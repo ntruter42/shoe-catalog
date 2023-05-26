@@ -1,6 +1,63 @@
 /* ==================== MAIN ==================== */
 
+:root {
+	font-size: 16px;
+	font-family: sans-serif;
+}
+
+body {
+	height: 100vh;
+	width: 100vw;
+}
+
 /* ==================== NAVIGATION BAR ==================== */
+
+.navbar-container {
+	display: flex;
+	justify-content: space-between;
+
+	width: 100%;
+}
+
+/* NAVIGATION SECTIONS */
+
+.nav-section {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.nav-section span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+/* Brand Section */
+
+.nav-brand {
+	width: 15%;
+	justify-content: flex-start;
+}
+
+.nav-logo img {
+	width: 50px;
+	height: 50px;
+}
+
+/* Categories Section */
+
+.nav-categories {
+	width: 50%;
+}
+
+/* Menu Section */
+
+.nav-menu {
+	width: 25%;
+}
+
 
 /* ==================== MESSAGES ==================== */
 
@@ -19,3 +76,11 @@
 /* ==================== RESPONSIVENESS ==================== */
 
 /* ==================== LAYOUT GUIDES ==================== */
+
+* {
+	outline: 1px solid magenta;
+}
+
+.nav-section span {
+	outline: 1px solid cyan;
+}
