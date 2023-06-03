@@ -6,32 +6,30 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Ready Official Website | Ready SA</title>
-	<link rel="shortcut icon" href="assets/icon/ready-white.png" type="image/x-icon">
+	<link rel="shortcut icon" href="assets/icon/ready.png" type="image/x-icon">
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/style.css">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/components/icon.min.css"
+		integrity="sha512-rTyypI20S663Wq9zrzMSOP1MNPHaYX7+ug5OZ/DTqCDLwRdErCo2W30Hdme3aUzJSvAUap3SmBk0r5j0vRxyGw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body>
-	<nav class="navbar-container">
+<body class="main-grid">
+	<nav class="nav-grid">
 		<!-- SHOE CATEGORIES -->
-		<div class="nav-brand nav-section">
-			<span class="nav-logo"><img src="assets/icon/ready-black.png" alt="Ready Logo"></span>
+		<div class="nav-brand">
+			<img src="assets/logo/logo-color-fill.png" alt="Ready Logo">
 			<span class="nav-name">Ready</span>
 		</div>
-		<div class="nav-categories nav-section">
-			<span class="cat-men">Men</span>
-			<span class="cat-women">Women</span>
-			<span class="cat-kids">Kids</span>
-			<span class="cat-sale">Sale</span>
-		</div>
-		<div class="nav-menu nav-section">
-			<span class="nav-search">Search</span>
-			<span class="nav-cart">Cart</span>
-			<span class="nav-user">User</span>
+		<div class="nav-menu">
+			<span class="nav-search"><i class="big search icon"></i><input type="text" name="site-search"></span>
+			<span class="nav-cart"><i class="big shopping cart icon"></i></span>
+			<span class="nav-user"><i class="big user icon"></i></i></span>
 		</div>
 	</nav>
 
-	<!-- Filter menu (similar to navbar) -->
+	<!-- Filter & sort menu (similar to navbar) -->
 	<div class="filter-bar">
 		<span class="filter-sort"></span>
 
@@ -42,11 +40,9 @@
 		<!-- 1 number input field for size -->
 		<!-- 2 number input fields for price range -->
 
-		<!-- SORTING OPTIONS (reverse-toggle)-->
-		<!-- 1 button to sort by popularity -->
-		<!-- 1 button to sort by newest -->
-		<!-- 1 button to sort by price -->
-		<!-- 1 button to sort by size -->
+		<!-- SORTING OPTIONS (reverse-toggle) -->
+		<!-- 1 dropdown to sort by popularity, newest, price, size -->
+		<!-- 1 button to reverse sort order -->
 	</div>
 
 	<!-- Shoe cards -->
