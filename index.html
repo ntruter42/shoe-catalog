@@ -15,9 +15,8 @@
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body class="grid main-grid">
-	<nav class="grid nav-grid">
-		<!-- SHOE CATEGORIES -->
+<body class="grid">
+	<nav class="grid">
 		<div class="grid nav-brand">
 			<img src="assets/logo/logo-color-fill.png" alt="Ready Logo">
 			<span>Ready</span>
@@ -29,23 +28,74 @@
 		</div>
 	</nav>
 
-	<!-- Filter & sort menu (similar to navbar) -->
-	<div class="filter-bar">
-		<span class="filter-sort"></span>
+	<!--======== Filter & sort menu (similar to navbar) ========-->
+	<div class="grid filter-bar">
 
-		<!-- FILTER OPTIONS -->
+		<!---------- FILTER OPTIONS ---------->
+		<!-- <span class="filter-title">Filter</span> -->
+
 		<!-- dropdown menu for brand -->
-		<!-- dropdown menu for type -->
-		<!-- dropdown menu for colour -->
-		<!-- 1 number input field for size -->
-		<!-- 2 number input fields for price range -->
+		<label for="filter-brand">
+			<select name="filter-brand" id="filter-brand">
+				onchange="this.className=this.options[this.selectedIndex].className"
+				class="opaque">
+				<option value="" selected disabled>Brand</option>
+				<option value="">Nike</option>
+				<option value="">Adidas</option>
+				<option value="">Under Armour</option>
+				<option value="">Clear</option>
+			</select>
+		</label>
 
-		<!-- SORTING OPTIONS (reverse-toggle) -->
+		<!-- dropdown menu for type -->
+		<label for="filter-type">
+			<select name="filter-type" id="filter-type">
+				<option value="" selected disabled="">Type</option>
+				<option value="">Leisure</option>
+				<option value="">Running</option>
+				<option value="">Soccer</option>
+			</select>
+		</label>
+
+		<!-- dropdown menu for color -->
+		<label for="filter-color">
+			<select name="filter-color" id="filter-color">
+				<option value="" selected disabled>Color</option>
+				<option value="">Black</option>
+				<option value="">White</option>
+				<option value="">Red</option>
+			</select>
+		</label>
+
+		<!-- 1 number input field for size -->
+		<label for="filter-size">
+			<input type="number" name="filter-size" id="filter-size" placeholder="Size">
+		</label>
+
+		<!-- 2 number input fields for price range -->
+		<label for="filter-price-low">
+			<input type="number" name="filter-price-low" id="filter-price-low" placeholder="Price Low">
+		</label>
+		<label for="filter-price-high">
+			<input type="number" name="filter-price-high" id="filter-price-high" placeholder="Price High">
+		</label>
+
+		<!---------- SORTING OPTIONS ---------->
+		<!-- <span class="sort-title">Sort</span> -->
+
 		<!-- 1 dropdown to sort by popularity, newest, price, size -->
-		<!-- 1 button to reverse sort order -->
+		<label for="sort-category">
+			<select name="sort-category"" id=" sort-category"">
+				<option value="" selected disabled>Sort</option>
+			</select>
+			<!-- Use option as reverse toggle if selected twice -->
+
+			<!-- 1 button to reverse sort order -->
+			<!-- <button type="button">⬆⬇</button> -->
+		</label>
 	</div>
 
-	<!-- Shoe cards -->
+	<!--======== Shoe cards ========-->
 	<div class="display-window">
 		<!-- SHOE CARD TEMPLATE goes here... -->
 		<!-- photo -->
@@ -54,7 +104,7 @@
 		<!-- details (incl. stock) -->
 	</div>
 
-	<!-- Footer content -->
+	<!--======== Footer content ========-->
 	<footer>
 		<!-- shipping -->
 		<!-- returns / exchanges -->

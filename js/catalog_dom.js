@@ -11,7 +11,7 @@ const search = document.querySelector('#site-search');
 
 // ==================== NAVIGATION HANDLING ==================== //
 
-search.addEventListener('focusin', function () {
+search.parentNode.addEventListener('mouseover', function () {
 	search.style.width = "calc(100% - 45px)";
 	search.style.color = "#000";
 });
@@ -19,6 +19,13 @@ search.addEventListener('focusin', function () {
 search.addEventListener('focusout', function () {
 	search.style.width = "20px";
 	search.style.color = "#0000";
+});
+
+search.parentNode.addEventListener('mouseleave', function (event) {
+	if (document.activeElement !== search) {
+		search.style.width = "20px";
+		search.style.color = "#0000";
+	}
 });
 
 // ==================== SHOPPING CART HANDLING ==================== //
