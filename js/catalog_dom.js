@@ -2,8 +2,11 @@
 
 // ----- INPUT ELEMENTS ----- //
 const search = document.querySelector('#site-search');
+const filter = document.querySelector('.filter-bar');
 
 // ----- OUTPUT ELEMENTS ----- //
+const catalog = document.querySelector('.catalog-section');
+const displayWindow = document.querySelector('.display-window');
 
 // ----- VARIABLES ----- //
 
@@ -12,7 +15,12 @@ const search = document.querySelector('#site-search');
 // ==================== NAVIGATION HANDLING ==================== //
 
 search.parentNode.addEventListener('mouseover', function () {
-	search.style.width = "calc(100% - 45px)";
+	search.style.width = "calc(100% - 44px)";
+	search.style.color = "#000";
+});
+
+search.parentNode.addEventListener('focusin', function () {
+	search.style.width = "calc(100% - 44px)";
 	search.style.color = "#000";
 });
 
@@ -28,9 +36,32 @@ search.parentNode.addEventListener('mouseleave', function (event) {
 	}
 });
 
+// ==================== CATALOG HANDLING ==================== //
+
+catalog.addEventListener("mousemove", function (event) {
+	if (event.pageX <= 50) {
+		filter.classList.add("expand-filter-bar");
+		displayWindow.classList.add("shrink-display-window");
+	}
+});
+
+catalog.addEventListener("mouseleave", function (event) {
+	setTimeout(function () {
+		filter.classList.remove("expand-filter-bar");
+		displayWindow.classList.remove("shrink-display-window");
+	}, 1000);
+});
+
+filter.addEventListener("mouseleave", function (event) {
+	setTimeout(function () {
+		filter.classList.remove("expand-filter-bar");
+		displayWindow.classList.remove("shrink-display-window");
+	}, 1000);
+});
+
 // ==================== SHOPPING CART HANDLING ==================== //
 
-// ==================== DISPLAY HANDLING ==================== //
+// ==================== ADMIN USER HANDLING ==================== //
 
 // ==================== MESSAGE HANDLING ==================== //
 
