@@ -38,8 +38,6 @@
 			<!-- dropdown menu for brand -->
 			<label for="filter-brand">
 				<select name="filter-brand" id="filter-brand">
-					onchange="this.className=this.options[this.selectedIndex].className"
-					class="opaque">
 					<option value="" selected disabled>Brand</option>
 					<option value="">Nike</option>
 					<option value="">Adidas</option>
@@ -81,27 +79,52 @@
 				<input type="number" name="filter-price-high" id="filter-price-high" placeholder="Price High">
 			</label>
 
-			<!---------- SORTING OPTIONS ---------->
-			<!-- <span class="sort-title">Sort</span> -->
-	
-			<!-- 1 dropdown to sort by popularity, newest, price, size -->
-			<label for="sort-category">
-				<select name="sort-category"" id=" sort-category"">
-					<option value="" selected disabled>Sort</option>
-				</select>
-				<!-- Use option as reverse toggle if selected twice -->
-	
-				<!-- 1 button to reverse sort order -->
-				<!-- <button type="button">⬆⬇</button> -->
-			</label>
 		</div>
-		
+
 		<div class="catalog-menu">
-			<!-- <button type="button">Filters</button> -->
+			<button id="filter-button" type="button">Filters</button>
+
+			<!---------- SORTING OPTIONS ---------->
+			<!-- 1 dropdown to sort by popularity, newest, price, size -->
+			<select name="sort-category"" id=" sort-category"">
+				<option value="" selected disabled>Sort</option>
+			</select>
+
+			<!-- 1 button to reverse sort order -->
+			<button type="button">⬆⬇</button>
 		</div>
 
 		<!--======== Shoe cards ========-->
 		<div class="display-window">
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card">Hello World</div>
+			<div class="shoe-card">Goodbye World</div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
+			<div class="shoe-card"></div>
 			<!-- SHOE CARD TEMPLATE goes here... -->
 			<!-- photo -->
 			<!-- price (try to put over photo) -->

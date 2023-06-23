@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
-	/* outline: 1px solid #ddd; */
+	outline: 1px solid red;
 
 	padding: 0;
 	margin: 0;
@@ -64,7 +64,7 @@ nav {
 	background: var(--primary-bg);
 	box-shadow: 0 0 10px #888;
 
-	grid-template-columns: 120px 1fr 300px;
+	grid-template-columns: 70px 1fr 300px;
 
 	z-index: 1;
 }
@@ -81,7 +81,7 @@ nav>* {
 /* ===== Brand Section ===== */
 
 .nav-brand {
-	grid-template-columns: 50px 50px;
+	grid-template-columns: 50px 1fr;
 }
 
 .nav-brand img {
@@ -131,6 +131,20 @@ nav>* {
 .catalog-section {
 	position: relative;
 	overflow: hidden;
+
+	max-height: 100%;
+}
+
+.catalog-menu {
+	background: red;
+
+	display: flex;
+	justify-content: flex-end;
+
+	position: absolute;
+
+	width: 100%;
+	height: 30px;
 }
 
 /* ==================== FILTER & SORT BAR ==================== */
@@ -144,6 +158,7 @@ nav>* {
 	position: absolute;
 	top: 0;
 	left: -200px;
+	z-index: 1;
 
 	width: 200px;
 	height: 100%;
@@ -162,16 +177,44 @@ nav>* {
 /* ==================== DISPLAY WINDOW ==================== */
 
 .display-window {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+
+	height: 100%;
 	margin-left: 0;
-	padding-left: 20px;
-	transition: margin-left 300ms cubic-bezier(0, 0, 0, 1);
+	padding: 20px;
+
+	overflow: auto;
+	transition: 300ms cubic-bezier(0, 0, 0, 1);
 }
 
 .shrink-display-window {
-	margin-left: 300px;
+	margin-left: 200px;
 }
 
 /* ==================== SHOE CARDS ==================== */
+
+.shoe-card {
+	background: cyan;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: calc((100% - 100px) / 5);
+	min-width: 150px;
+	max-width: 200px;
+	margin: 10px;
+
+	aspect-ratio: 3 / 4;
+	transition: 300ms;
+}
+
+.huge {
+	/* margin-inline: 5%; */
+	transform: scale(1.5) translateY(10%);
+}
 
 /* ==================== SHOPPING CART ==================== */
 
