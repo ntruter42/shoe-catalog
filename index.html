@@ -7,129 +7,74 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Ready Official Website | Ready SA</title>
 	<link rel="shortcut icon" href="./assets/logo/logo-color-fill.png" type="image/x-icon">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+		integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+		integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
+		integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/style.css">
-
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/components/icon.min.css"
-		integrity="sha512-rTyypI20S663Wq9zrzMSOP1MNPHaYX7+ug5OZ/DTqCDLwRdErCo2W30Hdme3aUzJSvAUap3SmBk0r5j0vRxyGw=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- <script src="./js/catalog_factory.js" defer></script> -->
+	<script src="./js/catalog_dom.js" defer></script>
 </head>
 
-<body class="grid">
-	<nav class="grid">
-		<a href="index.html" class="grid nav-brand">
-			<img src="assets/logo/logo-color-fill.png" alt="Ready Logo">
+<body>
+	<nav>
+		<a class="nav-brand" href="index.html">
+			<img src="./assets/logo/logo-color-fill.png" alt="Ready Logo">
 			<span>Ready</span>
 		</a>
-		<ul class="grid nav-menu">
-			<li class="nav-search"><i class="big search icon"></i><input type="text" id="site-search"></li>
-			<li class="nav-cart"><a href="#"><i class="big shopping cart icon"></a></i></li>
-			<li class="nav-user"><a href="#"><i class="big user icon"></i></a></li>
+
+		<ul class="nav-menu">
+			<li class="nav-search">
+				<img class="nav-icon" src="./assets/icons/search-svgrepo-com.svg" alt="">
+				<input class="search-input" type="text">
+			</li>
+			<li class="nav-cart">
+				<a href="#"><img class="nav-icon" src="./assets/icons/cart-svgrepo-com.svg" alt=""></a>
+			</li>
+			<li class="nav-user">
+				<a href="#"><img class="nav-icon" src="./assets/icons/user-svgrepo-com.svg" alt=""></i></a>
+			</li>
 		</ul>
 	</nav>
 
 	<section class="catalog-section">
-		<!--======== Filter & sort menu (similar to navbar) ========-->
-		<div class="filter-bar">
-
-			<!---------- FILTER OPTIONS ---------->
-			<!-- <span class="filter-title">Filter</span> -->
-
-			<!-- dropdown menu for brand -->
-			<label for="filter-brand">
-				<select name="filter-brand" id="filter-brand">
-					<option value="" selected disabled>Brand</option>
-					<option value="">Nike</option>
-					<option value="">Adidas</option>
-					<option value="">Under Armour</option>
-					<option value="">Clear</option>
-				</select>
-			</label>
-
-			<!-- dropdown menu for type -->
-			<label for="filter-type">
-				<select name="filter-type" id="filter-type">
-					<option value="" selected disabled="">Type</option>
-					<option value="">Leisure</option>
-					<option value="">Running</option>
-					<option value="">Soccer</option>
-				</select>
-			</label>
-
-			<!-- dropdown menu for color -->
-			<label for="filter-color">
-				<select name="filter-color" id="filter-color">
-					<option value="" selected disabled>Color</option>
-					<option value="">Black</option>
-					<option value="">White</option>
-					<option value="">Red</option>
-				</select>
-			</label>
-
-			<!-- 1 number input field for size -->
-			<label for="filter-size">
-				<input type="number" name="filter-size" id="filter-size" placeholder="Size">
-			</label>
-
-			<!-- 2 number input fields for price range -->
-			<label for="filter-price-low">
-				<input type="number" name="filter-price-low" id="filter-price-low" placeholder="Price Low">
-			</label>
-			<label for="filter-price-high">
-				<input type="number" name="filter-price-high" id="filter-price-high" placeholder="Price High">
-			</label>
-
-		</div>
-
+		<!--======== CATALOG MENU (similar to navbar) ========-->
 		<div class="catalog-menu">
-			<button id="filter-button" type="button">Filters</button>
+			<!---------- FILTERS applied ---------->
+			<div class="filters-applied hidden">
+				<!-- Put a button to remove filter for each one applied -->
+			</div>
 
-			<!---------- SORTING OPTIONS ---------->
-			<!-- 1 dropdown to sort by popularity, newest, price, size -->
-			<select name="sort-category"" id=" sort-category"">
-				<option value="" selected disabled>Sort</option>
-			</select>
+			<!---------- FILTER button ---------->
+			<button class="filter-button" type="button"><img src="./assets/icons/equalizer-svgrepo-com.svg"
+					alt="">Filters</button>
+
+			<!---------- SORTING options ---------->
+			<!-- 1 dropdown to sort by popularity, newest, price -->
+			<div class="select-sort">
+				<label>Sort</label>
+				<select class="sort-category" name="sort-category">
+					<optgroup label="Sort">
+						<!-- <option value="" selected hidden>Sort</option> -->
+						<option value="">Newest</option>
+						<option value="">Popularity</option>
+						<option value="">Price (Low - High)</option>
+						<option value="">Price (High - Low)</option>
+					</optgroup>
+				</select>
+			</div>
 
 			<!-- 1 button to reverse sort order -->
-			<button type="button">⬆⬇</button>
-		</div>
-
-		<!--======== Shoe cards ========-->
-		<div class="display-window">
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card">Hello World</div>
-			<div class="shoe-card">Goodbye World</div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<div class="shoe-card"></div>
-			<!-- SHOE CARD TEMPLATE goes here... -->
-			<!-- photo -->
-			<!-- price (try to put over photo) -->
-			<!-- name -->
-			<!-- details (incl. stock) -->
+			<!-- <button class="ui toggle button" type="button">⬆⬇</button> -->
 		</div>
 	</section>
 
@@ -141,9 +86,6 @@
 		<!-- contact -->
 		<!-- social -->
 	</footer>
-
-	<script src="js/catalog_factory.js"></script>
-	<script src="js/catalog_dom.js"></script>
 </body>
 
 </html>

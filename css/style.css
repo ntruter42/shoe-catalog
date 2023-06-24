@@ -3,18 +3,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
-	outline: 1px solid red;
+	/* outline: 1px solid red; */
 
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
 
 	color: #000;
-	/* default all text to black */
 	text-decoration: none;
-	/* remove underline from links */
 	list-style: none;
-	/* remove bullet points from list items */
 }
 
 .hidden {
@@ -25,145 +22,228 @@
 	visibility: hidden !important;
 }
 
-.opaque {
-	filter: opacity(0.5);
-}
-
 .grid {
 	display: grid;
+}
+
+.flex {
+	display: flex;
 }
 
 /* ==================== MAIN ==================== */
 
 :root {
-	--primary-bg: #ddf;
+	--nav-bg: #def;
+	--nav-fg: #000;
+	--primary-bg: #fff;
+	--primary-fg: #000;
+	--secondary-bg: #ccc;
+	--secondary-fg: #333;
+	--primary-accent: #7600FF;
+	--secondary-accent: #FFA0A0;
+	--primary-shadow: 0 0.25rem 0.25rem #0004;
+	--drop-shadow: drop-shadow(var(--primary-shadow));
+	--transition-fast: 100ms cubic-bezier(0, 0, 0, 1);
+	--transition: 250ms cubic-bezier(0, 0, 0, 1);
+	--transition-slow: 500ms cubic-bezier(0, 0, 0, 1);
 
 	font-size: 16px;
 	font-family: 'Poppins', 'Lato', 'Roboto', sans-serif;
 }
 
 html {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
 	height: 100vh;
 	width: 100vw;
 }
 
 body {
-	grid-template-rows: 70px 1fr 60px;
+	display: flex;
+	flex-direction: column;
 
 	height: 100vh;
 	width: 100vw;
 }
 
+img {
+	max-height: 100%;
+}
+
+button {
+	padding: 0.5rem;
+}
+
 /* ==================== NAVIGATION BAR ==================== */
 
 nav {
-	background: var(--primary-bg);
-	box-shadow: 0 0 10px #888;
+	background: var(--nav-bg);
+	box-shadow: 0 0 0.25rem #0008;
 
-	grid-template-columns: 70px 1fr 300px;
+	display: flex;
+	justify-content: space-between;
 
-	z-index: 1;
+	height: 70px;
 }
 
 /* ========== NAVIGATION Sections ========== */
 
-nav>* {
-	align-items: center;
-	justify-items: center;
-
-	margin: 10px;
-}
-
 /* ===== Brand Section ===== */
 
 .nav-brand {
-	grid-template-columns: 50px 1fr;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	height: 100%;
+	padding: 0.5rem;
+
+	transition: var(--transition);
 }
 
-.nav-brand img {
-	max-width: 100%;
-	max-height: 100%;
-	filter: hue-rotate(-80deg);
+.nav-brand:hover {
+	transform: scale(1.1) translateX(5px);
+	filter: var(--drop-shadow);
 }
 
 .nav-brand span {
 	position: relative;
-	right: 1.5rem;
-	bottom: 0.125rem;
+	right: 1rem;
+	bottom: 0.25rem;
 	transform: rotate(55deg);
 }
 
 /* ===== Menu Section ===== */
 
 .nav-menu {
-	grid-template-columns: 1fr 50px 50px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.5rem;
 
-	grid-column: 3 / 4;
+	padding: 0.5rem;
+}
+
+.nav-icon {
+	max-height: 2rem;
+
+	filter: grayscale() brightness(0.5);
+	transition: var(--transition-fast);
+}
+
+.nav-menu .nav-icon:hover {
+	transform: scale(1.1);
+	filter: var(--drop-shadow);
 }
 
 .nav-search {
 	display: flex;
-	justify-self: end;
+	justify-content: center;
 }
 
-
-.nav-search input {
+.search-input {
 	background: #0000;
 	color: #0000;
 	outline: none;
 	border: none;
-	border-bottom: 1px solid black;
-	box-shadow: 0 0.5rem 0.75rem -0.75rem black;
+	border-bottom: 2px solid var(--nav-fg);
+	box-shadow: 0 0.5rem 0.75rem -0.75rem;
 
 	text-align: center;
 
-	width: 20px;
+	width: 0;
+	height: 2rem;
+	
+	transition: var(--transition-slow);
+}
 
-	transition: 300ms cubic-bezier(0, 0, 0, 1);
+.nav-search:hover .search-input {
+	border-bottom: 2px solid var(--primary-accent);
+}
+
+.expand-site-search {
+	color: var(--primary-fg);
+	border-bottom: 2px solid var(--primary-accent);
+	width: 10rem;
+}
+
+.remove-icon-filter {
+	filter: none;
 }
 
 /* ==================== CATALOG SECTION ==================== */
 
 .catalog-section {
-	position: relative;
-	overflow: hidden;
-
-	max-height: 100%;
+	flex: 1 1 auto;
 }
 
 .catalog-menu {
-	background: red;
+	outline: 1px solid red;
 
 	display: flex;
 	justify-content: flex-end;
+	align-items: center;
+	gap: 0.5rem;
 
-	position: absolute;
+	padding: 0.5rem;
+}
 
-	width: 100%;
-	height: 30px;
+.catalog-menu * {
+	font-variant-caps: small-caps;
+}
+
+.catalog-menu button {
+	background: #0000;
+	border: none;
+
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+
+	height: 2rem;
+}
+
+.catalog-menu button:hover {
+	transform: scale(1.1);
+	filter: var(--drop-shadow);
+}
+
+.catalog-menu button:active {
+	transform: none;
+	filter: none;
+}
+
+.select-sort {
+	position: relative;
+}
+
+.select-sort select {
+	background: #0000;
+
+	text-align: center;
+
+	/* width: auto; */
+	/* border: none; */
+
+	/* appearance: none; */
 }
 
 /* ==================== FILTER & SORT BAR ==================== */
 
 .filter-bar {
-	background-color: #0008;
+	background-color: #0f04;
+	outline: 1px solid green;
 
-	display: flex;
-	flex-direction: column;
+	/* display: flex; */
+	/* flex-direction: column; */
 
-	position: absolute;
-	top: 0;
-	left: -200px;
-	z-index: 1;
+	/* position: relative; */
+	/* top: 0; */
+	/* left: -200px; */
+	/* z-index: 1; */
 
-	width: 200px;
-	height: 100%;
+	/* width: 200px; */
+	/* height: 100%; */
 
-	transition: left 300ms cubic-bezier(0, 0, 0, 1);
+	transition: var(--transition);
 }
 
 .filter-bar input {
@@ -177,16 +257,7 @@ nav>* {
 /* ==================== DISPLAY WINDOW ==================== */
 
 .display-window {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-
-	height: 100%;
-	margin-left: 0;
-	padding: 20px;
-
 	overflow: auto;
-	transition: 300ms cubic-bezier(0, 0, 0, 1);
 }
 
 .shrink-display-window {
@@ -196,24 +267,7 @@ nav>* {
 /* ==================== SHOE CARDS ==================== */
 
 .shoe-card {
-	background: cyan;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	width: calc((100% - 100px) / 5);
-	min-width: 150px;
-	max-width: 200px;
-	margin: 10px;
-
-	aspect-ratio: 3 / 4;
-	transition: 300ms;
-}
-
-.huge {
-	/* margin-inline: 5%; */
-	transform: scale(1.5) translateY(10%);
+	background: #4444;
 }
 
 /* ==================== SHOPPING CART ==================== */
@@ -221,10 +275,10 @@ nav>* {
 /* ==================== FOOTER BAR ==================== */
 
 footer {
-	background: var(--primary-bg);
-	box-shadow: 0 0 10px #888;
+	background: var(--nav-bg);
+	box-shadow: 0 0 0.25rem #0008;
 
-	z-index: 1;
+	height: 50px;
 }
 
 /* ==================== MESSAGES ==================== */

@@ -1,77 +1,72 @@
 // ----- TEMPLATE SETUP ----- //
 
 // ----- INPUT ELEMENTS ----- //
-const search = document.querySelector('#site-search');
-const filter = document.querySelector('.filter-bar');
-const filterButton = document.querySelector('#filter-button');
+const siteSearch = document.querySelector('.search-input');
+const filterButton = document.querySelector('.filter-button');
+const filterBar = document.querySelector('.filter-bar');
 
 // ----- OUTPUT ELEMENTS ----- //
-const catalog = document.querySelector('.catalog-section');
+const catalogSection = document.querySelector('.catalog-section');
 const displayWindow = document.querySelector('.display-window');
 const shoeCards = document.querySelectorAll('.shoe-card');
 
 // ----- VARIABLES ----- //
+let timeout = 250;
+let timeoutID;
 
 // ==================== INITIALIZATION ==================== //
 
 // ==================== NAVIGATION HANDLING ==================== //
 
-search.parentNode.addEventListener('mouseover', function () {
-	search.style.width = "calc(100% - 44px)";
-	search.style.color = "#000";
+siteSearch.parentNode.addEventListener('click', function () {
+	clearTimeout(timeoutID);
+	siteSearch.focus();
+	siteSearch.classList.add('expand-site-search');
+	siteSearch.parentNode.firstElementChild.classList.add('remove-icon-filter');
 });
 
-search.parentNode.addEventListener('focusin', function () {
-	search.style.width = "calc(100% - 44px)";
-	search.style.color = "#000";
+// siteSearch.parentNode.addEventListener('focusin', function () {
+// 	clearTimeout(timeoutID);
+// 	siteSearch.classList.add('expand-site-search');
+// });
+
+// siteSearch.parentNode.addEventListener('mouseover', function () {
+// 	clearTimeout(timeoutID);
+// 	siteSearch.parentNode.firstElementChild.classList.add('remove-icon-filter');
+// 	timeoutID = setTimeout(() => {
+// 		siteSearch.classList.add('expand-site-search');
+// 	}, timeout);
+// });
+
+siteSearch.parentNode.addEventListener('focusout', function () {
+	clearTimeout(timeoutID);
+	siteSearch.parentNode.firstElementChild.classList.remove('remove-icon-filter');
+	timeoutID = setTimeout(() => {
+		siteSearch.classList.remove('expand-site-search');
+	}, timeout);
 });
 
-search.addEventListener('focusout', function () {
-	search.style.width = "20px";
-	search.style.color = "#0000";
-});
-
-search.parentNode.addEventListener('mouseleave', function (event) {
-	if (document.activeElement !== search) {
-		search.style.width = "20px";
-		search.style.color = "#0000";
-	}
-});
+// siteSearch.parentNode.addEventListener('mouseleave', function () {
+// 	clearTimeout(timeoutID);
+// 	timeoutID = setTimeout(() => {
+// 		if (document.activeElement !== siteSearch) {
+// 			siteSearch.parentNode.firstElementChild.classList.remove('remove-icon-filter');
+// 			siteSearch.classList.remove('expand-site-search');
+// 		}
+// 	}, timeout * 4);
+// });
 
 // ==================== CATALOG HANDLING ==================== //
 
-filterButton.addEventListener("click", function () {
-	if (filter.classList.contains("expand-filter-bar")) {
-		filter.classList.remove("expand-filter-bar");
-		displayWindow.classList.remove("shrink-display-window");
-	} else {
-		filter.classList.add("expand-filter-bar");
-		displayWindow.classList.add("shrink-display-window");
-	}
-});
-
-shoeCards.forEach(card => {
-	card.addEventListener('click', function () {
-		if (card.classList.contains("huge")) {
-			card.classList.remove('huge');
-			setTimeout(() => {
-				card.scrollIntoView({ behavior: "smooth", block: "nearest" });
-			}, 300);
-		} else {
-			card.classList.add('huge');
-			setTimeout(() => {
-				card.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
-			}, 300);
-		}
-	});
-
-	document.addEventListener("click", function (event) {
-		if (!card.contains(event.target)) {
-			displayWindow.classList.remove('shift-display-window');
-			card.classList.remove("huge");
-		}
-	});
-});
+// filterButton.addEventListener("click", function () {
+// 	if (filterBar.classList.contains("expand-filter-bar")) {
+// 		filterBar.classList.remove("expand-filter-bar");
+// 		displayWindow.classList.remove("shrink-display-window");
+// 	} else {
+// 		filterBar.classList.add("expand-filter-bar");
+// 		displayWindow.classList.add("shrink-display-window");
+// 	}
+// });
 
 // ==================== SHOPPING CART HANDLING ==================== //
 
