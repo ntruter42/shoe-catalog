@@ -37,11 +37,11 @@
 	--nav-fg: #000;
 	--primary-bg: #fff;
 	--primary-fg: #000;
-	--secondary-bg: #ccc;
+	--secondary-bg: #fff;
 	--secondary-fg: #333;
 	--primary-accent: #7600FF;
 	--secondary-accent: #FFA0A0;
-	--primary-shadow: 0 0.25rem 0.25rem #0004;
+	--primary-shadow: 0 0.125rem 0.125rem #0004;
 	--drop-shadow: drop-shadow(var(--primary-shadow));
 	--transition-fast: 100ms cubic-bezier(0, 0, 0, 1);
 	--transition: 250ms cubic-bezier(0, 0, 0, 1);
@@ -64,24 +64,50 @@ body {
 	width: 100vw;
 }
 
-img {
-	max-height: 100%;
-}
-
-button {
-	padding: 0.5rem;
-}
-
-/* ==================== NAVIGATION BAR ==================== */
-
-nav {
+nav,
+footer {
 	background: var(--nav-bg);
 	box-shadow: 0 0 0.25rem #0008;
 
 	display: flex;
 	justify-content: space-between;
 
+	z-index: 1;
+
 	height: 70px;
+}
+
+img {
+	max-height: 100%;
+}
+
+button,
+select {
+	border: 1px solid var(--primary-accent);
+	border-radius: 0.5rem;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.25rem;
+
+	padding-inline: 0.5rem;
+	height: 2rem;
+}
+
+input {
+	background: var(--secondary-bg);
+	color: var(--secondary-fg);
+	outline: none;
+	border: 1px solid var(--primary-accent);
+	border-radius: 0.5rem;
+
+	text-align: center;
+
+	height: 2rem;
+
+	caret-color: var(--primary-accent);
+	-moz-appearance: textfield;
 }
 
 /* ========== NAVIGATION Sections ========== */
@@ -94,7 +120,7 @@ nav {
 	align-items: center;
 
 	height: 100%;
-	padding: 0.5rem;
+	padding-inline: 0.5rem;
 
 	transition: var(--transition);
 }
@@ -119,7 +145,7 @@ nav {
 	align-items: center;
 	gap: 0.5rem;
 
-	padding: 0.5rem;
+	padding-inline: 1rem;
 }
 
 .nav-icon {
@@ -145,14 +171,15 @@ nav {
 	outline: none;
 	border: none;
 	border-bottom: 2px solid var(--nav-fg);
+	border-radius: 0;
 	box-shadow: 0 0.5rem 0.75rem -0.75rem;
 
 	text-align: center;
 
 	width: 0;
-	height: 2rem;
-	
+
 	transition: var(--transition-slow);
+	caret-color: var(--primary-accent);
 }
 
 .nav-search:hover .search-input {
@@ -172,58 +199,81 @@ nav {
 /* ==================== CATALOG SECTION ==================== */
 
 .catalog-section {
+	display: flex;
+	flex-direction: column;
 	flex: 1 1 auto;
+
+	position: relative;
 }
 
 .catalog-menu {
+	background-color: #f004;
 	outline: 1px solid red;
 
 	display: flex;
-	justify-content: flex-end;
+	/* justify-content: flex-end; */
 	align-items: center;
 	gap: 0.5rem;
 
-	padding: 0.5rem;
+	padding: 1rem;
+
+	transition: var(--transition-slow);
 }
 
-.catalog-menu * {
+.catalog-menu>* {
 	font-variant-caps: small-caps;
 }
 
-.catalog-menu button {
-	background: #0000;
-	border: none;
-
-	display: flex;
-	align-items: center;
-	gap: 0.25rem;
-
-	height: 2rem;
+.filter-button {
+	background: var(--secondary-bg);
 }
 
-.catalog-menu button:hover {
-	transform: scale(1.1);
-	filter: var(--drop-shadow);
-}
-
-.catalog-menu button:active {
-	transform: none;
-	filter: none;
+.filter-button img {
+	padding-block: 0.5rem;
 }
 
 .select-sort {
 	position: relative;
+	transition: var(--transition-fast);
+}
+
+.select-sort label {
+	background: linear-gradient(#f000, #fff 50% 60%, #f000 60%);
+
+	display: flex;
+	align-items: flex-end;
+
+	position: absolute;
+	top: -0.5rem;
+	left: 0.5rem;
+
+	height: 1rem;
+}
+
+.select-sort label img {
+	padding: 0;
 }
 
 .select-sort select {
-	background: #0000;
+	background: var(--primary-bg);
 
 	text-align: center;
 
-	/* width: auto; */
-	/* border: none; */
+	appearance: none;
+}
 
-	/* appearance: none; */
+.filter-button:hover,
+.select-sort:hover {
+	filter: var(--drop-shadow);
+}
+
+.filter-button:active,
+.select-sort:active {
+	filter: none;
+}
+
+.shrink-catalog-section {
+	margin-left: 200px;
 }
 
 /* ==================== FILTER & SORT BAR ==================== */
@@ -232,18 +282,18 @@ nav {
 	background-color: #0f04;
 	outline: 1px solid green;
 
-	/* display: flex; */
-	/* flex-direction: column; */
+	display: flex;
+	flex-direction: column;
 
-	/* position: relative; */
-	/* top: 0; */
-	/* left: -200px; */
-	/* z-index: 1; */
+	position: absolute;
+	top: 0;
+	left: -200px;
 
-	/* width: 200px; */
-	/* height: 100%; */
+	width: 200px;
+	height: 100%;
+	padding: 1rem;
 
-	transition: var(--transition);
+	transition: var(--transition-slow);
 }
 
 .filter-bar input {
@@ -257,11 +307,18 @@ nav {
 /* ==================== DISPLAY WINDOW ==================== */
 
 .display-window {
-	overflow: auto;
-}
+	background-color: #00f4;
+	border: 1px solid blue;
 
-.shrink-display-window {
-	margin-left: 200px;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	gap: 10px;
+
+	height: 100%;
+
+	overflow: auto;
+	transition: var(--transition-slow);
 }
 
 /* ==================== SHOE CARDS ==================== */
@@ -275,9 +332,6 @@ nav {
 /* ==================== FOOTER BAR ==================== */
 
 footer {
-	background: var(--nav-bg);
-	box-shadow: 0 0 0.25rem #0008;
-
 	height: 50px;
 }
 
