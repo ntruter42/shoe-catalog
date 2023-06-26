@@ -12,6 +12,7 @@
 	color: #000;
 	text-decoration: none;
 	list-style: none;
+	transition: var(--transition-slow);
 }
 
 .hidden {
@@ -52,6 +53,9 @@
 }
 
 html {
+	display: flex;
+	justify-content: center;
+
 	height: 100vh;
 	width: 100vw;
 }
@@ -62,6 +66,7 @@ body {
 
 	height: 100vh;
 	width: 100vw;
+	/* max-width: 768px; */
 }
 
 nav,
@@ -70,6 +75,7 @@ footer {
 	box-shadow: 0 0 0.25rem #0008;
 
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 
 	z-index: 1;
@@ -156,6 +162,7 @@ input {
 }
 
 .nav-menu .nav-icon:hover {
+	cursor: pointer;
 	transform: scale(1.1);
 	filter: var(--drop-shadow);
 }
@@ -193,6 +200,7 @@ input {
 }
 
 .remove-icon-filter {
+	cursor: default !important;
 	filter: none;
 }
 
@@ -204,6 +212,8 @@ input {
 	flex: 1 1 auto;
 
 	position: relative;
+
+	height: calc(100% - 120px);
 }
 
 .catalog-menu {
@@ -211,7 +221,7 @@ input {
 	outline: 1px solid red;
 
 	display: flex;
-	/* justify-content: flex-end; */
+	flex-wrap: wrap;
 	align-items: center;
 	gap: 0.5rem;
 
@@ -238,7 +248,7 @@ input {
 }
 
 .select-sort label {
-	background: linear-gradient(#f000, #fff 50% 60%, #f000 60%);
+	background: linear-gradient(#f000 5%, #fff 45% 60%, #f000 60%);
 
 	display: flex;
 	align-items: flex-end;
@@ -246,6 +256,7 @@ input {
 	position: absolute;
 	top: -0.5rem;
 	left: 0.5rem;
+	z-index: 1;
 
 	height: 1rem;
 }
@@ -263,7 +274,7 @@ input {
 }
 
 .filter-button:hover,
-.select-sort:hover {
+.select-sort:hover select {
 	filter: var(--drop-shadow);
 }
 
@@ -284,6 +295,7 @@ input {
 
 	display: flex;
 	flex-direction: column;
+	gap: 1rem;
 
 	position: absolute;
 	top: 0;
@@ -310,12 +322,12 @@ input {
 	background-color: #00f4;
 	border: 1px solid blue;
 
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(3, 1fr);
-	gap: 10px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1rem;
 
-	height: 100%;
+	padding: 1rem;
 
 	overflow: auto;
 	transition: var(--transition-slow);
@@ -324,7 +336,17 @@ input {
 /* ==================== SHOE CARDS ==================== */
 
 .shoe-card {
-	background: #4444;
+	background: #fff8;
+	border-radius: 0.5rem;
+
+	width: 20rem;
+	height: fit-content;
+	padding: 1rem;
+}
+
+.shoe-card img {
+	max-width: 100%;
+	object-fit: contain;
 }
 
 /* ==================== SHOPPING CART ==================== */
@@ -340,5 +362,45 @@ footer {
 /* ==================== ANIMATIONS ==================== */
 
 /* ==================== RESPONSIVENESS ==================== */
+
+@media (width < 444px) {
+	.catalog-menu {
+		justify-content: center;
+	}
+
+	nav {
+		flex-wrap: wrap;
+		height: auto;
+
+		justify-content: center;
+	}
+
+	.nav-brand {
+		height: 50px;
+	}
+
+	.nav-menu {
+		height: 50px;
+	}
+
+	.catalog-section {
+		height: calc(100% - 170px);
+	}
+}
+
+@media (width < 344px) {
+	.expand-filter-bar {
+		align-items: center;
+
+		top: 4rem;
+		left: 0;
+
+		width: 100%;
+	}
+
+	.catalog-menu, .display-window {
+		margin-left: 0;
+	}
+}
 
 /* ==================== LAYOUT GUIDES ==================== */
