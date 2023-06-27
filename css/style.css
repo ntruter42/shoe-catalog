@@ -12,7 +12,6 @@
 	color: #000;
 	text-decoration: none;
 	list-style: none;
-	transition: var(--transition-slow);
 }
 
 .hidden {
@@ -34,12 +33,14 @@
 /* ==================== MAIN ==================== */
 
 :root {
-	--nav-bg: #def;
+	--nav-bg: #0ff4;
 	--nav-fg: #000;
-	--primary-bg: #fff;
+	--primary-bg: #888;
 	--primary-fg: #000;
 	--secondary-bg: #fff;
 	--secondary-fg: #333;
+	--opaque-white-bg: #fff8;
+	--opaque-black-bg: #0004;
 	--primary-accent: #7600FF;
 	--secondary-accent: #FFA0A0;
 	--primary-shadow: 0 0.125rem 0.125rem #0004;
@@ -53,9 +54,6 @@
 }
 
 html {
-	display: flex;
-	justify-content: center;
-
 	height: 100vh;
 	width: 100vw;
 }
@@ -72,7 +70,7 @@ body {
 nav,
 footer {
 	background: var(--nav-bg);
-	box-shadow: 0 0 0.25rem #0008;
+	box-shadow: 0 0 1rem #0004;
 
 	display: flex;
 	flex-wrap: wrap;
@@ -132,7 +130,7 @@ input {
 }
 
 .nav-brand:hover {
-	transform: scale(1.1) translateX(5px);
+	transform: scale(1.05) translateX(2.5px);
 	filter: var(--drop-shadow);
 }
 
@@ -207,6 +205,8 @@ input {
 /* ==================== CATALOG SECTION ==================== */
 
 .catalog-section {
+	background: url(../assets/images/wallhaven-6ke9eq.png);
+
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
@@ -217,8 +217,8 @@ input {
 }
 
 .catalog-menu {
-	background-color: #f004;
-	outline: 1px solid red;
+	background: var(--opaque-white-bg);
+	box-shadow: 0 1rem 1rem -1rem #0004;
 
 	display: flex;
 	flex-wrap: wrap;
@@ -248,7 +248,8 @@ input {
 }
 
 .select-sort label {
-	background: linear-gradient(#f000 5%, #fff 45% 60%, #f000 60%);
+	background: linear-gradient(#0000 50%, var(--secondary-bg) 50%);
+	border-radius: 100%;
 
 	display: flex;
 	align-items: flex-end;
@@ -266,7 +267,7 @@ input {
 }
 
 .select-sort select {
-	background: var(--primary-bg);
+	background: var(--secondary-bg);
 
 	text-align: center;
 
@@ -290,8 +291,7 @@ input {
 /* ==================== FILTER & SORT BAR ==================== */
 
 .filter-bar {
-	background-color: #0f04;
-	outline: 1px solid green;
+	background: var(--opaque-white-bg);
 
 	display: flex;
 	flex-direction: column;
@@ -314,16 +314,14 @@ input {
 
 .expand-filter-bar {
 	left: 0;
+	box-shadow: 1rem 0 1rem -1rem #0004;
 }
 
 /* ==================== DISPLAY WINDOW ==================== */
 
 .display-window {
-	background-color: #00f4;
-	border: 1px solid blue;
-
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	flex-wrap: wrap;
 	gap: 1rem;
 
@@ -336,17 +334,76 @@ input {
 /* ==================== SHOE CARDS ==================== */
 
 .shoe-card {
-	background: #fff8;
+	background: var(--opaque-white-bg);
+	border: 1px solid var(--opaque-black-bg);
 	border-radius: 0.5rem;
+	box-shadow: var(--primary-shadow);
+
+	display: flex;
+	flex-direction: column;
+
+	position: relative;
 
 	width: 20rem;
 	height: fit-content;
 	padding: 1rem;
 }
 
-.shoe-card img {
+.shoe-img {
+	background: var(--secondary-bg);
+	border: 1px solid var(--opaque-black-bg);
+	border-radius: 0.5rem;
+	box-shadow: var(--primary-shadow);
+
 	max-width: 100%;
-	object-fit: contain;
+	padding: 1rem;
+	margin-bottom: 0.5rem;
+
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+}
+
+.shoe-price {
+	font-size: 1.25rem;
+
+	background-color: var(--secondary-accent);
+	border-radius: 5px;
+
+	align-self: flex-end;
+	position: absolute;
+
+	padding: 10px;
+
+	transform: rotate(-15deg);
+}
+
+.shoe-price:before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: -1.05rem;
+	transform: translateY(-50%);
+	width: 0;
+	height: 0;
+	border-top: 1.25rem solid transparent;
+	border-bottom: 1.25rem solid transparent;
+	border-right: 1.25rem solid var(--secondary-accent);
+}
+
+.shoe-price:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: -0.5rem;
+	transform: translateY(-50%);
+	width: 8px;
+	height: 8px;
+	background-color: var(--secondary-bg);
+	border-radius: 50%;
+}
+
+.shoe-title {
+	font-weight: bold;
 }
 
 /* ==================== SHOPPING CART ==================== */
@@ -398,9 +455,25 @@ footer {
 		width: 100%;
 	}
 
-	.catalog-menu, .display-window {
+	.catalog-menu,
+	.display-window {
 		margin-left: 0;
 	}
 }
 
 /* ==================== LAYOUT GUIDES ==================== */
+/*
+.catalog-menu {
+	background-color: #f004;
+	border: 1px solid red;
+}
+
+.filter-bar {
+	background-color: #0f04;
+	border: 1px solid green;
+}
+
+.display-window {
+	background-color: #00f4;
+	border: 1px solid blue;
+}

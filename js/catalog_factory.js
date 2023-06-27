@@ -1,31 +1,17 @@
 function ShoeCatalog() {
 	// variable for shoe catalog list
-	let shoeList = {
-		'1000': {
-			'brand': "Under Armour",
-			'title': "Assert 9",
-			'type': "Running Shoe",
-			'sizeColorQuantity': {
-				'6,white': 9,
-				'6,black': 13,
-				'6,red': 3,
-				'7,white': 11,
-				'9,white': 7,
-				'9,black': 5,
-			}
-		},
-	};
+	let shoeList = {};
 	// variable for shopping cart
 
 	// function to add shoe to catalog
-	function addShoe(brand, model, type, sizeColorQuantity, price, picture) {
+	function addShoe(brand, model, type, price, photo, sizeColorQuantity) {
 		const shoe = {
-			brand: brand,
-			model: model,
-			type: type,
-			sizeColorQuantity: sizeColorQuantity,
-			price: price,
-			picture: picture
+			'brand': brand,
+			'model': model,
+			'type': type,
+			'price': price,
+			'photo': photo,
+			'sizeColorQuantity': sizeColorQuantity,
 		};
 
 		shoeList[generateShoeID()] = shoe;
