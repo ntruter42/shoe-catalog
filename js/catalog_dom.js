@@ -1,21 +1,36 @@
 // ----- TEMPLATE SETUP ----- //
 
 // ----- INPUT ELEMENTS ----- //
-const siteSearch = document.querySelector('.search-input');
-const filterButton = document.querySelector('.filter-button');
-const filterBar = document.querySelector('.filter-bar');
+const navSearch = document.querySelector('.search-input');
+const navUserBtn = document.querySelector('.nav-user');
+const navCartBtn = document.querySelector('.nav-cart');
+const navAddBtn = document.querySelector('.nav-add-shoe');
+
+const loginBtn = document.querySelector('.user-login');
+const loginExit = document.querySelector('.user-exit');
+const loginName = document.querySelector('.user-name');
+const loginPass = document.querySelector('.user-password');
+
+const filterBtn = document.querySelector('.filter-button');
 
 // ----- OUTPUT ELEMENTS ----- //
 const catalogSection = document.querySelector('.catalog-section');
 const catalogMenu = document.querySelector('.catalog-menu');
+const filterBar = document.querySelector('.filter-bar');
 const displayWindow = document.querySelector('.display-window');
 const shoeCards = document.querySelectorAll('.shoe-card');
+
+const userLogin = document.querySelector('.user-login-form');
+const messageBox = document.querySelector('.message-box');
+const dimmer = document.querySelector('.dimmer');
 
 // ----- VARIABLES ----- //
 let timeout = 250;
 let timeoutID;
 
 // ==================== INITIALIZATION ==================== //
+
+let shoeCatalog = ShoeCatalog();
 
 let sampleShoeList = {
 	'1000': {
@@ -96,18 +111,18 @@ let sampleShoeList = {
 
 function expandSearch() {
 	clearTimeout(timeoutID);
-	siteSearch.parentNode.firstElementChild.classList.add('remove-icon-filter');
-	siteSearch.classList.add('expand-site-search');
+	navSearch.parentNode.firstElementChild.classList.add('remove-icon-filter');
+	navSearch.classList.add('expand-site-search');
 	timeoutID = setTimeout(() => {
-		siteSearch.focus();
+		navSearch.focus();
 	}, timeout * 2);
 }
 
 function contractSearch() {
 	clearTimeout(timeoutID);
-	siteSearch.parentNode.firstElementChild.classList.remove('remove-icon-filter');
+	navSearch.parentNode.firstElementChild.classList.remove('remove-icon-filter');
 	timeoutID = setTimeout(() => {
-		siteSearch.classList.remove('expand-site-search');
+		navSearch.classList.remove('expand-site-search');
 	}, timeout);
 }
 
@@ -129,13 +144,76 @@ function toggleFilterBar() {
 
 // ==================== ADMIN USER HANDLING ==================== //
 
+function showLoginForm() {
+	userLogin.classList.add('show-div', 'focus');
+	userLogin.childNodes[5].focus();
+	dimmer.classList.remove('hidden');
+}
+
+function hideLoginForm() {
+	userLogin.classList.remove('show-div', 'focus');
+	dimmer.classList.add('hidden');
+}
+
+function logUserIn() {
+	if (loginName.value === '' || loginPass.value === '') {
+		shoeCatalog.setMessage("Fill in the form :|", "error");
+	} else if (loginName.value === 'admin' && loginPass.value === 'admin') {
+		navCartBtn.classList.add('hidden');
+		navAddBtn.classList.remove('hidden');
+		hideLoginForm();
+	} else if (loginName.value === 'user' && loginPass.value === 'password') {
+		navCartBtn.classList.remove('hidden');
+		navAddBtn.classList.add('hidden');
+		hideLoginForm();
+	} else {
+		shoeCatalog.setMessage("Username or password is incorrect :(", "error");
+	}
+	showMessage();
+}
+
 // ==================== MESSAGE HANDLING ==================== //
+
+function showMessage() {
+	message = shoeCatalog.getMessage();
+	if (message.text !== '') {
+		messageBox.childNodes[1].innerHTML = message.text;
+		messageBox.classList.add(message.type, 'show-div', 'focus');
+		dimmer.classList.remove('hidden');
+	
+		setTimeout(function () {
+			messageBox.className = "message-box";
+			dimmer.classList.add('hidden');
+		}, timeout * 8);
+	}
+}
 
 // ==================== EXTRA FUNCTIONALITY ==================== //
 
 // ==================== EVENT LISTENERS ==================== //
 
-filterButton.addEventListener("click", toggleFilterBar);
+filterBtn.addEventListener('click', toggleFilterBar);
 
-siteSearch.parentNode.addEventListener('click', expandSearch);
-siteSearch.parentNode.addEventListener('focusout', contractSearch);
+navUserBtn.addEventListener('click', showLoginForm);
+loginExit.addEventListener('click', hideLoginForm);
+loginBtn.addEventListener('click', logUserIn);
+
+navSearch.parentNode.addEventListener('click', expandSearch);
+navSearch.parentNode.addEventListener('focusout', contractSearch);
+
+document.querySelectorAll('.shoe-like').forEach(likeButton => {
+	likeButton.addEventListener('click', function () {
+		shoeCatalog.setMessage("Your like is acknowledged ;)", "success");
+		showMessage();
+	});
+});
+
+navCartBtn.addEventListener('click', function () {
+	shoeCatalog.setMessage("This feature isn't built yet :/", "warning");
+	showMessage();
+});
+
+navAddBtn.addEventListener('click', function () {
+	shoeCatalog.setMessage("This feature isn't built yet :/", "warning");
+	showMessage();
+});

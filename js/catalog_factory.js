@@ -3,6 +3,12 @@ function ShoeCatalog() {
 	let shoeList = {};
 	// variable for shopping cart
 
+	// variable to store messages
+	let message = {
+		'text': '',
+		'type': '',
+	};
+
 	// function to add shoe to catalog
 	function addShoe(brand, model, type, price, photo, sizeColorQuantity) {
 		const shoe = {
@@ -43,9 +49,24 @@ function ShoeCatalog() {
 
 	// function to sort shoe list
 
+	// functions to handle messages
+	function setMessage(text, type) {
+		message.text = text;
+		message.type = type;
+	}
+
+	function getMessage() {
+		let retrievedMessage = JSON.parse(JSON.stringify(message));
+		message.text = '';
+		message.type = '';
+		return retrievedMessage;
+	}
+
 	// return functions
 	return {
 		addShoe,
 		generateShoeID,
+		setMessage,
+		getMessage,
 	}
 }
