@@ -129,7 +129,7 @@
 				<span class="shoe-color">Colors - Black</span>
 			</div>
 			<div class="shoe-card">
-								<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img shoe-img-padding" src="./assets/images/shoes/ua-mircogvalsetz-gold.webp" alt="">
 				<span class="shoe-price">R 2,899.00</span>
@@ -138,7 +138,7 @@
 				<span class="shoe-color">Colors - Black, Gold</span>
 			</div>
 			<div class="shoe-card">
-								<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img" src="./assets/images/shoes/adidas-breaknet2-white.avif" alt="">
 				<span class="shoe-price">R 1,099.00</span>
@@ -147,7 +147,7 @@
 				<span class="shoe-color">Colors - Black, White</span>
 			</div>
 			<div class="shoe-card">
-								<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img" src="./assets/images/shoes/nike-airmax90-black.webp" alt="">
 				<span class="shoe-price">R 2,499.00</span>
@@ -156,7 +156,7 @@
 				<span class="shoe-color">Colors - Black</span>
 			</div>
 			<div class="shoe-card">
-								<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img shoe-img-padding" src="./assets/images/shoes/ua-mircogvalsetz-black.webp" alt="">
 				<span class="shoe-price">R 2,899.00</span>
@@ -165,7 +165,7 @@
 				<span class="shoe-color">Colors - Black, Gold</span>
 			</div>
 			<div class="shoe-card">
-								<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img" src="./assets/images/shoes/adidas-breaknet2-black.avif" alt="">
 				<span class="shoe-price">R 1,099.00</span>
@@ -182,15 +182,54 @@
 		</div>
 
 		<form class="user-login-form" action="">
+			<span class="user-exit"><img src="./assets/icons/cross-svgrepo-com.svg" alt=""></span>
+
 			<h1>Log Into Your Account</h1>
 			<br>
-			<span class="user-exit"><img src="./assets/icons/cross-svgrepo-com.svg" alt=""></span>
 			<label for="user-name">Username</label>
 			<input class="user-name" type="text" name="user-name" id="user-name">
 			<label for="user-password">Password</label>
 			<input class="user-password" type="password" name="user-password" id="user-password">
 			<br>
 			<button class="user-login" type="button">Login</button>
+		</form>
+
+		<form class="add-shoe-form" action="">
+			<span class="add-shoe-exit"><img src="./assets/icons/cross-svgrepo-com.svg" alt=""></span>
+			
+			<h1>Add a shoe</h1>
+
+			<label for="add-shoe-brand">Brand:</label>
+			<input type="text" id="add-shoe-brand">
+
+			<label for="add-shoe-model">Model:</label>
+			<input type="text" id="add-shoe-model">
+
+			<label for="add-shoe-type">Type:</label>
+			<input type="text" id="add-shoe-type">
+
+			<label for="add-shoe-price">Price:</label>
+			<input type="number" id="add-shoe-price">
+
+			<label for="add-shoe-photo">Photo:</label>
+			<input type="text" id="add-shoe-photo">
+
+			<div class="size-color-quantity">
+				<div>
+					<label for="sizeInput">Size:</label>
+					<input type="text" class="sizeInput" required>
+
+					<label for="colorInput">Color:</label>
+					<input type="text" class="colorInput" required>
+
+					<label for="quantityInput">Quantity:</label>
+					<input type="number" class="quantityInput" required>
+				</div>
+			</div>
+			<div class="add-shoe-buttons">
+				<button class="add-size-color" type="button">Add Size-Color</button><br>
+				<button class="add-shoe-button" type="button">Add Shoe</button>
+			</div>
 		</form>
 
 		<div class="message-box focus">
