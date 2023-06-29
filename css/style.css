@@ -3,7 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
-	/* outline: 1px solid red; */
+	outline: none;
+	border: none;
 
 	padding: 0;
 	margin: 0;
@@ -12,6 +13,7 @@
 	color: #000;
 	text-decoration: none;
 	list-style: none;
+	cursor: default;
 }
 
 /* ==================== MAIN ==================== */
@@ -46,9 +48,6 @@
 }
 
 html {
-	display: flex;
-	justify-content: center;
-
 	height: 100vh;
 	width: 100vw;
 }
@@ -63,7 +62,6 @@ body {
 
 	height: 100vh;
 	width: 100vw;
-	/* max-width: 768px; */
 }
 
 nav,
@@ -76,13 +74,19 @@ footer {
 	flex-wrap: wrap;
 	justify-content: space-between;
 
-	z-index: 1;
+	z-index: 2;
 
-	height: 70px;
+	height: 50px;
+}
+
+a,
+a * {
+	cursor: pointer !important;
 }
 
 img {
 	max-height: 100%;
+	max-width: 100%;
 }
 
 button,
@@ -114,6 +118,7 @@ input {
 
 	height: 2rem;
 
+	cursor: text;
 	caret-color: var(--primary-accent);
 	-moz-appearance: textfield;
 }
@@ -124,24 +129,28 @@ input {
 
 .nav-brand {
 	display: flex;
-	justify-content: center;
 	align-items: center;
 
-	height: 100%;
-	padding-inline: 0.5rem;
+	position: relative;
 
-	transition: transform var(--transition), filter var(--transition);
+	height: 100%;
+	margin-inline: 0.5rem;
+	padding-right: 1rem;
+
+	transition: var(--transition-fast);
 }
 
 .nav-brand:hover {
-	transform: scale(1.05) translateX(2.5px);
+	transform: scale(1.1);
 	filter: var(--drop-shadow);
 }
 
-.nav-brand span {
-	position: relative;
-	right: 1.5rem;
-	bottom: 0.125rem;
+.brand-name {
+	font-size: 0.875rem;
+
+	position: absolute;
+	right: -0.5rem;
+
 	transform: rotate(55deg);
 }
 
@@ -154,19 +163,6 @@ input {
 	gap: 0.5rem;
 
 	padding-inline: 1rem;
-}
-
-.nav-icon {
-	max-height: 2rem;
-
-	filter: grayscale() brightness(0.5);
-	transition: filter var(--transition-fast), transform var(--transition-fast);
-}
-
-.nav-icon:hover {
-	cursor: pointer;
-	transform: scale(1.1);
-	filter: var(--drop-shadow);
 }
 
 .nav-search {
@@ -191,19 +187,10 @@ input {
 	caret-color: var(--primary-accent);
 }
 
-.nav-search:hover .search-input {
-	border-bottom: 2px solid var(--primary-accent);
-}
-
 .expand-site-search {
 	color: var(--secondary-fg);
 	border-bottom: 2px solid var(--primary-accent);
 	width: 10rem;
-}
-
-.remove-icon-filter {
-	cursor: default !important;
-	filter: none;
 }
 
 /* ==================== CATALOG SECTION ==================== */
@@ -244,11 +231,11 @@ input {
 	padding-block: 0.5rem;
 }
 
-.select-sort {
+.sort-select {
 	position: relative;
 }
 
-.select-sort label {
+.sort-select label {
 	background: linear-gradient(#0000 50%, var(--secondary-bg) 50%);
 	border-radius: 100%;
 	text-shadow:
@@ -270,11 +257,11 @@ input {
 	height: 1rem;
 }
 
-.select-sort label img {
+.sort-select label img {
 	padding: 0;
 }
 
-.select-sort select {
+.sort-select select {
 	background: var(--secondary-bg);
 
 	text-align: center;
@@ -283,12 +270,12 @@ input {
 }
 
 .filter-button:hover,
-.select-sort:hover select {
+.sort-select:hover select {
 	filter: var(--drop-shadow);
 }
 
 .filter-button:active,
-.select-sort:active {
+.sort-select:active {
 	filter: none;
 }
 
@@ -308,13 +295,12 @@ input {
 	position: absolute;
 	top: 0;
 	left: -200px;
-	z-index: 1;
 
 	width: 200px;
 	height: 100%;
 	padding: 1rem;
 
-	transition: left var(--transition-slow), box-shadow var(--transition-slow), z-index var(--transition-slow);
+	transition: var(--transition-slow);
 }
 
 .filter-bar input {
@@ -325,48 +311,6 @@ input {
 	box-shadow: 1rem 0 1rem -1rem #0004;
 
 	left: 0;
-}
-
-/* ==================== USER LOGIN ==================== */
-
-.user-login-form {
-	background: var(--secondary-bg);
-	border: 1px solid var(--secondary-fg);
-	border-radius: 1rem;
-
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	gap: 1rem;
-
-	position: absolute;
-	top: -50%;
-	left: 50%;
-	z-index: 1;
-
-	width: 50%;
-	min-width: 340px;
-	max-width: 440px;
-	padding: 4rem 2rem;
-
-	transform: translate(-50%, -50%);
-	transition: top var(--transition-slow), box-shadow var(--transition-slow);
-}
-
-.user-login-form input {
-	width: 80%;
-}
-
-.user-exit {
-	position: absolute;
-	top: 0.5rem;
-	right: 0.5rem;
-
-	height: 2rem;
-
-	cursor: pointer;
 }
 
 /* ==================== DISPLAY WINDOW ==================== */
@@ -387,7 +331,7 @@ input {
 
 .shoe-card {
 	background: var(--opaque-white-bg);
-	border: 1px solid var(--opaque-black-bg);
+	border: 1px solid var(--transparent-black-bg);
 	border-radius: 0.5rem;
 	box-shadow: var(--box-shadow);
 
@@ -415,7 +359,7 @@ input {
 
 .shoe-img {
 	background: var(--secondary-bg);
-	border: 1px solid var(--opaque-black-bg);
+	border: 1px solid var(--transparent-black-bg);
 	border-radius: 0.5rem;
 	box-shadow: var(--box-shadow);
 
@@ -478,6 +422,43 @@ input {
 	font-weight: bold;
 }
 
+/* ==================== USER LOGIN ==================== */
+
+.user-login-form {
+	background: var(--secondary-bg);
+	border: 1px solid var(--secondary-fg);
+	border-radius: 1rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	gap: 1rem;
+
+	width: 50%;
+	min-width: 340px;
+	max-width: 440px;
+	padding: 4rem 2rem;
+
+	transform: translate(-50%, -50%);
+	transition: top var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+.user-login-form input {
+	width: 80%;
+}
+
+.user-exit {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+
+	height: 2rem;
+
+	cursor: pointer;
+}
+
 /* ==================== ADD SHOE FORM ==================== */
 
 .add-shoe-form {
@@ -491,11 +472,6 @@ input {
 	justify-items: center;
 	align-items: center;
 	gap: 1rem;
-
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	z-index: 1;
 
 	width: 50%;
 	min-width: 340px;
@@ -551,16 +527,6 @@ input {
 	width: 100%;
 }
 
-.add-shoe-exit {
-	position: absolute;
-	top: 0.5rem;
-	right: 0.5rem;
-
-	height: 2rem;
-
-	cursor: pointer;
-}
-
 /* ==================== SHOPPING CART ==================== */
 
 /* ==================== FOOTER BAR ==================== */
@@ -578,14 +544,7 @@ footer {
 	border: 2px solid var(--primary-fg);
 	border-radius: 1rem;
 
-	position: absolute;
-	top: -50%;
-	left: 50%;
-
 	padding: 2rem;
-
-	transform: translate(-50%, -50%);
-	transition: top var(--transition-slow), box-shadow var(--transition-slow);
 }
 
 .message {
@@ -631,7 +590,7 @@ footer {
 		height: 50px;
 	}
 
-	.nav-brand span {
+	.brand-name {
 		font-size: 0.75rem;
 		right: 1.125rem;
 	}
@@ -670,21 +629,52 @@ footer {
 	visibility: hidden !important;
 }
 
-.dimmer {
-	position: absolute;
-	z-index: 99;
+.ui-icon {
+	max-height: 2rem;
+	max-width: 2rem;
 
-	width: 100%;
-	height: 100%;
+	cursor: pointer;
+	filter: grayscale() brightness(0.5);
+	transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+
+.ui-icon:hover {
+	transform: scale(1.1);
+	filter: var(--drop-shadow);
+}
+
+.remove-icon-filter {
+	cursor: default;
+	filter: none;
+}
+
+.hide-div {
+	box-shadow: none;
+
+	position: absolute;
+	top: -50%;
+	left: 50%;
+	z-index: 0;
+
+	transform: translate(-50%, -50%);
+	transition: top var(--transition-slow), box-shadow var(--transition-slow);
 }
 
 .show-div {
-	box-shadow: var(--box-shadow), 0 0 50rem 50rem #000a;
+	box-shadow: var(--box-shadow), 0 0 20rem max(60vh, 60vw) #0008;
+
+	position: absolute;
 	top: 50%;
+	left: 50%;
+
+	transform: translate(-50%, -50%);
+	transition: top var(--transition-slow), box-shadow var(--transition-slow);
 }
 
-.focus {
-	z-index: 100;
+.div-exit {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
 }
 
 /* ==================== LAYOUT GUIDES ==================== */

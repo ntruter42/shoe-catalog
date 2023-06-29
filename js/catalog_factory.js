@@ -34,6 +34,13 @@ function ShoeCatalog() {
 	// function to remove shoe from catalog
 
 	// function to set entire catalog list
+	function setShoeList(list) {
+		shoeList = list;
+	}
+
+	function getShoeList() {
+		return shoeList;
+	}
 
 	// function to add shoe to shopping cart
 
@@ -66,6 +73,8 @@ function ShoeCatalog() {
 	return {
 		addShoe,
 		generateShoeID,
+		setShoeList,
+		getShoeList,
 		setMessage,
 		getMessage,
 	}

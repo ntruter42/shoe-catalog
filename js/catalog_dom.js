@@ -1,17 +1,20 @@
 // ----- TEMPLATE SETUP ----- //
+const shoeTemplate = Handlebars.compile(document.querySelector('.shoe-template').innerHTML);
 
 // ----- INPUT ELEMENTS ----- //
 const navSearch = document.querySelector('.search-input');
 const navUserBtn = document.querySelector('.nav-user');
 const navCartBtn = document.querySelector('.nav-cart');
-const navAddBtn = document.querySelector('.nav-add-shoe');
+const navAddBtn = document.querySelector('.nav-add');
 
 const loginBtn = document.querySelector('.user-login');
-const loginExit = document.querySelector('.user-exit');
 const loginName = document.querySelector('.user-name');
 const loginPass = document.querySelector('.user-password');
 
 const filterBtn = document.querySelector('.filter-button');
+const sortOption = document.querySelector('.sort-category');
+
+const exitBtns = document.querySelectorAll('.div-exit');
 
 // ----- OUTPUT ELEMENTS ----- //
 const catalogSection = document.querySelector('.catalog-section');
@@ -22,7 +25,6 @@ const shoeCards = document.querySelectorAll('.shoe-card');
 
 const userLogin = document.querySelector('.user-login-form');
 const messageBox = document.querySelector('.message-box');
-const dimmer = document.querySelector('.dimmer');
 
 // ----- VARIABLES ----- //
 let timeout = 250;
@@ -30,7 +32,7 @@ let timeoutID;
 
 // ==================== INITIALIZATION ==================== //
 
-let shoeCatalog = ShoeCatalog();
+let catShoe = ShoeCatalog();
 
 let sampleShoeList = {
 	'1000': {
@@ -73,8 +75,8 @@ let sampleShoeList = {
 		'type': "Sneaker",
 		'price': 1099,
 		'photoURL': {
-			'black': "./assets/images/shoes/adidas-breaknet2-white.avif",
-			'white': "./assets/images/shoes/adidas-breaknet2-black.avif",
+			'black': "./assets/images/shoes/adidas-breaknet2-black.avif",
+			'white': "./assets/images/shoes/adidas-breaknet2-white.avif",
 		},
 		'sizeColorQuantity': {
 			'6,black': 11,
@@ -107,21 +109,24 @@ let sampleShoeList = {
 	},
 };
 
+catShoe.setShoeList(sampleShoeList);
+displayShoeCards(catShoe.getShoeList());
+
 // ==================== NAVIGATION HANDLING ==================== //
 
 function expandSearch() {
 	clearTimeout(timeoutID);
-	navSearch.parentNode.firstElementChild.classList.add('remove-icon-filter');
+	navSearch.parentElement.querySelector('.ui-icon').classList.add('remove-icon-filter');
 	navSearch.classList.add('expand-site-search');
 	timeoutID = setTimeout(() => {
 		navSearch.focus();
-	}, timeout * 2);
+	}, timeout);
 }
 
 function contractSearch() {
 	clearTimeout(timeoutID);
-	navSearch.parentNode.firstElementChild.classList.remove('remove-icon-filter');
 	timeoutID = setTimeout(() => {
+		navSearch.parentElement.querySelector('.ui-icon').classList.remove('remove-icon-filter');
 		navSearch.classList.remove('expand-site-search');
 	}, timeout);
 }
@@ -140,34 +145,72 @@ function toggleFilterBar() {
 	}
 }
 
+// ==================== DISPLAY WINDOW HANDLING ==================== //
+
+function sortShoeCards() {
+	let order = sortOption.value;
+}
+
+function displayShoeCards(shoeList) {
+	const data = {
+		shoes: []
+	}
+
+	for (let id in shoeList) {
+		let shoe = shoeList[id];
+
+		let sizeColors = Object.keys(shoe.sizeColorQuantity);
+
+		let sizes = [];
+		let colors = [];
+		for (let i = 0; i < sizeColors.length; i++) {
+			let [size, color] = sizeColors[i].split(',');
+
+			if (!sizes.includes(size)) {	
+				sizes.push(size);
+			}
+
+			color = color.charAt(0).toUpperCase() + color.slice(1);
+			if (!colors.includes(color)){	
+				colors.push(color);
+			}
+		}
+
+		data.shoes.push({
+			photoURL: shoe.photoURL[Object.keys(shoe.photoURL)[0]],
+			price: shoe.price.toFixed(2),
+			title: shoe.brand + ' ' + shoe.model + ' ' + shoe.type,
+			sizes: sizes.join(', '),
+			colors: colors.join(', ')
+		});
+	}
+
+	const shoeCardContents = shoeTemplate(data);
+	displayWindow.innerHTML = shoeCardContents;
+}
+
 // ==================== SHOPPING CART HANDLING ==================== //
 
 // ==================== ADMIN USER HANDLING ==================== //
 
 function showLoginForm() {
-	userLogin.classList.add('show-div', 'focus');
-	userLogin.childNodes[5].focus();
-	dimmer.classList.remove('hidden');
-}
-
-function hideLoginForm() {
-	userLogin.classList.remove('show-div', 'focus');
-	dimmer.classList.add('hidden');
+	showDiv(userLogin);
+	userLogin.childNodes[9].focus();
 }
 
 function logUserIn() {
 	if (loginName.value === '' || loginPass.value === '') {
-		shoeCatalog.setMessage("Fill in the form :|", "error");
+		catShoe.setMessage("Fill in the form :|", "error");
 	} else if (loginName.value === 'admin' && loginPass.value === 'admin') {
 		navCartBtn.classList.add('hidden');
 		navAddBtn.classList.remove('hidden');
-		hideLoginForm();
+		userLogin.document.querySelector('.exit-button').click();
 	} else if (loginName.value === 'user' && loginPass.value === 'password') {
 		navCartBtn.classList.remove('hidden');
 		navAddBtn.classList.add('hidden');
-		hideLoginForm();
+		userLogin.document.querySelector('.exit-button').click();
 	} else {
-		shoeCatalog.setMessage("Username or password is incorrect :(", "error");
+		catShoe.setMessage("Username or password is incorrect :(", "error");
 	}
 	showMessage();
 }
@@ -175,45 +218,83 @@ function logUserIn() {
 // ==================== MESSAGE HANDLING ==================== //
 
 function showMessage() {
-	message = shoeCatalog.getMessage();
+	message = catShoe.getMessage();
 	if (message.text !== '') {
-		messageBox.childNodes[1].innerHTML = message.text;
-		messageBox.classList.add(message.type, 'show-div', 'focus');
-		dimmer.classList.remove('hidden');
-	
+		messageBox.children[0].innerHTML = message.text;
+		messageBox.classList.add(message.type);
+		showDiv(messageBox);
 		setTimeout(function () {
-			messageBox.className = "message-box";
-			dimmer.classList.add('hidden');
+			hideDiv(messageBox);
+			messageBox.classList.remove(message.type);
 		}, timeout * 8);
 	}
 }
 
 // ==================== EXTRA FUNCTIONALITY ==================== //
 
+function showDiv(element) {
+	let div;
+	if (element instanceof HTMLElement) {
+		div = element;
+	} else if (typeof element === 'string') {
+		div = document.querySelector('.' + element);
+	} else {
+		return;
+	}
+	div.classList.remove('hidden');
+	setTimeout(() => {
+		div.classList.remove('hide-div');
+		div.classList.add('show-div');
+	}, 0);
+}
+
+function hideDiv(element) {
+	let div;
+	if (element instanceof HTMLElement) {
+		div = element;
+	} else if (typeof element === 'string') {
+		div = document.querySelector('.' + element);
+	} else {
+		return;
+	}
+	div.classList.remove('show-div');
+	div.classList.add('hide-div');
+
+	setTimeout(() => {
+		div.classList.add('hidden');
+	}, timeout);
+}
+
 // ==================== EVENT LISTENERS ==================== //
-
-filterBtn.addEventListener('click', toggleFilterBar);
-
-navUserBtn.addEventListener('click', showLoginForm);
-loginExit.addEventListener('click', hideLoginForm);
-loginBtn.addEventListener('click', logUserIn);
 
 navSearch.parentNode.addEventListener('click', expandSearch);
 navSearch.parentNode.addEventListener('focusout', contractSearch);
+navUserBtn.addEventListener('click', showLoginForm);
+
+filterBtn.addEventListener('click', toggleFilterBar);
+sortOption.addEventListener('change', sortShoeCards);
+
+loginBtn.addEventListener('click', logUserIn);
+
+exitBtns.forEach(button => {
+	button.addEventListener('click', function () {
+		hideDiv(button.parentElement);
+	});
+});
 
 document.querySelectorAll('.shoe-like').forEach(likeButton => {
 	likeButton.addEventListener('click', function () {
-		shoeCatalog.setMessage("Your like is acknowledged ;)", "success");
+		catShoe.setMessage("Your like is acknowledged ;)", "success");
 		showMessage();
 	});
 });
 
 navCartBtn.addEventListener('click', function () {
-	shoeCatalog.setMessage("This feature isn't built yet :/", "warning");
+	catShoe.setMessage("This feature isn't built yet :/", "warning");
 	showMessage();
 });
 
 navAddBtn.addEventListener('click', function () {
-	shoeCatalog.setMessage("This feature isn't built yet :/", "warning");
+	catShoe.setMessage("This feature isn't built yet :/", "warning");
 	showMessage();
 });

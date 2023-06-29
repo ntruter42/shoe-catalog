@@ -11,31 +11,47 @@
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/style.css">
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+		integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 	<script src="./js/catalog_factory.js" defer></script>
 	<script src="./js/catalog_dom.js" defer></script>
+
+	<script type="text/x-template" class="shoe-template">
+		{{#each shoes}}
+		<div class="shoe-card">
+			<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+			<img class="shoe-img shoe-img-padding" src="{{photoURL}}" alt="">
+			<span class="shoe-price">R {{price}}</span>
+			<span class="shoe-title">{{title}}</span>
+			<span class="shoe-size">Sizes - {{sizes}}</span>
+			<span class="shoe-color">Colors - {{colors}}</span>
+		</div>
+		{{/each}}
+	</script>
 </head>
 
 <body>
-	<div class="dimmer hidden"></div>
 	<nav>
 		<a class="nav-brand" href="index.html">
-			<img src="./assets/logo/logo-color-fill.png" alt="Ready Logo">
-			<span>Ready</span>
+			<img class="brand-logo" src="./assets/logo/logo-color-fill.png" alt="Ready Logo">
+			<span class="brand-name">Ready</span>
 		</a>
 
 		<ul class="nav-menu">
 			<li class="nav-search">
-				<img class="nav-icon" src="./assets/icons/search-svgrepo-com.svg" alt="">
+				<img class="ui-icon" src="./assets/icons/search-svgrepo-com.svg" alt="">
 				<input class="search-input" type="text">
 			</li>
-			<li class="nav-add-shoe hidden">
-				<img class="nav-icon" src="./assets/icons/plus-svgrepo-com.svg" alt="">
+			<li class="nav-add hidden">
+				<img class="ui-icon" src="./assets/icons/plus-svgrepo-com.svg" alt="">
 			</li>
 			<li class="nav-cart">
-				<img class="nav-icon" src="./assets/icons/cart-svgrepo-com.svg" alt="">
+				<img class="ui-icon" src="./assets/icons/cart-svgrepo-com.svg" alt="">
 			</li>
 			<li class="nav-user">
-				<img class="nav-icon" src="./assets/icons/user-svgrepo-com.svg" alt="">
+				<img class="ui-icon" src="./assets/icons/user-svgrepo-com.svg" alt="">
 			</li>
 		</ul>
 	</nav>
@@ -51,17 +67,17 @@
 
 			<!---------- SORTING options ---------->
 			<!-- 1 dropdown to sort by popularity, newest, price -->
-			<div class="select-sort">
+			<div class="sort-select">
 				<label>
 					<img src="./assets/icons/bottom-svgrepo-com.svg" alt="">
 					Sort
 					<img src="./assets/icons/bottom-svgrepo-com.svg" style="transform: rotate(180deg);" alt="">
 				</label>
 				<select class="sort-category" name="sort-category">
-					<option value="">Newest</option>
-					<option value="">Popularity</option>
-					<option value="">Price (Low - High)</option>
-					<option value="">Price (High - Low)</option>
+					<option value="newest">Newest</option>
+					<option value="popular">Popularity</option>
+					<option value="low-high">Price (Low - High)</option>
+					<option value="high-low">Price (High - Low)</option>
 				</select>
 			</div>
 
@@ -120,8 +136,8 @@
 
 		<!--======== Shoe cards ========-->
 		<div class="display-window">
-			<div class="shoe-card">
-				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+			<!-- <div class="shoe-card">
+				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 				<img class="shoe-img shoe-img-padding" src="./assets/images/shoes/ua-assert9-black.webp" alt="">
 				<span class="shoe-price">R 999.00</span>
 				<span class="shoe-title">Under Armour Assert 9 Running Shoe</span>
@@ -129,7 +145,7 @@
 				<span class="shoe-color">Colors - Black</span>
 			</div>
 			<div class="shoe-card">
-				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img shoe-img-padding" src="./assets/images/shoes/ua-mircogvalsetz-gold.webp" alt="">
 				<span class="shoe-price">R 2,899.00</span>
@@ -138,7 +154,7 @@
 				<span class="shoe-color">Colors - Black, Gold</span>
 			</div>
 			<div class="shoe-card">
-				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img" src="./assets/images/shoes/adidas-breaknet2-white.avif" alt="">
 				<span class="shoe-price">R 1,099.00</span>
@@ -147,7 +163,7 @@
 				<span class="shoe-color">Colors - Black, White</span>
 			</div>
 			<div class="shoe-card">
-				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img" src="./assets/images/shoes/nike-airmax90-black.webp" alt="">
 				<span class="shoe-price">R 2,499.00</span>
@@ -156,7 +172,7 @@
 				<span class="shoe-color">Colors - Black</span>
 			</div>
 			<div class="shoe-card">
-				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img shoe-img-padding" src="./assets/images/shoes/ua-mircogvalsetz-black.webp" alt="">
 				<span class="shoe-price">R 2,899.00</span>
@@ -165,14 +181,14 @@
 				<span class="shoe-color">Colors - Black, Gold</span>
 			</div>
 			<div class="shoe-card">
-				<img class="shoe-like nav-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
+				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
 
 				<img class="shoe-img" src="./assets/images/shoes/adidas-breaknet2-black.avif" alt="">
 				<span class="shoe-price">R 1,099.00</span>
 				<span class="shoe-title">Adidas Breaknet 2.0 Sneaker</span>
 				<span class="shoe-size">Sizes - 6, 7, 8, 9</span>
 				<span class="shoe-color">Colors - Black, White</span>
-			</div>
+			</div> -->
 
 			<!-- SHOE CARD TEMPLATE goes here... -->
 			<!-- photo -->
@@ -181,8 +197,8 @@
 			<!-- details (incl. stock) -->
 		</div>
 
-		<form class="user-login-form" action="">
-			<span class="user-exit"><img src="./assets/icons/cross-svgrepo-com.svg" alt=""></span>
+		<form class="user-login-form hide-div" action="">
+			<img class="div-exit ui-icon" src="./assets/icons/cross-svgrepo-com.svg" alt="X">
 
 			<h1>Log Into Your Account</h1>
 			<br>
@@ -194,9 +210,9 @@
 			<button class="user-login" type="button">Login</button>
 		</form>
 
-		<form class="add-shoe-form" action="">
-			<span class="add-shoe-exit"><img src="./assets/icons/cross-svgrepo-com.svg" alt=""></span>
-			
+		<form class="add-shoe-form hide-div" action="">
+			<img class="div-exit ui-icon" src="./assets/icons/cross-svgrepo-com.svg" alt="X">
+
 			<h1>Add a shoe</h1>
 
 			<label for="add-shoe-brand">Brand:</label>
@@ -232,7 +248,7 @@
 			</div>
 		</form>
 
-		<div class="message-box focus">
+		<div class="message-box hide-div">
 			<span class="message">This is a test message</span>
 		</div>
 	</section>
