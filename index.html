@@ -21,10 +21,10 @@
 	<script type="text/x-template" class="shoe-template">
 		{{#each shoes}}
 		<div class="shoe-card">
-			<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
-			<img class="shoe-img shoe-img-padding" src="{{photoURL}}" alt="">
+			<img class="shoe-img" src="{{photo}}" alt="{{brand}}&#10{{model}}&#10{{type}}">
+			<img class="shoe-like ui-icon {{dim}}" src="./assets/icons/heart-svgrepo-com.svg" alt="{{id}}">
 			<span class="shoe-price">R {{price}}</span>
-			<span class="shoe-title">{{title}}</span>
+			<span class="shoe-title">{{brand}} {{model}}<br>{{type}}</span>
 			<span class="shoe-size">Sizes - {{sizes}}</span>
 			<span class="shoe-color">Colors - {{colors}}</span>
 		</div>
@@ -41,17 +41,17 @@
 
 		<ul class="nav-menu">
 			<li class="nav-search">
-				<img class="ui-icon" src="./assets/icons/search-svgrepo-com.svg" alt="">
+				<img class="ui-icon dim" src="./assets/icons/search-svgrepo-com.svg" alt="">
 				<input class="search-input" type="text">
 			</li>
 			<li class="nav-add hidden">
 				<img class="ui-icon" src="./assets/icons/plus-svgrepo-com.svg" alt="">
 			</li>
 			<li class="nav-cart">
-				<img class="ui-icon" src="./assets/icons/cart-svgrepo-com.svg" alt="">
+				<img class="ui-icon dim" src="./assets/icons/cart-svgrepo-com.svg" alt="">
 			</li>
 			<li class="nav-user">
-				<img class="ui-icon" src="./assets/icons/user-svgrepo-com.svg" alt="">
+				<img class="ui-icon dim" src="./assets/icons/user-svgrepo-com.svg" alt="">
 			</li>
 		</ul>
 	</nav>
@@ -68,17 +68,17 @@
 			<!---------- SORTING options ---------->
 			<!-- 1 dropdown to sort by popularity, newest, price -->
 			<div class="sort-select">
-				<label>
-					<img src="./assets/icons/bottom-svgrepo-com.svg" alt="">
-					Sort
-					<img src="./assets/icons/bottom-svgrepo-com.svg" style="transform: rotate(180deg);" alt="">
-				</label>
 				<select class="sort-category" name="sort-category">
 					<option value="newest">Newest</option>
 					<option value="popular">Popularity</option>
 					<option value="low-high">Price (Low - High)</option>
 					<option value="high-low">Price (High - Low)</option>
 				</select>
+				<label>
+					<img src="./assets/icons/bottom-svgrepo-com.svg" alt="">
+					Sort
+					<img src="./assets/icons/bottom-svgrepo-com.svg" style="transform: rotate(180deg);" alt="">
+				</label>
 			</div>
 
 			<!---------- FILTERS applied ---------->

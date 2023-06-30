@@ -28,7 +28,7 @@ const messageBox = document.querySelector('.message-box');
 
 // ----- VARIABLES ----- //
 let timeout = 250;
-let timeoutID;
+let divTimeout, msgTimeout;
 
 // ==================== INITIALIZATION ==================== //
 
@@ -40,7 +40,9 @@ let sampleShoeList = {
 		'model': "Assert 9",
 		'type': "Running Shoe",
 		'price': 999,
-		'photoURL': {
+		'like': false,
+		'photos': {
+			'index': 'black',
 			'black': "./assets/images/shoes/ua-assert9-black.webp",
 		},
 		'sizeColorQuantity': {
@@ -55,7 +57,9 @@ let sampleShoeList = {
 		'model': "Micro G Valsetz",
 		'type': "Tactical Boot",
 		'price': 2899,
-		'photoURL': {
+		'like': true,
+		'photos': {
+			'index': 'black',
 			'black': "./assets/images/shoes/ua-mircogvalsetz-black.webp",
 			'gold': "./assets/images/shoes/ua-mircogvalsetz-gold.webp",
 		},
@@ -74,7 +78,9 @@ let sampleShoeList = {
 		'model': "Breaknet 2.0",
 		'type': "Sneaker",
 		'price': 1099,
-		'photoURL': {
+		'like': false,
+		'photos': {
+			'index': 'black',
 			'black': "./assets/images/shoes/adidas-breaknet2-black.avif",
 			'white': "./assets/images/shoes/adidas-breaknet2-white.avif",
 		},
@@ -93,7 +99,9 @@ let sampleShoeList = {
 		'model': "Air Max 90",
 		'type': "Sneaker",
 		'price': 2499,
-		'photoURL': {
+		'like': false,
+		'photos': {
+			'index': 'black',
 			'black': "./assets/images/shoes/nike-airmax90-black.webp",
 		},
 		'sizeColorQuantity': {
@@ -111,21 +119,20 @@ let sampleShoeList = {
 
 catShoe.setShoeList(sampleShoeList);
 displayShoeCards(catShoe.getShoeList());
+setTimeout(displayShoeCards(catShoe.getShoeList()), 10000);
 
 // ==================== NAVIGATION HANDLING ==================== //
 
 function expandSearch() {
-	clearTimeout(timeoutID);
 	navSearch.parentElement.querySelector('.ui-icon').classList.add('remove-icon-filter');
 	navSearch.classList.add('expand-site-search');
-	timeoutID = setTimeout(() => {
+	setTimeout(() => {
 		navSearch.focus();
 	}, timeout);
 }
 
 function contractSearch() {
-	clearTimeout(timeoutID);
-	timeoutID = setTimeout(() => {
+	setTimeout(() => {
 		navSearch.parentElement.querySelector('.ui-icon').classList.remove('remove-icon-filter');
 		navSearch.classList.remove('expand-site-search');
 	}, timeout);
@@ -166,27 +173,58 @@ function displayShoeCards(shoeList) {
 		for (let i = 0; i < sizeColors.length; i++) {
 			let [size, color] = sizeColors[i].split(',');
 
-			if (!sizes.includes(size)) {	
+			if (!sizes.includes(size)) {
 				sizes.push(size);
 			}
 
 			color = color.charAt(0).toUpperCase() + color.slice(1);
-			if (!colors.includes(color)){	
+			if (!colors.includes(color)) {
 				colors.push(color);
 			}
 		}
 
-		data.shoes.push({
-			photoURL: shoe.photoURL[Object.keys(shoe.photoURL)[0]],
+		let currShoe = {
+			id: id,
+			photo: shoe.photos[shoe.photos.index],
 			price: shoe.price.toFixed(2),
-			title: shoe.brand + ' ' + shoe.model + ' ' + shoe.type,
+			brand: shoe.brand,
+			model: shoe.model,
+			type: shoe.type,
 			sizes: sizes.join(', '),
 			colors: colors.join(', ')
-		});
+		};
+
+		if (shoe.like === false) {
+			currShoe['dim'] = 'dim';
+		}
+
+		data.shoes.push(currShoe);
 	}
 
 	const shoeCardContents = shoeTemplate(data);
 	displayWindow.innerHTML = shoeCardContents;
+	setLikeBtnEvents();
+	setImgClickEvents();
+}
+
+function setLikeBtnEvents() {
+	const likeBtns = document.querySelectorAll('.shoe-like');
+	likeBtns.forEach(button => {
+		button.addEventListener('click', () => {
+			catShoe.toggleLike(button.alt);
+			displayShoeCards(catShoe.getShoeList());
+		});
+	});
+}
+
+function setImgClickEvents() {
+	const shoeImgs = document.querySelectorAll('.shoe-img');
+	shoeImgs.forEach(img => {
+		img.addEventListener('click', () => {
+			catShoe.setMessage(img.alt, "success");
+			showMessage();
+		});
+	});
 }
 
 // ==================== SHOPPING CART HANDLING ==================== //
@@ -218,21 +256,23 @@ function logUserIn() {
 // ==================== MESSAGE HANDLING ==================== //
 
 function showMessage() {
+	clearTimeout(msgTimeout);
 	message = catShoe.getMessage();
 	if (message.text !== '') {
 		messageBox.children[0].innerHTML = message.text;
 		messageBox.classList.add(message.type);
 		showDiv(messageBox);
-		setTimeout(function () {
+		msgTimeout = setTimeout(function () {
 			hideDiv(messageBox);
 			messageBox.classList.remove(message.type);
-		}, timeout * 8);
+		}, timeout * 10);
 	}
 }
 
 // ==================== EXTRA FUNCTIONALITY ==================== //
 
 function showDiv(element) {
+	clearTimeout(divTimeout);
 	let div;
 	if (element instanceof HTMLElement) {
 		div = element;
@@ -242,13 +282,14 @@ function showDiv(element) {
 		return;
 	}
 	div.classList.remove('hidden');
-	setTimeout(() => {
+	divTimeout = setTimeout(() => {
 		div.classList.remove('hide-div');
 		div.classList.add('show-div');
 	}, 0);
 }
 
 function hideDiv(element) {
+	clearTimeout(divTimeout);
 	let div;
 	if (element instanceof HTMLElement) {
 		div = element;
@@ -260,7 +301,7 @@ function hideDiv(element) {
 	div.classList.remove('show-div');
 	div.classList.add('hide-div');
 
-	setTimeout(() => {
+	divTimeout = setTimeout(() => {
 		div.classList.add('hidden');
 	}, timeout);
 }
@@ -279,13 +320,6 @@ loginBtn.addEventListener('click', logUserIn);
 exitBtns.forEach(button => {
 	button.addEventListener('click', function () {
 		hideDiv(button.parentElement);
-	});
-});
-
-document.querySelectorAll('.shoe-like').forEach(likeButton => {
-	likeButton.addEventListener('click', function () {
-		catShoe.setMessage("Your like is acknowledged ;)", "success");
-		showMessage();
 	});
 });
 

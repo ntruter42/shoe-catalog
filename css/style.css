@@ -74,7 +74,7 @@ footer {
 	flex-wrap: wrap;
 	justify-content: space-between;
 
-	z-index: 2;
+	z-index: 1;
 
 	height: 50px;
 }
@@ -105,6 +105,11 @@ select {
 	height: 2rem;
 
 	cursor: pointer;
+}
+
+button img,
+select img {
+	max-height: 50%;
 }
 
 input {
@@ -205,6 +210,8 @@ input {
 	height: calc(100% - 120px);
 }
 
+/* ==================== CATALOG MENU ==================== */
+
 .catalog-menu {
 	background: var(--opaque-white-bg);
 	box-shadow: 0 1rem 1rem -1rem #0004;
@@ -221,14 +228,6 @@ input {
 
 .catalog-menu>* {
 	font-variant-caps: small-caps;
-}
-
-.filter-button {
-	background: var(--secondary-bg);
-}
-
-.filter-button img {
-	padding-block: 0.5rem;
 }
 
 .sort-select {
@@ -252,13 +251,8 @@ input {
 	position: absolute;
 	top: -0.5rem;
 	left: 0.5rem;
-	z-index: 1;
 
 	height: 1rem;
-}
-
-.sort-select label img {
-	padding: 0;
 }
 
 .sort-select select {
@@ -363,21 +357,28 @@ input {
 	border-radius: 0.5rem;
 	box-shadow: var(--box-shadow);
 
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	max-width: 100%;
 	margin-bottom: 0.5rem;
+	padding: 1rem;
 
+	white-space: pre;
 	object-fit: cover;
 	aspect-ratio: 1 / 1;
 }
 
-.shoe-img-padding {
-	padding: 1.5rem;
+.shoe-img {
+	filter: brightness(100%) contrast(110%);
 }
 
 .shoe-price {
 	font-size: 1.25rem;
 
-	background-color: var(--secondary-accent);
+	background: var(--secondary-accent);
 	border-radius: 0.25rem;
 
 	align-self: flex-end;
@@ -539,10 +540,12 @@ footer {
 
 .message-box {
 	font-size: 1.25rem;
-
+	
 	background: var(--secondary-bg);
 	border: 2px solid var(--primary-fg);
 	border-radius: 1rem;
+
+	text-align: center;
 
 	padding: 2rem;
 }
@@ -634,18 +637,16 @@ footer {
 	max-width: 2rem;
 
 	cursor: pointer;
-	filter: grayscale() brightness(0.5);
 	transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+
+.ui-icon.dim {
+	filter: grayscale() contrast(0.5);
 }
 
 .ui-icon:hover {
 	transform: scale(1.1);
 	filter: var(--drop-shadow);
-}
-
-.remove-icon-filter {
-	cursor: default;
-	filter: none;
 }
 
 .hide-div {
@@ -666,6 +667,7 @@ footer {
 	position: absolute;
 	top: 50%;
 	left: 50%;
+	z-index: 2;
 
 	transform: translate(-50%, -50%);
 	transition: top var(--transition-slow), box-shadow var(--transition-slow);

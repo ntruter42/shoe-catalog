@@ -10,18 +10,28 @@ function ShoeCatalog() {
 	};
 
 	// function to add shoe to catalog
-	function addShoe(brand, model, type, price, photo, sizeColorQuantity) {
+	function addShoe(brand, model, type, price, photos, sizeColorQuantity) {
 		const shoe = {
 			'brand': brand,
 			'model': model,
 			'type': type,
 			'price': price,
-			'photo': photo,
+			'like': false,
+			'photos': photos,
 			'sizeColorQuantity': sizeColorQuantity,
 		};
 
 		shoeList[generateShoeID()] = shoe;
 	}
+
+	function toggleLike(id) {
+		shoeList[id].like = !shoeList[id].like;
+	}
+
+	// function compileQuantities() {
+	// 	let sizeColorQuantity;
+	// 	return sizeColorQuantity;
+	// }
 
 	function generateShoeID() {
 		const shoeIDList = Object.keys(shoeList);
@@ -72,6 +82,7 @@ function ShoeCatalog() {
 	// return functions
 	return {
 		addShoe,
+		toggleLike,
 		generateShoeID,
 		setShoeList,
 		getShoeList,
