@@ -112,7 +112,7 @@ select img {
 	max-height: 50%;
 }
 
-input {
+input[type=text], input[type=number] {
 	background: var(--secondary-bg);
 	color: var(--secondary-fg);
 	outline: none;
@@ -295,6 +295,12 @@ input {
 	padding: 1rem;
 
 	transition: var(--transition-slow);
+}
+
+.filter-bar>* {
+	border: 1px solid red;
+	display: flex;
+	flex-direction: column;
 }
 
 .filter-bar input {
@@ -540,7 +546,7 @@ footer {
 
 .message-box {
 	font-size: 1.25rem;
-	
+
 	background: var(--secondary-bg);
 	border: 2px solid var(--primary-fg);
 	border-radius: 1rem;
@@ -647,6 +653,10 @@ footer {
 .ui-icon:hover {
 	transform: scale(1.1);
 	filter: var(--drop-shadow);
+}
+
+.shoe-like.ui-icon.dim:hover {
+	filter: grayscale() contrast(0.5);
 }
 
 .hide-div {

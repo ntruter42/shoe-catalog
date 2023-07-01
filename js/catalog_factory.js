@@ -1,10 +1,17 @@
 function ShoeCatalog() {
 	// variable for shoe catalog list
-	let shoeList = {};
+	let shoeMap = new Map();
+	let filters = {
+		brands: [],
+		types: [],
+		priceRange: { min: 0, max: Infinity },
+		like: undefined
+	};
+
 	// variable for shopping cart
 
 	// variable to store messages
-	let message = {
+	const message = {
 		'text': '',
 		'type': '',
 	};
@@ -17,15 +24,15 @@ function ShoeCatalog() {
 			'type': type,
 			'price': price,
 			'like': false,
+			'sold': 0,
 			'photos': photos,
 			'sizeColorQuantity': sizeColorQuantity,
 		};
-
-		shoeList[generateShoeID()] = shoe;
+		shoeMap.set(generateShoeID(), shoe);
 	}
 
 	function toggleLike(id) {
-		shoeList[id].like = !shoeList[id].like;
+		shoeMap.get(id).like = !shoeMap.get(id).like;
 	}
 
 	// function compileQuantities() {
@@ -34,22 +41,47 @@ function ShoeCatalog() {
 	// }
 
 	function generateShoeID() {
-		const shoeIDList = Object.keys(shoeList);
-		if (shoeIDList.length > 0) {
-			return parseInt(shoeIDList[shoeIDList.length - 1]) + 1;
+		let lastID = 999;
+		for (let id of shoeMap.keys()) {
+			if (id > lastID) {
+				lastID = id;
+			}
 		}
-		return 1000;
+		return lastID + 1;
 	}
 
 	// function to remove shoe from catalog
 
 	// function to set entire catalog list
-	function setShoeList(list) {
-		shoeList = list;
+	function setShoeMap(map) {
+		shoeMap = map;
 	}
 
-	function getShoeList() {
-		return shoeList;
+	function getShoeMap() {
+		const filteredShoeMap = new Map();
+
+		for (const [id, shoe] of shoeMap) {
+			let includeShoe = true;
+
+			if (filters.brands && filters.brands.length > 0 && !filters.brands.includes(shoe.brand)) {
+				includeShoe = false;
+			}
+			if (filters.types && filters.types.length > 0 && !filters.types.includes(shoe.type)) {
+				includeShoe = false;
+			}
+			if (filters.price && (shoe.price < filters.priceRange.min || shoe.price > filters.priceRange.max)) {
+				includeShoe = false;
+			}
+			if (filters.like !== undefined && shoe.like !== filters.like) {
+				includeShoe = false;
+			}
+
+			if (includeShoe) {
+				filteredShoeMap.set(id, shoe);
+			}
+		}
+
+		return filteredShoeMap;
 	}
 
 	// function to add shoe to shopping cart
@@ -63,8 +95,33 @@ function ShoeCatalog() {
 	// function to get specific shoe
 
 	// function to filter shoe list
+	function setFilters(brands, types, priceRange, like) {
+		filters.brands = brands;
+		filters.types = types;
+		filters.priceRange = priceRange;
+		filters.like = like;
+	}
 
 	// function to sort shoe list
+	function sortShoeMap(order) {
+		const shoeArray = Array.from(shoeMap);
+
+		shoeArray.sort((a, b) => {
+			switch (order) {
+				case 'newest':
+					return a[0] - b[0];
+				case 'popular':
+					return b[1].sold - a[1].sold;
+				case 'low-high':
+					return a[1].price - b[1].price;
+				case 'high-low':
+					return b[1].price - a[1].price;
+			}
+		});
+
+		const sortedShoeMap = new Map(shoeArray);
+		shoeMap = sortedShoeMap;
+	}
 
 	// functions to handle messages
 	function setMessage(text, type) {
@@ -84,8 +141,9 @@ function ShoeCatalog() {
 		addShoe,
 		toggleLike,
 		generateShoeID,
-		setShoeList,
-		getShoeList,
+		setShoeMap,
+		getShoeMap,
+		sortShoeMap,
 		setMessage,
 		getMessage,
 	}

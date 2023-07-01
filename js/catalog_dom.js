@@ -34,8 +34,9 @@ let divTimeout, msgTimeout;
 
 let catShoe = ShoeCatalog();
 
-let sampleShoeList = {
-	'1000': {
+let sampleShoeMap = new Map([
+	[1000, {
+		'id': 1000,
 		'brand': "Under Armour",
 		'model': "Assert 9",
 		'type': "Running Shoe",
@@ -50,9 +51,10 @@ let sampleShoeList = {
 			'7,black': 9,
 			'8,black': 7,
 			'9,black': 10,
-		},
-	},
-	'1001': {
+		}
+	}],
+	[1001, {
+		'id': 1001,
 		'brand': "Under Armour",
 		'model': "Micro G Valsetz",
 		'type': "Tactical Boot",
@@ -71,9 +73,10 @@ let sampleShoeList = {
 			'9,black': 2,
 			'10,black': 5,
 			'10,gold': 1,
-		},
-	},
-	'1002': {
+		}
+	}],
+	[1002, {
+		'id': 1002,
 		'brand': "Adidas",
 		'model': "Breaknet 2.0",
 		'type': "Sneaker",
@@ -92,9 +95,10 @@ let sampleShoeList = {
 			'8,black': 9,
 			'8,white': 4,
 			'9,white': 2,
-		},
-	},
-	'1003': {
+		}
+	}],
+	[1003, {
+		'id': 1003,
 		'brand': "Nike",
 		'model': "Air Max 90",
 		'type': "Sneaker",
@@ -113,16 +117,16 @@ let sampleShoeList = {
 			'9,black': 2,
 			'10,black': 4,
 			'11,black': 2,
-		},
-	},
-};
+		}
+	}]
+]);
 
-catShoe.setShoeList(sampleShoeList);
-displayShoeCards(catShoe.getShoeList());
-setTimeout(displayShoeCards(catShoe.getShoeList()), 10000);
+catShoe.setShoeMap(sampleShoeMap);
+displayShoeCards(catShoe.getShoeMap());
 
 // ==================== NAVIGATION HANDLING ==================== //
 
+// TODO: fix buggy expand timing / icon dimming
 function expandSearch() {
 	navSearch.parentElement.querySelector('.ui-icon').classList.add('remove-icon-filter');
 	navSearch.classList.add('expand-site-search');
@@ -154,18 +158,12 @@ function toggleFilterBar() {
 
 // ==================== DISPLAY WINDOW HANDLING ==================== //
 
-function sortShoeCards() {
-	let order = sortOption.value;
-}
-
-function displayShoeCards(shoeList) {
+function displayShoeCards(shoeMap) {
 	const data = {
 		shoes: []
 	}
 
-	for (let id in shoeList) {
-		let shoe = shoeList[id];
-
+	for (const [shoeID, shoe] of shoeMap) {
 		let sizeColors = Object.keys(shoe.sizeColorQuantity);
 
 		let sizes = [];
@@ -184,7 +182,7 @@ function displayShoeCards(shoeList) {
 		}
 
 		let currShoe = {
-			id: id,
+			id: shoeID,
 			photo: shoe.photos[shoe.photos.index],
 			price: shoe.price.toFixed(2),
 			brand: shoe.brand,
@@ -212,7 +210,7 @@ function setLikeBtnEvents() {
 	likeBtns.forEach(button => {
 		button.addEventListener('click', () => {
 			catShoe.toggleLike(button.alt);
-			displayShoeCards(catShoe.getShoeList());
+			displayShoeCards(catShoe.getShoeMap());
 		});
 	});
 }

@@ -30,6 +30,18 @@
 		</div>
 		{{/each}}
 	</script>
+	<script type="text/x-template" class="filter-template">
+			{{#each shoes}}
+			<div class="shoe-card">
+				<img class="shoe-img" src="{{photo}}" alt="{{brand}}&#10{{model}}&#10{{type}}">
+				<img class="shoe-like ui-icon {{dim}}" src="./assets/icons/heart-svgrepo-com.svg" alt="{{id}}">
+				<span class="shoe-price">R {{price}}</span>
+				<span class="shoe-title">{{brand}} {{model}}<br>{{type}}</span>
+				<span class="shoe-size">Sizes - {{sizes}}</span>
+				<span class="shoe-color">Colors - {{colors}}</span>
+			</div>
+			{{/each}}
+		</script>
 </head>
 
 <body>
@@ -90,15 +102,21 @@
 		<!---------- FILTER OPTIONS ---------->
 		<div class="filter-bar">
 			<!-- dropdown menu for brand -->
-			<label for="filter-brand">
-				<select class="filter-brand" name="filter-brand">
-					<option value="" selected disabled>Brand</option>
-					<option value="">Nike</option>
-					<option value="">Adidas</option>
-					<option value="">Under Armour</option>
-					<option value="">Clear</option>
-				</select>
-			</label>
+			<div class="filter-brand">
+				<h3>Brand</h3>
+				<label for="Nike">
+					<span>Nike</span>
+					<input type="checkbox" id="Nike" value="Nike">
+				</label>
+				<label for="Adidas">
+					<span>Adidas</span>
+					<input type="checkbox" id="Adidas" value="Adidas">
+				</label>
+				<label for="Under Armour">
+					<span>Under Armour</span>
+					<input type="checkbox" id="Under Armour" value="Under Armour">
+				</label>
+			</div>
 
 			<!-- dropdown menu for type -->
 			<label for="filter-type">
@@ -136,65 +154,6 @@
 
 		<!--======== Shoe cards ========-->
 		<div class="display-window">
-			<!-- <div class="shoe-card">
-				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
-				<img class="shoe-img shoe-img-padding" src="./assets/images/shoes/ua-assert9-black.webp" alt="">
-				<span class="shoe-price">R 999.00</span>
-				<span class="shoe-title">Under Armour Assert 9 Running Shoe</span>
-				<span class="shoe-size">Sizes - 6, 7, 8, 9</span>
-				<span class="shoe-color">Colors - Black</span>
-			</div>
-			<div class="shoe-card">
-				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
-
-				<img class="shoe-img shoe-img-padding" src="./assets/images/shoes/ua-mircogvalsetz-gold.webp" alt="">
-				<span class="shoe-price">R 2,899.00</span>
-				<span class="shoe-title">Under Armour Micro G Valsetz Tactical Boot</span>
-				<span class="shoe-size">Sizes - 7, 8, 9, 10</span>
-				<span class="shoe-color">Colors - Black, Gold</span>
-			</div>
-			<div class="shoe-card">
-				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
-
-				<img class="shoe-img" src="./assets/images/shoes/adidas-breaknet2-white.avif" alt="">
-				<span class="shoe-price">R 1,099.00</span>
-				<span class="shoe-title">Adidas Breaknet 2.0 Sneaker</span>
-				<span class="shoe-size">Sizes - 6, 7, 8, 9</span>
-				<span class="shoe-color">Colors - Black, White</span>
-			</div>
-			<div class="shoe-card">
-				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
-
-				<img class="shoe-img" src="./assets/images/shoes/nike-airmax90-black.webp" alt="">
-				<span class="shoe-price">R 2,499.00</span>
-				<span class="shoe-title">Nike Air Max 90 Sneaker</span>
-				<span class="shoe-size">Sizes - 4, 5, 6, 7, 8, 9, 10, 11</span>
-				<span class="shoe-color">Colors - Black</span>
-			</div>
-			<div class="shoe-card">
-				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
-
-				<img class="shoe-img shoe-img-padding" src="./assets/images/shoes/ua-mircogvalsetz-black.webp" alt="">
-				<span class="shoe-price">R 2,899.00</span>
-				<span class="shoe-title">Under Armour Micro G Valsetz Tactical Boot</span>
-				<span class="shoe-size">Sizes - 7, 8, 9, 10</span>
-				<span class="shoe-color">Colors - Black, Gold</span>
-			</div>
-			<div class="shoe-card">
-				<img class="shoe-like ui-icon" src="assets/icons/heart-svgrepo-com.svg" alt="">
-
-				<img class="shoe-img" src="./assets/images/shoes/adidas-breaknet2-black.avif" alt="">
-				<span class="shoe-price">R 1,099.00</span>
-				<span class="shoe-title">Adidas Breaknet 2.0 Sneaker</span>
-				<span class="shoe-size">Sizes - 6, 7, 8, 9</span>
-				<span class="shoe-color">Colors - Black, White</span>
-			</div> -->
-
-			<!-- SHOE CARD TEMPLATE goes here... -->
-			<!-- photo -->
-			<!-- price (try to put over photo) -->
-			<!-- name -->
-			<!-- details (incl. stock) -->
 		</div>
 
 		<form class="user-login-form hide-div" action="">
