@@ -104,51 +104,83 @@
 			<!-- dropdown menu for brand -->
 			<div class="filter-brand">
 				<h3>Brand</h3>
-				<label for="Nike">
-					<span>Nike</span>
+				<label class="filter-checkbox" for="Nike">
 					<input type="checkbox" id="Nike" value="Nike">
+					<span>Nike</span>
 				</label>
-				<label for="Adidas">
-					<span>Adidas</span>
+				<label class="filter-checkbox" for="Adidas">
 					<input type="checkbox" id="Adidas" value="Adidas">
+					<span>Adidas</span>
 				</label>
-				<label for="Under Armour">
-					<span>Under Armour</span>
+				<label class="filter-checkbox" for="Under Armour">
 					<input type="checkbox" id="Under Armour" value="Under Armour">
+					<span>Under Armour</span>
 				</label>
 			</div>
 
 			<!-- dropdown menu for type -->
-			<label for="filter-type">
-				<select class="filter-type" name="filter-type">
-					<option value="" selected disabled="">Type</option>
-					<option value="">Running Shoes</option>
-					<option value="">Tactical Boots</option>
-					<option value="">Sneakers</option>
-				</select>
-			</label>
+			<div class="filter-type">
+				<h3>Type</h3>
+				<label class="filter-checkbox" for="Running Shoes">
+					<input type="checkbox" id="Running Shoes" value="Running Shoes">
+					<span>Running Shoes</span>
+				</label>
+				<label class="filter-checkbox" for="Tactical Boots">
+					<input type="checkbox" id="Tactical Boots" value="Tactical Boots">
+					<span>Tactical Boots</span>
+				</label>
+				<label class="filter-checkbox" for="Sneakers">
+					<input type="checkbox" id="Under Armour" value="Under Armour">
+					<span>Sneakers</span>
+				</label>
+			</div>
 
 			<!-- dropdown menu for color -->
-			<label for="filter-color">
-				<select class="filter-color" name="filter-color">
-					<option value="" selected disabled>Color</option>
-					<option value="">Black</option>
-					<option value="">White</option>
-					<option value="">Gold</option>
-				</select>
-			</label>
+			<div class="filter-color">
+				<h3>Colour</h3>
+				<label class="filter-checkbox" for="Black">
+					<input type="checkbox" id="Black" value="Black">
+					<span>Black</span>
+				</label>
+				<label class="filter-checkbox" for="White">
+					<input type="checkbox" id="White" value="White">
+					<span>White</span>
+				</label>
+				<label class="filter-checkbox" for="Gold">
+					<input type="checkbox" id="Gold" value="Gold">
+					<span>Gold</span>
+				</label>
+			</div>
 
 			<!-- 1 number input field for size -->
-			<label for="filter-size">
-				<input class="filter-size" type="number" name="filter-size" placeholder="Size">
-			</label>
+			<div class="filter-size">
+				<h3>Size</h3>
+				<label class="filter-checkbox" for="6">
+					<input type="checkbox" id="6" value="6">
+					<span>6</span>
+				</label>
+				<label class="filter-checkbox" for="7">
+					<input type="checkbox" id="7" value="7">
+					<span>7</span>
+				</label>
+				<label class="filter-checkbox" for="8">
+					<input type="checkbox" id="8" value="8">
+					<span>8</span>
+				</label>
+				<label class="filter-checkbox" for="9">
+					<input type="checkbox" id="9" value="9">
+					<span>9</span>
+				</label>
+			</div>
 
 			<!-- 2 number input fields for price range -->
 			<label for="filter-price-low">
-				<input class="filter-price-low" type="number" name="filter-price-low" placeholder="Price Low">
+				<span>Price Low</span>
+				<input class="filter-price-low" type="number" name="filter-price-low" placeholder="">
 			</label>
 			<label for="filter-price-high">
-				<input class="filter-price-high" type="number" name="filter-price-high" placeholder="Price High">
+				<span>Price High</span>
+				<input class="filter-price-high" type="number" name="filter-price-high" placeholder="">
 			</label>
 		</div>
 

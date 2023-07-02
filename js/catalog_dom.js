@@ -42,6 +42,7 @@ let sampleShoeMap = new Map([
 		'type': "Running Shoe",
 		'price': 999,
 		'like': false,
+		'sold': 9,
 		'photos': {
 			'index': 'black',
 			'black': "./assets/images/shoes/ua-assert9-black.webp",
@@ -60,6 +61,7 @@ let sampleShoeMap = new Map([
 		'type': "Tactical Boot",
 		'price': 2899,
 		'like': true,
+		'sold': 2,
 		'photos': {
 			'index': 'black',
 			'black': "./assets/images/shoes/ua-mircogvalsetz-black.webp",
@@ -82,6 +84,7 @@ let sampleShoeMap = new Map([
 		'type': "Sneaker",
 		'price': 1099,
 		'like': false,
+		'sold': 11,
 		'photos': {
 			'index': 'black',
 			'black': "./assets/images/shoes/adidas-breaknet2-black.avif",
@@ -104,6 +107,7 @@ let sampleShoeMap = new Map([
 		'type': "Sneaker",
 		'price': 2499,
 		'like': false,
+		'sold': 5,
 		'photos': {
 			'index': 'black',
 			'black': "./assets/images/shoes/nike-airmax90-black.webp",
@@ -121,7 +125,17 @@ let sampleShoeMap = new Map([
 	}]
 ]);
 
-catShoe.setShoeMap(sampleShoeMap);
+if (localStorage.getItem('shoeMap')) {
+	catShoe.setShoeMap(new Map(JSON.parse(localStorage.getItem('shoeMap'))));
+} else {
+	catShoe.setShoeMap(sampleShoeMap);
+}
+
+if (localStorage.getItem('shoeMapSortOrder')) {
+	sortOption.value = localStorage.getItem('shoeMapSortOrder');
+}
+
+updateLocalStorage();
 displayShoeCards(catShoe.getShoeMap());
 
 // ==================== NAVIGATION HANDLING ==================== //
@@ -184,6 +198,7 @@ function displayShoeCards(shoeMap) {
 		let currShoe = {
 			id: shoeID,
 			photo: shoe.photos[shoe.photos.index],
+			color: shoe.photos.index,
 			price: shoe.price.toFixed(2),
 			brand: shoe.brand,
 			model: shoe.model,
@@ -205,11 +220,18 @@ function displayShoeCards(shoeMap) {
 	setImgClickEvents();
 }
 
+function sortShoeCards() {
+	catShoe.sortShoeMap(sortOption.options[sortOption.selectedIndex].value);
+	updateLocalStorage();
+	displayShoeCards(catShoe.getShoeMap());
+}
+
 function setLikeBtnEvents() {
 	const likeBtns = document.querySelectorAll('.shoe-like');
 	likeBtns.forEach(button => {
 		button.addEventListener('click', () => {
-			catShoe.toggleLike(button.alt);
+			catShoe.toggleLike(Number(button.alt));
+			updateLocalStorage();
 			displayShoeCards(catShoe.getShoeMap());
 		});
 	});
@@ -219,8 +241,9 @@ function setImgClickEvents() {
 	const shoeImgs = document.querySelectorAll('.shoe-img');
 	shoeImgs.forEach(img => {
 		img.addEventListener('click', () => {
-			catShoe.setMessage(img.alt, "success");
-			showMessage();
+			catShoe.nextImg(Number(img.nextElementSibling.alt));
+			updateLocalStorage();
+			displayShoeCards(catShoe.getShoeMap());
 		});
 	});
 }
@@ -302,6 +325,13 @@ function hideDiv(element) {
 	divTimeout = setTimeout(() => {
 		div.classList.add('hidden');
 	}, timeout);
+}
+
+// ==================== LOCAL STORAGE ==================== //
+
+function updateLocalStorage() {
+	localStorage.setItem('shoeMap', JSON.stringify(Array.from(catShoe.getShoeMap().entries())));
+	localStorage.setItem('shoeMapSortOrder', sortOption.options[sortOption.selectedIndex].value);
 }
 
 // ==================== EVENT LISTENERS ==================== //

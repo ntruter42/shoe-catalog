@@ -5,7 +5,9 @@ function ShoeCatalog() {
 		brands: [],
 		types: [],
 		priceRange: { min: 0, max: Infinity },
-		like: undefined
+		like: undefined,
+		sizes: [],
+		colors: []
 	};
 
 	// variable for shopping cart
@@ -33,6 +35,15 @@ function ShoeCatalog() {
 
 	function toggleLike(id) {
 		shoeMap.get(id).like = !shoeMap.get(id).like;
+	}
+
+	function nextImg(id) {
+		const shoe = shoeMap.get(id);
+		const colors = Object.keys(shoe.photos);
+		const currIndex = colors.indexOf(shoe.photos.index);
+		const nextIndex = colors[((currIndex) % (colors.length - 1)) + 1];
+
+		shoe.photos.index = nextIndex;
 	}
 
 	// function compileQuantities() {
@@ -66,14 +77,39 @@ function ShoeCatalog() {
 			if (filters.brands && filters.brands.length > 0 && !filters.brands.includes(shoe.brand)) {
 				includeShoe = false;
 			}
+
 			if (filters.types && filters.types.length > 0 && !filters.types.includes(shoe.type)) {
 				includeShoe = false;
 			}
-			if (filters.price && (shoe.price < filters.priceRange.min || shoe.price > filters.priceRange.max)) {
+
+			if (filters.priceRange && (shoe.price < filters.priceRange.min || shoe.price > filters.priceRange.max)) {
 				includeShoe = false;
 			}
+
 			if (filters.like !== undefined && shoe.like !== filters.like) {
 				includeShoe = false;
+			}
+
+			if (filters.sizes && filters.sizes.length > 0) {
+				const shoeSizes = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[0]);
+
+				for (let size of filters.sizes) {
+					if (!shoeSizes.includes(size)) {
+						includeShoe = false;
+						break;
+					}
+				}
+			}
+
+			if (filters.colors && filters.colors.length > 0) {
+				const shoeColors = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[1]);
+
+				for (let color of filters.colors) {
+					if (!shoeColors.includes(color)) {
+						includeShoe = false;
+						break;
+					}
+				}
 			}
 
 			if (includeShoe) {
@@ -95,11 +131,13 @@ function ShoeCatalog() {
 	// function to get specific shoe
 
 	// function to filter shoe list
-	function setFilters(brands, types, priceRange, like) {
+	function setFilters(brands, types, priceRange, like, sizes, colors) {
 		filters.brands = brands;
 		filters.types = types;
 		filters.priceRange = priceRange;
 		filters.like = like;
+		filters.sizes = sizes;
+		filters.colors = colors;
 	}
 
 	// function to sort shoe list
@@ -140,6 +178,7 @@ function ShoeCatalog() {
 	return {
 		addShoe,
 		toggleLike,
+		nextImg,
 		generateShoeID,
 		setShoeMap,
 		getShoeMap,
