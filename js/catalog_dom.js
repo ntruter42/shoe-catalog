@@ -7,9 +7,10 @@ const navUserBtn = document.querySelector('.nav-user');
 const navCartBtn = document.querySelector('.nav-cart');
 const navAddBtn = document.querySelector('.nav-add');
 
-const loginBtn = document.querySelector('.user-login');
+const loginForm = document.querySelector('.user-login-form');
 const loginName = document.querySelector('.user-name');
 const loginPass = document.querySelector('.user-password');
+const loginBtn = document.querySelector('.user-login');
 
 const filterBtn = document.querySelector('.filter-button');
 const sortOption = document.querySelector('.sort-category');
@@ -23,7 +24,6 @@ const filterBar = document.querySelector('.filter-bar');
 const displayWindow = document.querySelector('.display-window');
 const shoeCards = document.querySelectorAll('.shoe-card');
 
-const userLogin = document.querySelector('.user-login-form');
 const messageBox = document.querySelector('.message-box');
 
 // ----- VARIABLES ----- //
@@ -125,17 +125,9 @@ let sampleShoeMap = new Map([
 	}]
 ]);
 
-if (localStorage.getItem('shoeMap')) {
-	catShoe.setShoeMap(new Map(JSON.parse(localStorage.getItem('shoeMap'))));
-} else {
-	catShoe.setShoeMap(sampleShoeMap);
-}
-
-if (localStorage.getItem('shoeMapSortOrder')) {
-	sortOption.value = localStorage.getItem('shoeMapSortOrder');
-}
-
+initializeCatalog();
 updateLocalStorage();
+updateNavMenu();
 displayShoeCards(catShoe.getShoeMap());
 
 // ==================== NAVIGATION HANDLING ==================== //
@@ -253,25 +245,34 @@ function setImgClickEvents() {
 // ==================== ADMIN USER HANDLING ==================== //
 
 function showLoginForm() {
-	showDiv(userLogin);
-	userLogin.childNodes[9].focus();
+	showDiv(loginForm);
+	loginForm.childNodes[9].focus();
 }
 
 function logUserIn() {
 	if (loginName.value === '' || loginPass.value === '') {
 		catShoe.setMessage("Fill in the form :|", "error");
-	} else if (loginName.value === 'admin' && loginPass.value === 'admin') {
-		navCartBtn.classList.add('hidden');
-		navAddBtn.classList.remove('hidden');
-		userLogin.document.querySelector('.exit-button').click();
-	} else if (loginName.value === 'user' && loginPass.value === 'password') {
-		navCartBtn.classList.remove('hidden');
-		navAddBtn.classList.add('hidden');
-		userLogin.document.querySelector('.exit-button').click();
+	} else if (catShoe.checkUserPass(loginName.value, loginPass.value)) {
+		catShoe.setCurrUser(loginName.value);
+		catShoe.setMessage("You are logged in as " + catShoe.getCurrUser(), "success");
+		setTimeout(() => {
+			loginForm.querySelector('.div-exit').click();
+		}, timeout * 10);
 	} else {
 		catShoe.setMessage("Username or password is incorrect :(", "error");
 	}
+	updateNavMenu();
 	showMessage();
+}
+
+function updateNavMenu() {
+	if (catShoe.getCurrUser() === 'consumer') {
+		navCartBtn.classList.remove('hidden');
+		navAddBtn.classList.add('hidden');
+	} else if (catShoe.getCurrUser() === 'admin') {
+		navCartBtn.classList.add('hidden');
+		navAddBtn.classList.remove('hidden');
+	}
 }
 
 // ==================== MESSAGE HANDLING ==================== //
@@ -332,6 +333,27 @@ function hideDiv(element) {
 function updateLocalStorage() {
 	localStorage.setItem('shoeMap', JSON.stringify(Array.from(catShoe.getShoeMap().entries())));
 	localStorage.setItem('shoeMapSortOrder', sortOption.options[sortOption.selectedIndex].value);
+	localStorage.setItem('user', catShoe.getCurrUser());
+}
+
+function initializeCatalog() {
+	if (localStorage.getItem('shoeMap')) {
+		catShoe.setShoeMap(new Map(JSON.parse(localStorage.getItem('shoeMap'))));
+	} else {
+		catShoe.setShoeMap(sampleShoeMap);
+	}
+
+	if (localStorage.getItem('shoeMapSortOrder')) {
+		sortOption.value = localStorage.getItem('shoeMapSortOrder');
+	} else {
+		sortOption.value = 'newest';
+	}
+
+	if (localStorage.getItem('user')) {
+		catShoe.setCurrUser(localStorage.getItem('user'));
+	} else {
+		catShoe.setCurrUser('consumer');
+	}
 }
 
 // ==================== EVENT LISTENERS ==================== //
@@ -343,6 +365,16 @@ navUserBtn.addEventListener('click', showLoginForm);
 filterBtn.addEventListener('click', toggleFilterBar);
 sortOption.addEventListener('change', sortShoeCards);
 
+loginName.addEventListener('keydown', (event) => {
+	if (event.keyCode === 13) {
+		loginPass.focus();
+	}
+});
+loginPass.addEventListener('keydown', (event) => {
+	if (event.keyCode === 13) {
+		logUserIn();
+	}
+});
 loginBtn.addEventListener('click', logUserIn);
 
 exitBtns.forEach(button => {

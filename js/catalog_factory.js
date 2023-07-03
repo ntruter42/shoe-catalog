@@ -10,6 +10,12 @@ function ShoeCatalog() {
 		colors: []
 	};
 
+	let users = {
+		'admin': 'admin',
+		'nicholas': 'password'
+	};
+	let currUser = 'admin';
+
 	// variable for shopping cart
 
 	// variable to store messages
@@ -161,6 +167,18 @@ function ShoeCatalog() {
 		shoeMap = sortedShoeMap;
 	}
 
+	function checkUserPass(username, password) {
+		return users[username] === password;
+	}
+
+	function setCurrUser(username) {
+		currUser = username;
+	}
+
+	function getCurrUser() {
+		return currUser;
+	}
+
 	// functions to handle messages
 	function setMessage(text, type) {
 		message.text = text;
@@ -183,6 +201,9 @@ function ShoeCatalog() {
 		setShoeMap,
 		getShoeMap,
 		sortShoeMap,
+		checkUserPass,
+		setCurrUser,
+		getCurrUser,
 		setMessage,
 		getMessage,
 	}
