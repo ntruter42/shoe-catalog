@@ -1,5 +1,6 @@
 // ----- TEMPLATE SETUP ----- //
 const shoeTemplate = Handlebars.compile(document.querySelector('.shoe-template').innerHTML);
+const filterTemplate = Handlebars.compile(document.querySelector('.filter-template').innerHTML);
 
 // ----- INPUT ELEMENTS ----- //
 const navSearch = document.querySelector('.search-input');
@@ -36,7 +37,7 @@ let catShoe = ShoeCatalog();
 
 let sampleShoeMap = new Map([
 	[1000, {
-		'id': 1000,
+		// 'id': 1000,
 		'brand': "Under Armour",
 		'model': "Assert 9",
 		'type': "Running Shoe",
@@ -55,7 +56,7 @@ let sampleShoeMap = new Map([
 		}
 	}],
 	[1001, {
-		'id': 1001,
+		// 'id': 1001,
 		'brand': "Under Armour",
 		'model': "Micro G Valsetz",
 		'type': "Tactical Boot",
@@ -78,7 +79,7 @@ let sampleShoeMap = new Map([
 		}
 	}],
 	[1002, {
-		'id': 1002,
+		// 'id': 1002,
 		'brand': "Adidas",
 		'model': "Breaknet 2.0",
 		'type': "Sneaker",
@@ -101,7 +102,7 @@ let sampleShoeMap = new Map([
 		}
 	}],
 	[1003, {
-		'id': 1003,
+		// 'id': 1003,
 		'brand': "Nike",
 		'model': "Air Max 90",
 		'type': "Sneaker",
@@ -122,12 +123,46 @@ let sampleShoeMap = new Map([
 			'10,black': 4,
 			'11,black': 2,
 		}
+	}],
+	[1004, {
+		// 'id': 1004,
+		'brand': "Nike",
+		'model': "Gripknit Phantom GX",
+		'type': "Soccer Boot",
+		'price': 5799,
+		'like': false,
+		'sold': 0,
+		'photos': {
+			'index': 'black',
+			'black': "./assets/images/shoes/nike-gripknit-phantom-gx-black.webp",
+			'red': "./assets/images/shoes/nike-gripknit-phantom-gx-red.webp",
+			'green': "./assets/images/shoes/nike-gripknit-phantom-gx-green.webp",
+		},
+		'sizeColorQuantity': {
+			'6,black': 1,
+			'6,red': 1,
+			'7,black': 1,
+			'7,red': 2,
+			'7,green': 2,
+			'8,black': 1,
+			'8,red': 2,
+			'8,green': 2,
+		}
 	}]
 ]);
+
+let sampleFilters = {
+	brands: ['Nike', 'Under Armour', 'Adidas'],
+	types: ['Running Shoe', 'Tactical Boot', 'Sneaker', 'Soccer Boot'],
+	colors: ['Black', 'Gold', 'White', 'Red', 'Green'],
+	sizes: [4, 5, 6, 7, 8, 9, 10, 11]
+};
 
 initializeCatalog();
 updateLocalStorage();
 updateNavMenu();
+catShoe.setFilters();
+updateFilterBar();
 displayShoeCards(catShoe.getShoeMap());
 
 // ==================== NAVIGATION HANDLING ==================== //
@@ -203,13 +238,17 @@ function displayShoeCards(shoeMap) {
 			currShoe['dim'] = 'dim';
 		}
 
+		if (Object.keys(shoe.photos).length < 3) {
+			currShoe['transparent'] = 'transparent';
+		}
+
 		data.shoes.push(currShoe);
 	}
 
 	const shoeCardContents = shoeTemplate(data);
 	displayWindow.innerHTML = shoeCardContents;
 	setLikeBtnEvents();
-	setImgClickEvents();
+	setNextBtnEvents();
 }
 
 function sortShoeCards() {
@@ -229,13 +268,35 @@ function setLikeBtnEvents() {
 	});
 }
 
-function setImgClickEvents() {
-	const shoeImgs = document.querySelectorAll('.shoe-img');
-	shoeImgs.forEach(img => {
-		img.addEventListener('click', () => {
-			catShoe.nextImg(Number(img.nextElementSibling.alt));
+function setNextBtnEvents() {
+	const nextBtns = document.querySelectorAll('.shoe-next');
+	nextBtns.forEach(button => {
+		button.addEventListener('click', () => {
+			catShoe.nextImg(Number(button.nextElementSibling.alt));
 			updateLocalStorage();
 			displayShoeCards(catShoe.getShoeMap());
+		});
+	});
+}
+
+function updateFilterBar() {
+	const data = {
+		brands: sampleFilters.brands,
+		types: sampleFilters.types,
+		colors: sampleFilters.colors,
+		sizes: sampleFilters.sizes
+	}
+
+	filterBar.innerHTML = filterTemplate(data);
+	setFilterCheckboxes();
+}
+
+function setFilterCheckboxes() {
+	const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+	filterCheckboxes.forEach(checkbox => {
+		checkbox.addEventListener('change', () => {
+			catShoe.setMessage("This feature is clearly a WIP :/<br>" + checkbox.value, "warning");
+			showMessage();
 		});
 	});
 }
@@ -254,7 +315,7 @@ function logUserIn() {
 		catShoe.setMessage("Fill in the form :|", "error");
 	} else if (catShoe.checkUserPass(loginName.value, loginPass.value)) {
 		catShoe.setCurrUser(loginName.value);
-		catShoe.setMessage("You are logged in as " + catShoe.getCurrUser(), "success");
+		catShoe.setMessage("You are logged in as<br>" + catShoe.getCurrUser(), "success");
 		setTimeout(() => {
 			loginForm.querySelector('.div-exit').click();
 		}, timeout * 10);
@@ -352,7 +413,7 @@ function initializeCatalog() {
 	if (localStorage.getItem('user')) {
 		catShoe.setCurrUser(localStorage.getItem('user'));
 	} else {
-		catShoe.setCurrUser('consumer');
+		catShoe.setCurrUser('nicholas');
 	}
 }
 

@@ -22,6 +22,7 @@
 		{{#each shoes}}
 		<div class="shoe-card">
 			<img class="shoe-img" src="{{photo}}" alt="{{brand}}&#10{{model}}&#10{{type}}">
+			<img class="shoe-next ui-icon dim {{transparent}}" src="./assets/icons/layers-svgrepo-com.svg" alt="{{color}}">
 			<img class="shoe-like ui-icon {{dim}}" src="./assets/icons/heart-svgrepo-com.svg" alt="{{id}}">
 			<span class="shoe-price">R {{price}}</span>
 			<span class="shoe-title">{{brand}} {{model}}<br>{{type}}</span>
@@ -30,10 +31,45 @@
 		</div>
 		{{/each}}
 	</script>
-	
-	<script type="text/x-template" class="filter-template">
-		<!-- TODO: create template for each filter -->
-	</script>
+
+<script type="text/x-template" class="filter-template">
+	<div class="filter-brand">
+		<h3>Brand</h3>
+		{{#each brands}}
+		<label class="filter-checkbox" for="{{this}}">
+			<input type="checkbox" id="{{this}}" value="{{this}}">
+			<span>{{this}}</span>
+		</label>
+		{{/each}}
+	</div>
+	<div class="filter-type">
+		<h3>Type</h3>
+		{{#each types}}
+		<label class="filter-checkbox" for="{{this}}">
+			<input type="checkbox" id="{{this}}" value="{{this}}">
+			<span>{{this}}</span>
+		</label>
+		{{/each}}
+	</div>
+	<div class="filter-color">
+		<h3>Colour</h3>
+		{{#each colors}}
+		<label class="filter-checkbox" for="{{this}}">
+			<input type="checkbox" id="{{this}}" value="{{this}}">
+			<span>{{this}}</span>
+		</label>
+		{{/each}}
+	</div>
+	<div class="filter-size">
+		<h3>Size</h3>
+		{{#each sizes}}
+		<label class="filter-checkbox" for="{{this}}">
+			<input type="checkbox" id="{{this}}" value="{{this}}">
+			<span>{{this}}</span>
+		</label>
+		{{/each}}
+	</div>
+</script>
 </head>
 
 <body>
@@ -93,9 +129,8 @@
 
 		<!---------- FILTER OPTIONS ---------->
 		<div class="filter-bar">
-			<!-- dropdown menu for brand -->
-			<div class="filter-brand">
-				<h3>Brand</h3>
+			<!-- <div class="filter-brand">
+				<h3>Brands</h3>
 				<label class="filter-checkbox" for="Nike">
 					<input type="checkbox" id="Nike" value="Nike">
 					<span>Nike</span>
@@ -110,9 +145,8 @@
 				</label>
 			</div>
 
-			<!-- dropdown menu for type -->
 			<div class="filter-type">
-				<h3>Type</h3>
+				<h3>Types</h3>
 				<label class="filter-checkbox" for="Running Shoes">
 					<input type="checkbox" id="Running Shoes" value="Running Shoes">
 					<span>Running Shoes</span>
@@ -123,13 +157,16 @@
 				</label>
 				<label class="filter-checkbox" for="Sneakers">
 					<input type="checkbox" id="Under Armour" value="Under Armour">
+					<span>Soccer Boots</span>
+				</label>
+				<label class="filter-checkbox" for="Sneakers">
+					<input type="checkbox" id="Under Armour" value="Under Armour">
 					<span>Sneakers</span>
 				</label>
 			</div>
 
-			<!-- dropdown menu for color -->
 			<div class="filter-color">
-				<h3>Colour</h3>
+				<h3>Colours</h3>
 				<label class="filter-checkbox" for="Black">
 					<input type="checkbox" id="Black" value="Black">
 					<span>Black</span>
@@ -138,15 +175,30 @@
 					<input type="checkbox" id="White" value="White">
 					<span>White</span>
 				</label>
+				<label class="filter-checkbox" for="Red">
+					<input type="checkbox" id="Red" value="Red">
+					<span>Red</span>
+				</label>
+				<label class="filter-checkbox" for="Green">
+					<input type="checkbox" id="Green" value="Green">
+					<span>Green</span>
+				</label>
 				<label class="filter-checkbox" for="Gold">
 					<input type="checkbox" id="Gold" value="Gold">
 					<span>Gold</span>
 				</label>
 			</div>
 
-			<!-- 1 number input field for size -->
 			<div class="filter-size">
-				<h3>Size</h3>
+				<h3>Sizes</h3>
+				<label class="filter-checkbox" for="4">
+					<input type="checkbox" id="4" value="4">
+					<span>4</span>
+				</label>
+				<label class="filter-checkbox" for="5">
+					<input type="checkbox" id="5" value="5">
+					<span>5</span>
+				</label>
 				<label class="filter-checkbox" for="6">
 					<input type="checkbox" id="6" value="6">
 					<span>6</span>
@@ -163,7 +215,15 @@
 					<input type="checkbox" id="9" value="9">
 					<span>9</span>
 				</label>
-			</div>
+				<label class="filter-checkbox" for="10">
+					<input type="checkbox" id="10" value="10">
+					<span>10</span>
+				</label>
+				<label class="filter-checkbox" for="11">
+					<input type="checkbox" id="11" value="11">
+					<span>11</span>
+				</label>
+			</div> -->
 
 			<!-- 2 number input fields for price range -->
 			<label for="filter-price-low">

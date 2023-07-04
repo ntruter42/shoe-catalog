@@ -303,9 +303,13 @@ input[type=checkbox] {
 }
 
 .filter-bar>* {
-	border: 1px solid red;
+	/* outline: 2px solid red; */
 	display: flex;
 	flex-direction: column;
+}
+
+.filter-checkbox {
+	border: 1px solid cyan;
 }
 
 .filter-bar input {
@@ -360,6 +364,34 @@ input[type=checkbox] {
 
 .shoe-like:hover {
 	opacity: 1;
+}
+
+.shoe-like.dim:hover {
+	filter: grayscale() contrast(0.5);
+}
+
+.shoe-next {
+	position: absolute;
+
+	top: 16rem;
+	right: 1rem;
+	margin: 0.5rem;
+
+	opacity: 0.5;
+}
+
+.shoe-next:hover {
+	opacity: 1;
+}
+
+.shoe-next.transparent {
+	cursor: default;
+}
+
+.shoe-next.transparent:hover {
+	opacity: 0.25;
+	transform: scale(1) !important;
+	filter: grayscale() contrast(0.5);
 }
 
 .shoe-img {
@@ -580,6 +612,67 @@ footer {
 	border: 2px solid var(--success-fg);
 }
 
+/* ==================== GENERAL CLASSES ==================== */
+
+.hidden {
+	display: none !important;
+}
+
+.invisible {
+	visibility: hidden !important;
+}
+
+.transparent {
+	opacity: 0.25;
+}
+
+.ui-icon {
+	max-height: 2rem;
+	max-width: 2rem;
+
+	cursor: pointer;
+	transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+
+.ui-icon.dim {
+	filter: grayscale() contrast(0.5);
+}
+
+.ui-icon:hover {
+	transform: scale(1.1);
+	filter: var(--drop-shadow);
+}
+
+.hide-div {
+	box-shadow: none;
+
+	position: absolute;
+	top: -100%;
+	left: 50%;
+	z-index: 0;
+
+	transform: translate(-50%, -50%);
+	transition: top var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+.show-div {
+	box-shadow: var(--box-shadow), 0 0 20rem max(60vh, 60vw) #0008;
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 2;
+
+	transform: translate(-50%, -50%);
+	transition: top var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+.div-exit {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+}
+
 /* ==================== ANIMATIONS ==================== */
 
 /* ==================== RESPONSIVENESS ==================== */
@@ -631,67 +724,6 @@ footer {
 	.message-box {
 		font-size: 1rem;
 	}
-}
-
-/* ==================== GENERAL CLASSES ==================== */
-
-.hidden {
-	display: none !important;
-}
-
-.invisible {
-	visibility: hidden !important;
-}
-
-.ui-icon {
-	max-height: 2rem;
-	max-width: 2rem;
-
-	cursor: pointer;
-	transition: filter var(--transition-fast), transform var(--transition-fast);
-}
-
-.ui-icon.dim {
-	filter: grayscale() contrast(0.5);
-}
-
-.ui-icon:hover {
-	transform: scale(1.1);
-	filter: var(--drop-shadow);
-}
-
-.shoe-like.ui-icon.dim:hover {
-	filter: grayscale() contrast(0.5);
-}
-
-.hide-div {
-	box-shadow: none;
-
-	position: absolute;
-	top: -50%;
-	left: 50%;
-	z-index: 0;
-
-	transform: translate(-50%, -50%);
-	transition: top var(--transition-slow), box-shadow var(--transition-slow);
-}
-
-.show-div {
-	box-shadow: var(--box-shadow), 0 0 20rem max(60vh, 60vw) #0008;
-
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	z-index: 2;
-
-	transform: translate(-50%, -50%);
-	transition: top var(--transition-slow), box-shadow var(--transition-slow);
-}
-
-.div-exit {
-	position: absolute;
-	top: 0.5rem;
-	right: 0.5rem;
 }
 
 /* ==================== LAYOUT GUIDES ==================== */

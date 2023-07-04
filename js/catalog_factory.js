@@ -1,14 +1,21 @@
 function ShoeCatalog() {
-	// variable for shoe catalog list
 	let shoeMap = new Map();
-	let filters = {
-		brands: [],
-		types: [],
-		priceRange: { min: 0, max: Infinity },
-		like: undefined,
-		sizes: [],
-		colors: []
-	};
+
+let filters = {
+	brands: [],
+	types: [],
+	priceRange: { min: 0, max: Infinity },
+	sizes: [],
+	colors: []
+};
+let appliedFilters = {
+	brands: [],
+	types: [],
+	priceRange: { min: 0, max: Infinity },
+	like: undefined,
+	sizes: [],
+	colors: []
+};
 
 	let users = {
 		'admin': 'admin',
@@ -18,13 +25,11 @@ function ShoeCatalog() {
 
 	// variable for shopping cart
 
-	// variable to store messages
 	const message = {
 		'text': '',
-		'type': '',
+		'type': ''
 	};
 
-	// function to add shoe to catalog
 	function addShoe(brand, model, type, price, photos, sizeColorQuantity) {
 		const shoe = {
 			'brand': brand,
@@ -34,7 +39,7 @@ function ShoeCatalog() {
 			'like': false,
 			'sold': 0,
 			'photos': photos,
-			'sizeColorQuantity': sizeColorQuantity,
+			'sizeColorQuantity': sizeColorQuantity
 		};
 		shoeMap.set(generateShoeID(), shoe);
 	}
@@ -52,14 +57,9 @@ function ShoeCatalog() {
 		shoe.photos.index = nextIndex;
 	}
 
-	// function compileQuantities() {
-	// 	let sizeColorQuantity;
-	// 	return sizeColorQuantity;
-	// }
-
 	function generateShoeID() {
 		let lastID = 999;
-		for (let id of shoeMap.keys()) {
+		for (const id of shoeMap.keys()) {
 			if (id > lastID) {
 				lastID = id;
 			}
@@ -67,9 +67,6 @@ function ShoeCatalog() {
 		return lastID + 1;
 	}
 
-	// function to remove shoe from catalog
-
-	// function to set entire catalog list
 	function setShoeMap(map) {
 		shoeMap = map;
 	}
@@ -80,26 +77,26 @@ function ShoeCatalog() {
 		for (const [id, shoe] of shoeMap) {
 			let includeShoe = true;
 
-			if (filters.brands && filters.brands.length > 0 && !filters.brands.includes(shoe.brand)) {
+			if (appliedFilters.brands && appliedFilters.brands.length > 0 && !appliedFilters.brands.includes(shoe.brand)) {
 				includeShoe = false;
 			}
 
-			if (filters.types && filters.types.length > 0 && !filters.types.includes(shoe.type)) {
+			if (appliedFilters.types && appliedFilters.types.length > 0 && !appliedFilters.types.includes(shoe.type)) {
 				includeShoe = false;
 			}
 
-			if (filters.priceRange && (shoe.price < filters.priceRange.min || shoe.price > filters.priceRange.max)) {
+			if (appliedFilters.priceRange && (shoe.price < appliedFilters.priceRange.min || shoe.price > appliedFilters.priceRange.max)) {
 				includeShoe = false;
 			}
 
-			if (filters.like !== undefined && shoe.like !== filters.like) {
+			if (appliedFilters.like !== undefined && shoe.like !== appliedFilters.like) {
 				includeShoe = false;
 			}
 
-			if (filters.sizes && filters.sizes.length > 0) {
+			if (appliedFilters.sizes && appliedFilters.sizes.length > 0) {
 				const shoeSizes = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[0]);
 
-				for (let size of filters.sizes) {
+				for (const size of appliedFilters.sizes) {
 					if (!shoeSizes.includes(size)) {
 						includeShoe = false;
 						break;
@@ -107,10 +104,10 @@ function ShoeCatalog() {
 				}
 			}
 
-			if (filters.colors && filters.colors.length > 0) {
+			if (appliedFilters.colors && appliedFilters.colors.length > 0) {
 				const shoeColors = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[1]);
 
-				for (let color of filters.colors) {
+				for (const color of appliedFilters.colors) {
 					if (!shoeColors.includes(color)) {
 						includeShoe = false;
 						break;
@@ -119,7 +116,7 @@ function ShoeCatalog() {
 			}
 
 			if (includeShoe) {
-				filteredShoeMap.set(id, shoe);
+				filteredShoeMap.set(id, JSON.parse(JSON.stringify(shoe)));
 			}
 		}
 
@@ -127,26 +124,52 @@ function ShoeCatalog() {
 	}
 
 	// function to add shoe to shopping cart
-
 	// function to remove shoe from shopping cart
-
 	// function to set entire shopping cart
-
 	// function to clear shopping cart
-
 	// function to get specific shoe
 
-	// function to filter shoe list
-	function setFilters(brands, types, priceRange, like, sizes, colors) {
-		filters.brands = brands;
-		filters.types = types;
-		filters.priceRange = priceRange;
-		filters.like = like;
-		filters.sizes = sizes;
-		filters.colors = colors;
+	function setFilters() {
+		for (const [, shoe] of shoeMap) {
+			if (!filters.brands.includes(shoe.brand)) {
+				filters.brands.push(shoe.brand);
+			}
+
+			if (!filters.types.includes(shoe.type)) {
+				filters.types.push(shoe.type);
+			}
+
+			if (shoe.price < filters.priceRange.min) {
+				filters.priceRange.min = price;
+			}
+
+			if (shoe.price > filters.priceRange.max) {
+				filters.priceRange.max = price;
+			}
+
+			const sizeColors = Object.keys(shoe.sizeColorQuantity);
+			for (const sizeColor of sizeColors) {
+				const [size, color] = sizeColor.split(',');
+				if (!filters.sizes.includes(Number(size))) {
+					filters.sizes.push(Number(size));
+				}
+				filters.sizes.sort((a, b) => a - b);
+				if (!filters.colors.includes(color)) {
+					filters.colors.push(color);
+				}
+			}
+		}
 	}
 
-	// function to sort shoe list
+	function setAppliedFilters(brands, types, priceRange, like, sizes, colors) {
+		appliedFilters.brands = brands;
+		appliedFilters.types = types;
+		appliedFilters.priceRange = priceRange;
+		appliedFilters.like = like;
+		appliedFilters.sizes = sizes;
+		appliedFilters.colors = colors;
+	}
+
 	function sortShoeMap(order) {
 		const shoeArray = Array.from(shoeMap);
 
@@ -179,7 +202,6 @@ function ShoeCatalog() {
 		return currUser;
 	}
 
-	// functions to handle messages
 	function setMessage(text, type) {
 		message.text = text;
 		message.type = type;
@@ -192,7 +214,6 @@ function ShoeCatalog() {
 		return retrievedMessage;
 	}
 
-	// return functions
 	return {
 		addShoe,
 		toggleLike,
@@ -201,6 +222,8 @@ function ShoeCatalog() {
 		setShoeMap,
 		getShoeMap,
 		sortShoeMap,
+		setFilters,
+		setAppliedFilters,
 		checkUserPass,
 		setCurrUser,
 		getCurrUser,
