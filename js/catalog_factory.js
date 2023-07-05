@@ -1,21 +1,21 @@
 function ShoeCatalog() {
 	let shoeMap = new Map();
 
-let filters = {
-	brands: [],
-	types: [],
-	priceRange: { min: 0, max: Infinity },
-	sizes: [],
-	colors: []
-};
-let appliedFilters = {
-	brands: [],
-	types: [],
-	priceRange: { min: 0, max: Infinity },
-	like: undefined,
-	sizes: [],
-	colors: []
-};
+	let filters = {
+		brands: [],
+		types: [],
+		sizes: [],
+		colors: [],
+		priceRange: { min: 0, max: Infinity }
+	};
+	let appliedFilters = {
+		brands: [],
+		types: [],
+		sizes: [],
+		colors: [],
+		like: undefined,
+		priceRange: { min: 0, max: Infinity }
+	};
 
 	let users = {
 		'admin': 'admin',
@@ -89,9 +89,10 @@ let appliedFilters = {
 				includeShoe = false;
 			}
 
-			if (appliedFilters.like !== undefined && shoe.like !== appliedFilters.like) {
-				includeShoe = false;
-			}
+			// TODO: fix bug / does not display ALL shoes when "Liked" is unchecked
+			// if (appliedFilters.like !== undefined && shoe.like !== appliedFilters.like) {
+			// 	includeShoe = false;
+			// }
 
 			if (appliedFilters.sizes && appliedFilters.sizes.length > 0) {
 				const shoeSizes = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[0]);
@@ -161,6 +162,10 @@ let appliedFilters = {
 		}
 	}
 
+	function getFilters() {
+		return filters;
+	}
+
 	function setAppliedFilters(brands, types, priceRange, like, sizes, colors) {
 		appliedFilters.brands = brands;
 		appliedFilters.types = types;
@@ -223,6 +228,7 @@ let appliedFilters = {
 		getShoeMap,
 		sortShoeMap,
 		setFilters,
+		getFilters,
 		setAppliedFilters,
 		checkUserPass,
 		setCurrUser,

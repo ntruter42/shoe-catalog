@@ -280,11 +280,13 @@ function setNextBtnEvents() {
 }
 
 function updateFilterBar() {
+	const filters = catShoe.getFilters();
 	const data = {
-		brands: sampleFilters.brands,
-		types: sampleFilters.types,
-		colors: sampleFilters.colors,
-		sizes: sampleFilters.sizes
+		user: catShoe.getCurrUser().charAt(0).toUpperCase() + catShoe.getCurrUser().slice(1),
+		brands: filters.brands,
+		types: filters.types,
+		colors: filters.colors.map(color => color.charAt(0).toUpperCase() + color.slice(1)),
+		sizes: filters.sizes
 	}
 
 	filterBar.innerHTML = filterTemplate(data);
@@ -292,13 +294,36 @@ function updateFilterBar() {
 }
 
 function setFilterCheckboxes() {
-	const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+	const filterCheckboxes = document.querySelectorAll('.filter-checkbox input');
 	filterCheckboxes.forEach(checkbox => {
 		checkbox.addEventListener('change', () => {
-			catShoe.setMessage("This feature is clearly a WIP :/<br>" + checkbox.value, "warning");
-			showMessage();
+			const brands = getCheckedValues('filter-brand');
+			const types = getCheckedValues('filter-type');
+			const sizes = getCheckedValues('filter-size');
+			const colors = getCheckedValues('filter-color');
+			const like = document.getElementById('Like').checked;
+
+			const priceRange = { min: 0, max: Infinity };
+			if (!isNaN(Number(document.querySelector('.filter-price-low').value))) {
+				priceRange.min = Number(document.querySelector('.filter-price-low').value);
+			}
+			if (!isNaN(Number(document.querySelector('.filter-price-high').value))) {
+				priceRange.min = Number(document.querySelector('.filter-price-high').value);
+			}
+			catShoe.setAppliedFilters(brands, types, priceRange, like, sizes, colors)
+			displayShoeCards(catShoe.getShoeMap());
 		});
 	});
+}
+
+function getCheckedValues(filterCategory) {
+	const checkedBoxes = document.querySelectorAll('.' + filterCategory + ' input[type="checkbox"]:checked');
+	const values = [];
+	checkedBoxes.forEach((checkbox) => {
+		values.push(checkbox.value);
+	});
+
+	return values;
 }
 
 // ==================== SHOPPING CART HANDLING ==================== //

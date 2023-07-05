@@ -69,6 +69,21 @@
 		</label>
 		{{/each}}
 	</div>
+	<div class="filter-like">
+		<h3>{{user}}</h3>
+		<label class="filter-checkbox" for="Like">
+			<input type="checkbox" id="Like" value="Like">
+			<span>Liked</span>
+		</label>
+	</div>
+	<label for="filter-price-low">
+		<span>Price Low</span>
+		<input class="filter-price-low" type="number" name="filter-price-low" placeholder="">
+	</label>
+	<label for="filter-price-high">
+		<span>Price High</span>
+		<input class="filter-price-high" type="number" name="filter-price-high" placeholder="">
+	</label>
 </script>
 </head>
 
@@ -102,11 +117,10 @@
 			<!---------- FILTER button ---------->
 			<button class="filter-button" type="button">
 				<img src="./assets/icons/equalizer-svgrepo-com.svg" alt="">
-				Filters
+				<span>Filters</span>
 			</button>
 
 			<!---------- SORTING options ---------->
-			<!-- 1 dropdown to sort by popularity, newest, price -->
 			<div class="sort-select">
 				<select class="sort-category" name="sort-category">
 					<option value="newest">Newest</option>
@@ -129,111 +143,6 @@
 
 		<!---------- FILTER OPTIONS ---------->
 		<div class="filter-bar">
-			<!-- <div class="filter-brand">
-				<h3>Brands</h3>
-				<label class="filter-checkbox" for="Nike">
-					<input type="checkbox" id="Nike" value="Nike">
-					<span>Nike</span>
-				</label>
-				<label class="filter-checkbox" for="Adidas">
-					<input type="checkbox" id="Adidas" value="Adidas">
-					<span>Adidas</span>
-				</label>
-				<label class="filter-checkbox" for="Under Armour">
-					<input type="checkbox" id="Under Armour" value="Under Armour">
-					<span>Under Armour</span>
-				</label>
-			</div>
-
-			<div class="filter-type">
-				<h3>Types</h3>
-				<label class="filter-checkbox" for="Running Shoes">
-					<input type="checkbox" id="Running Shoes" value="Running Shoes">
-					<span>Running Shoes</span>
-				</label>
-				<label class="filter-checkbox" for="Tactical Boots">
-					<input type="checkbox" id="Tactical Boots" value="Tactical Boots">
-					<span>Tactical Boots</span>
-				</label>
-				<label class="filter-checkbox" for="Sneakers">
-					<input type="checkbox" id="Under Armour" value="Under Armour">
-					<span>Soccer Boots</span>
-				</label>
-				<label class="filter-checkbox" for="Sneakers">
-					<input type="checkbox" id="Under Armour" value="Under Armour">
-					<span>Sneakers</span>
-				</label>
-			</div>
-
-			<div class="filter-color">
-				<h3>Colours</h3>
-				<label class="filter-checkbox" for="Black">
-					<input type="checkbox" id="Black" value="Black">
-					<span>Black</span>
-				</label>
-				<label class="filter-checkbox" for="White">
-					<input type="checkbox" id="White" value="White">
-					<span>White</span>
-				</label>
-				<label class="filter-checkbox" for="Red">
-					<input type="checkbox" id="Red" value="Red">
-					<span>Red</span>
-				</label>
-				<label class="filter-checkbox" for="Green">
-					<input type="checkbox" id="Green" value="Green">
-					<span>Green</span>
-				</label>
-				<label class="filter-checkbox" for="Gold">
-					<input type="checkbox" id="Gold" value="Gold">
-					<span>Gold</span>
-				</label>
-			</div>
-
-			<div class="filter-size">
-				<h3>Sizes</h3>
-				<label class="filter-checkbox" for="4">
-					<input type="checkbox" id="4" value="4">
-					<span>4</span>
-				</label>
-				<label class="filter-checkbox" for="5">
-					<input type="checkbox" id="5" value="5">
-					<span>5</span>
-				</label>
-				<label class="filter-checkbox" for="6">
-					<input type="checkbox" id="6" value="6">
-					<span>6</span>
-				</label>
-				<label class="filter-checkbox" for="7">
-					<input type="checkbox" id="7" value="7">
-					<span>7</span>
-				</label>
-				<label class="filter-checkbox" for="8">
-					<input type="checkbox" id="8" value="8">
-					<span>8</span>
-				</label>
-				<label class="filter-checkbox" for="9">
-					<input type="checkbox" id="9" value="9">
-					<span>9</span>
-				</label>
-				<label class="filter-checkbox" for="10">
-					<input type="checkbox" id="10" value="10">
-					<span>10</span>
-				</label>
-				<label class="filter-checkbox" for="11">
-					<input type="checkbox" id="11" value="11">
-					<span>11</span>
-				</label>
-			</div> -->
-
-			<!-- 2 number input fields for price range -->
-			<label for="filter-price-low">
-				<span>Price Low</span>
-				<input class="filter-price-low" type="number" name="filter-price-low" placeholder="">
-			</label>
-			<label for="filter-price-high">
-				<span>Price High</span>
-				<input class="filter-price-high" type="number" name="filter-price-high" placeholder="">
-			</label>
 		</div>
 
 		<!--======== Shoe cards ========-->
