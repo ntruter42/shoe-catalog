@@ -21,13 +21,13 @@
 	<script type="text/x-template" class="shoe-template">
 		{{#each shoes}}
 		<div class="shoe-card">
-			<img class="shoe-img" src="{{photo}}" alt="{{brand}}&#10{{model}}&#10{{type}}">
+			<img class="shoe-img" src="{{photo}}" alt="{{brand}}&#10 {{model}}&#10 {{type}}">
 			<img class="shoe-next ui-icon dim {{transparent}}" src="./assets/icons/layers-svgrepo-com.svg" alt="{{color}}">
 			<img class="shoe-like ui-icon {{dim}}" src="./assets/icons/heart-svgrepo-com.svg" alt="{{id}}">
 			<span class="shoe-price">R {{price}}</span>
 			<span class="shoe-title">{{brand}} {{model}}<br>{{type}}</span>
 			<span class="shoe-size">Sizes - {{sizes}}</span>
-			<span class="shoe-color">Colors - {{colors}}</span>
+			<span class="shoe-color">Colorways - {{colors}}</span>
 		</div>
 		{{/each}}
 	</script>
@@ -52,7 +52,7 @@
 		{{/each}}
 	</div>
 	<div class="filter-color">
-		<h3>Colour</h3>
+		<h3>Colorway</h3>
 		{{#each colors}}
 		<label class="filter-checkbox" for="{{this}}">
 			<input type="checkbox" id="{{this}}" value="{{this}}">

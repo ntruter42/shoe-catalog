@@ -37,7 +37,6 @@ let catShoe = ShoeCatalog();
 
 let sampleShoeMap = new Map([
 	[1000, {
-		// 'id': 1000,
 		'brand': "Under Armour",
 		'model': "Assert 9",
 		'type': "Running Shoe",
@@ -45,18 +44,17 @@ let sampleShoeMap = new Map([
 		'like': false,
 		'sold': 9,
 		'photos': {
-			'index': 'black',
-			'black': "./assets/images/shoes/ua-assert9-black.webp",
+			'index': 'Black-White',
+			'Black-White': "./assets/images/shoes/ua-assert9-blackwhite.webp"
 		},
 		'sizeColorQuantity': {
-			'6,black': 13,
-			'7,black': 9,
-			'8,black': 7,
-			'9,black': 10,
+			'6,Black-White': 13,
+			'7,Black-White': 9,
+			'8,Black-White': 7,
+			'9,Black-White': 10
 		}
 	}],
 	[1001, {
-		// 'id': 1001,
 		'brand': "Under Armour",
 		'model': "Micro G Valsetz",
 		'type': "Tactical Boot",
@@ -64,22 +62,21 @@ let sampleShoeMap = new Map([
 		'like': true,
 		'sold': 2,
 		'photos': {
-			'index': 'black',
-			'black': "./assets/images/shoes/ua-mircogvalsetz-black.webp",
-			'gold': "./assets/images/shoes/ua-mircogvalsetz-gold.webp",
+			'index': 'Black',
+			'Black': "./assets/images/shoes/ua-mircogvalsetz-black.webp",
+			'Gold': "./assets/images/shoes/ua-mircogvalsetz-gold.webp"
 		},
 		'sizeColorQuantity': {
-			'7,black': 3,
-			'7,gold': 2,
-			'8,black': 6,
-			'8,gold': 3,
-			'9,black': 2,
-			'10,black': 5,
-			'10,gold': 1,
+			'7,Black': 3,
+			'7,Gold': 2,
+			'8,Black': 6,
+			'8,Gold': 3,
+			'9,Black': 2,
+			'10,Black': 5,
+			'10,Gold': 1
 		}
 	}],
 	[1002, {
-		// 'id': 1002,
 		'brand': "Adidas",
 		'model': "Breaknet 2.0",
 		'type': "Sneaker",
@@ -87,22 +84,21 @@ let sampleShoeMap = new Map([
 		'like': false,
 		'sold': 11,
 		'photos': {
-			'index': 'black',
-			'black': "./assets/images/shoes/adidas-breaknet2-black.avif",
-			'white': "./assets/images/shoes/adidas-breaknet2-white.avif",
+			'index': 'Black-White',
+			'Black-White': "./assets/images/shoes/adidas-breaknet2-blackwhite.avif",
+			'White-Blue-Red': "./assets/images/shoes/adidas-breaknet2-white-bluered.avif"
 		},
 		'sizeColorQuantity': {
-			'6,black': 11,
-			'6,white': 5,
-			'7,black': 12,
-			'7,white': 11,
-			'8,black': 9,
-			'8,white': 4,
-			'9,white': 2,
+			'6,Black-White': 11,
+			'6,White-Blue-Red': 5,
+			'7,Black-White': 12,
+			'7,White-Blue-Red': 11,
+			'8,Black-White': 9,
+			'8,White-Blue-Red': 4,
+			'9,White-Blue-Red': 2
 		}
 	}],
 	[1003, {
-		// 'id': 1003,
 		'brand': "Nike",
 		'model': "Air Max 90",
 		'type': "Sneaker",
@@ -110,22 +106,21 @@ let sampleShoeMap = new Map([
 		'like': false,
 		'sold': 5,
 		'photos': {
-			'index': 'black',
-			'black': "./assets/images/shoes/nike-airmax90-black.webp",
+			'index': 'Black',
+			'Black': "./assets/images/shoes/nike-airmax90-black.webp"
 		},
 		'sizeColorQuantity': {
-			'4,black': 1,
-			'5,black': 5,
-			'6,black': 4,
-			'7,black': 7,
-			'8,black': 5,
-			'9,black': 2,
-			'10,black': 4,
-			'11,black': 2,
+			'4,Black': 1,
+			'5,Black': 5,
+			'6,Black': 4,
+			'7,Black': 7,
+			'8,Black': 5,
+			'9,Black': 2,
+			'10,Black': 4,
+			'11,Black': 2
 		}
 	}],
 	[1004, {
-		// 'id': 1004,
 		'brand': "Nike",
 		'model': "Gripknit Phantom GX",
 		'type': "Soccer Boot",
@@ -133,20 +128,78 @@ let sampleShoeMap = new Map([
 		'like': false,
 		'sold': 0,
 		'photos': {
-			'index': 'black',
-			'black': "./assets/images/shoes/nike-gripknit-phantom-gx-black.webp",
-			'red': "./assets/images/shoes/nike-gripknit-phantom-gx-red.webp",
-			'green': "./assets/images/shoes/nike-gripknit-phantom-gx-green.webp",
+			'index': 'Black-White',
+			'Black-White': "./assets/images/shoes/nike-gripknit-phantom-gx-blackwhite.webp",
+			'Black-Red': "./assets/images/shoes/nike-gripknit-phantom-gx-blackred.webp",
+			'Green-Orange': "./assets/images/shoes/nike-gripknit-phantom-gx-greenorange.webp"
 		},
 		'sizeColorQuantity': {
-			'6,black': 1,
-			'6,red': 1,
-			'7,black': 1,
-			'7,red': 2,
-			'7,green': 2,
-			'8,black': 1,
-			'8,red': 2,
-			'8,green': 2,
+			'6,Black-White': 1,
+			'6,Black-Red': 1,
+			'7,Black-White': 1,
+			'7,Black-Red': 2,
+			'7,Green-Orange': 2,
+			'8,Black-White': 1,
+			'8,Black-Red': 2,
+			'8,Green-Orange': 2
+		}
+	}],
+	[1005, {
+		'brand': "New Balance",
+		'model': "650",
+		'type': "Sneaker",
+		'price': 2899,
+		'like': false,
+		'sold': 18,
+		'photos': {
+			'index': 'White-Black',
+			'White-Black': "./assets/images/shoes/nb-650-whiteblack.webp",
+			'White-Blue': "./assets/images/shoes/nb-650-whiteblue.webp",
+			'White-Red': "./assets/images/shoes/nb-650-whitered.webp"
+		},
+		'sizeColorQuantity': {
+			'7,White-Black': 8,
+			'7,White-Blue': 7,
+			'7,White-Red': 1,
+			'8,White-Blue': 2,
+			'8,White-Blue': 2,
+			'8,White-Red': 3,
+			'9,White-Blue': 4,
+			'9,White-Blue': 2,
+			'9,White-Blue': 6,
+			'10,White-Black': 2
+		}
+	}],
+	[1006, {
+		'brand': "New Balance",
+		'model': "650 v2",
+		'type': "Sneaker",
+		'price': 2799,
+		'like': false,
+		'sold': 9,
+		'photos': {
+			'index': 'White-Black',
+			'White-Black': "./assets/images/shoes/nb-650v2-whiteblack.webp",
+			'White-Blue': "./assets/images/shoes/nb-650v2-whiteblue.webp",
+			'White-Yellow': "./assets/images/shoes/nb-650v2-whiteyellow.webp",
+			'Black-Red': "./assets/images/shoes/nb-650v2-blackred.webp"
+		},
+		'sizeColorQuantity': {
+			'5,White-Black': 2,
+			'5,White-Blue': 2,
+			'5,Black-Red': 3,
+			'6,White-Black': 5,
+			'6,White-Blue': 6,
+			'6,White-Yellow': 7,
+			'6,Black-Red': 3,
+			'7,White-Blue': 2,
+			'7,Black-Red': 3,
+			'8,White-Black': 2,
+			'8,White-Blue': 3,
+			'8,White-Yellow': 5,
+			'8,Black-Red': 2,
+			'9,White-Black': 7,
+			'9,Black-Red': 6
 		}
 	}]
 ]);
@@ -159,11 +212,11 @@ let sampleFilters = {
 };
 
 initializeCatalog();
-updateLocalStorage();
+// updateLocalStorage();
 updateNavMenu();
 catShoe.setFilters();
 updateFilterBar();
-displayShoeCards(catShoe.getShoeMap());
+displayShoeCards();
 
 // ==================== NAVIGATION HANDLING ==================== //
 
@@ -199,10 +252,11 @@ function toggleFilterBar() {
 
 // ==================== DISPLAY WINDOW HANDLING ==================== //
 
-function displayShoeCards(shoeMap) {
+function displayShoeCards() {
 	const data = {
 		shoes: []
 	}
+	const shoeMap = catShoe.getShoeMap();
 
 	for (const [shoeID, shoe] of shoeMap) {
 		let sizeColors = Object.keys(shoe.sizeColorQuantity);
@@ -254,7 +308,7 @@ function displayShoeCards(shoeMap) {
 function sortShoeCards() {
 	catShoe.sortShoeMap(sortOption.options[sortOption.selectedIndex].value);
 	updateLocalStorage();
-	displayShoeCards(catShoe.getShoeMap());
+	displayShoeCards();
 }
 
 function setLikeBtnEvents() {
@@ -263,7 +317,7 @@ function setLikeBtnEvents() {
 		button.addEventListener('click', () => {
 			catShoe.toggleLike(Number(button.alt));
 			updateLocalStorage();
-			displayShoeCards(catShoe.getShoeMap());
+			displayShoeCards();
 		});
 	});
 }
@@ -274,7 +328,7 @@ function setNextBtnEvents() {
 		button.addEventListener('click', () => {
 			catShoe.nextImg(Number(button.nextElementSibling.alt));
 			updateLocalStorage();
-			displayShoeCards(catShoe.getShoeMap());
+			displayShoeCards();
 		});
 	});
 }
@@ -290,10 +344,10 @@ function updateFilterBar() {
 	}
 
 	filterBar.innerHTML = filterTemplate(data);
-	setFilterCheckboxes();
+	getFilterCheckedboxes();
 }
 
-function setFilterCheckboxes() {
+function getFilterCheckedboxes() {
 	const filterCheckboxes = document.querySelectorAll('.filter-checkbox input');
 	filterCheckboxes.forEach(checkbox => {
 		checkbox.addEventListener('change', () => {
@@ -311,7 +365,7 @@ function setFilterCheckboxes() {
 				priceRange.min = Number(document.querySelector('.filter-price-high').value);
 			}
 			catShoe.setAppliedFilters(brands, types, priceRange, like, sizes, colors)
-			displayShoeCards(catShoe.getShoeMap());
+			displayShoeCards();
 		});
 	});
 }
@@ -324,6 +378,11 @@ function getCheckedValues(filterCategory) {
 	});
 
 	return values;
+}
+
+function addSearchFilter() {
+	catShoe.setSearchFilter(navSearch.value);
+	displayShoeCards();
 }
 
 // ==================== SHOPPING CART HANDLING ==================== //
@@ -444,9 +503,10 @@ function initializeCatalog() {
 
 // ==================== EVENT LISTENERS ==================== //
 
+navUserBtn.addEventListener('click', showLoginForm);
 navSearch.parentNode.addEventListener('click', expandSearch);
 navSearch.parentNode.addEventListener('focusout', contractSearch);
-navUserBtn.addEventListener('click', showLoginForm);
+navSearch.addEventListener('input', addSearchFilter);
 
 filterBtn.addEventListener('click', toggleFilterBar);
 sortOption.addEventListener('change', sortShoeCards);
