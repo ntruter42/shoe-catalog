@@ -137,6 +137,10 @@ input[type=checkbox] {
 	cursor: default;
 }
 
+b {
+	color: inherit;
+}
+
 /* ========== NAVIGATION Sections ========== */
 
 /* ===== Brand Section ===== */
@@ -327,6 +331,19 @@ input[type=checkbox] {
 
 .filter-bar input {
 	max-width: 100%;
+}
+
+.filter-size {
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.filter-size h3 {
+	width: 100%;
+}
+
+.filter-size label {
+	width: 30%;
 }
 
 .expand-filter-bar {

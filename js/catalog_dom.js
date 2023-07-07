@@ -13,6 +13,8 @@ const loginName = document.querySelector('.user-name');
 const loginPass = document.querySelector('.user-password');
 const loginBtn = document.querySelector('.user-login');
 
+const addShoeForm = document.querySelector('.add-shoe-form');
+
 const filterBtn = document.querySelector('.filter-button');
 const sortOption = document.querySelector('.sort-category');
 
@@ -41,7 +43,6 @@ let sampleShoeMap = new Map([
 		'model': "Assert 9",
 		'type': "Running Shoe",
 		'price': 999,
-		'like': false,
 		'sold': 9,
 		'photos': {
 			'index': 'Black-White',
@@ -59,7 +60,6 @@ let sampleShoeMap = new Map([
 		'model': "Micro G Valsetz",
 		'type': "Tactical Boot",
 		'price': 2899,
-		'like': true,
 		'sold': 2,
 		'photos': {
 			'index': 'Black',
@@ -81,12 +81,11 @@ let sampleShoeMap = new Map([
 		'model': "Breaknet 2.0",
 		'type': "Sneaker",
 		'price': 1099,
-		'like': false,
 		'sold': 11,
 		'photos': {
 			'index': 'Black-White',
 			'Black-White': "./assets/images/shoes/adidas-breaknet2-blackwhite.avif",
-			'White-Blue-Red': "./assets/images/shoes/adidas-breaknet2-white-bluered.avif"
+			'White-Blue-Red': "./assets/images/shoes/adidas-breaknet2-whitebluered.avif"
 		},
 		'sizeColorQuantity': {
 			'6,Black-White': 11,
@@ -103,7 +102,6 @@ let sampleShoeMap = new Map([
 		'model': "Air Max 90",
 		'type': "Sneaker",
 		'price': 2499,
-		'like': false,
 		'sold': 5,
 		'photos': {
 			'index': 'Black',
@@ -125,7 +123,6 @@ let sampleShoeMap = new Map([
 		'model': "Gripknit Phantom GX",
 		'type': "Soccer Boot",
 		'price': 5799,
-		'like': false,
 		'sold': 0,
 		'photos': {
 			'index': 'Black-White',
@@ -149,7 +146,6 @@ let sampleShoeMap = new Map([
 		'model': "650",
 		'type': "Sneaker",
 		'price': 2899,
-		'like': false,
 		'sold': 18,
 		'photos': {
 			'index': 'White-Black',
@@ -175,7 +171,6 @@ let sampleShoeMap = new Map([
 		'model': "650 v2",
 		'type': "Sneaker",
 		'price': 2799,
-		'like': false,
 		'sold': 9,
 		'photos': {
 			'index': 'White-Black',
@@ -204,15 +199,8 @@ let sampleShoeMap = new Map([
 	}]
 ]);
 
-let sampleFilters = {
-	brands: ['Nike', 'Under Armour', 'Adidas'],
-	types: ['Running Shoe', 'Tactical Boot', 'Sneaker', 'Soccer Boot'],
-	colors: ['Black', 'Gold', 'White', 'Red', 'Green'],
-	sizes: [4, 5, 6, 7, 8, 9, 10, 11]
-};
-
 initializeCatalog();
-// updateLocalStorage();
+updateLocalStorage();
 updateNavMenu();
 catShoe.setFilters();
 updateFilterBar();
@@ -248,6 +236,12 @@ function toggleFilterBar() {
 		displayWindow.classList.add("shrink-catalog-section");
 		catalogMenu.classList.add("shrink-catalog-section");
 	}
+}
+
+// ==================== ADD SHOE HANDLING ==================== //
+
+function showAddShoeForm() {
+	showDiv(addShoeForm);
 }
 
 // ==================== DISPLAY WINDOW HANDLING ==================== //
@@ -288,7 +282,7 @@ function displayShoeCards() {
 			colors: colors.join(', ')
 		};
 
-		if (shoe.like === false) {
+		if (catShoe.getCurrUser().likes.includes(shoeID) === false) {
 			currShoe['dim'] = 'dim';
 		}
 
@@ -336,7 +330,7 @@ function setNextBtnEvents() {
 function updateFilterBar() {
 	const filters = catShoe.getFilters();
 	const data = {
-		user: catShoe.getCurrUser().charAt(0).toUpperCase() + catShoe.getCurrUser().slice(1),
+		user: catShoe.getCurrUser().name.charAt(0).toUpperCase() + catShoe.getCurrUser().name.slice(1),
 		brands: filters.brands,
 		types: filters.types,
 		colors: filters.colors.map(color => color.charAt(0).toUpperCase() + color.slice(1)),
@@ -391,7 +385,7 @@ function addSearchFilter() {
 
 function showLoginForm() {
 	showDiv(loginForm);
-	loginForm.childNodes[9].focus();
+	loginForm.children[4].focus();
 }
 
 function logUserIn() {
@@ -399,7 +393,7 @@ function logUserIn() {
 		catShoe.setMessage("Fill in the form :|", "error");
 	} else if (catShoe.checkUserPass(loginName.value, loginPass.value)) {
 		catShoe.setCurrUser(loginName.value);
-		catShoe.setMessage("You are logged in as<br>" + catShoe.getCurrUser(), "success");
+		catShoe.setMessage("You are logged in as<br><b>" + catShoe.getCurrUser().name + '</b>', "success");
 		setTimeout(() => {
 			loginForm.querySelector('.div-exit').click();
 		}, timeout * 10);
@@ -407,16 +401,21 @@ function logUserIn() {
 		catShoe.setMessage("Username or password is incorrect :(", "error");
 	}
 	updateNavMenu();
+	updateFilterBar();
+	displayShoeCards();
 	showMessage();
 }
 
 function updateNavMenu() {
-	if (catShoe.getCurrUser() === 'consumer') {
-		navCartBtn.classList.remove('hidden');
-		navAddBtn.classList.add('hidden');
-	} else if (catShoe.getCurrUser() === 'admin') {
-		navCartBtn.classList.add('hidden');
-		navAddBtn.classList.remove('hidden');
+	switch (catShoe.getCurrUser().type) {
+		case 'buyer':
+			navCartBtn.classList.remove('hidden');
+			navAddBtn.classList.add('hidden');
+			break;
+		case 'admin':
+			navCartBtn.classList.add('hidden');
+			navAddBtn.classList.remove('hidden');
+			break;
 	}
 }
 
@@ -478,7 +477,7 @@ function hideDiv(element) {
 function updateLocalStorage() {
 	localStorage.setItem('shoeMap', JSON.stringify(Array.from(catShoe.getShoeMap().entries())));
 	localStorage.setItem('shoeMapSortOrder', sortOption.options[sortOption.selectedIndex].value);
-	localStorage.setItem('user', catShoe.getCurrUser());
+	localStorage.setItem('user', catShoe.getCurrUser().username);
 }
 
 function initializeCatalog() {
@@ -497,7 +496,7 @@ function initializeCatalog() {
 	if (localStorage.getItem('user')) {
 		catShoe.setCurrUser(localStorage.getItem('user'));
 	} else {
-		catShoe.setCurrUser('nicholas');
+		catShoe.setCurrUser('randomuser');
 	}
 }
 

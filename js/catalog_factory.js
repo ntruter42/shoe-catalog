@@ -14,21 +14,34 @@ function ShoeCatalog() {
 		types: [],
 		sizes: [],
 		colors: [],
-		like: undefined,
 		priceRange: { min: 0, max: Infinity },
 		search: ''
 	};
 
 	let users = {
 		'admin': {
-			'name': 'Admin',
+			'username': 'admin',
+			'name': 'Administrator',
 			'password': 'admin',
-			'liked': []
+			'type': 'admin',
+			'likes': [],
+			'cart': []
 		},
-		'nicholas': {
-			'name': 'Nicholas',
+		'ntruter42': {
+			'username': 'ntruter42',
+			'name': 'Nicholas Truter',
 			'password': 'password',
-			'liked': []
+			'type': 'buyer',
+			'likes': [],
+			'cart': []
+		},
+		'randomuser': {
+			'username': 'randomuser',
+			'name': 'Random User',
+			'password': 'random123',
+			'type': 'buyer',
+			'likes': [],
+			'cart': []
 		}
 	};
 	let currUser = 'admin';
@@ -55,12 +68,18 @@ function ShoeCatalog() {
 		shoeMap.set(generateShoeID(), shoe);
 	}
 
-	function toggleLike(id) {
-		shoeMap.get(id).like = !shoeMap.get(id).like;
+	function toggleLike(shoeID) {
+		const shoe = shoeMap.get(shoeID);
+
+		if (!getCurrUser().likes.includes(shoeID)) {
+			getCurrUser().likes.push(shoeID);
+		} else {
+			getCurrUser().likes.splice(getCurrUser().likes.indexOf(shoeID), 1);
+		}
 	}
 
-	function nextImg(id) {
-		const shoe = shoeMap.get(id);
+	function nextImg(shoeID) {
+		const shoe = shoeMap.get(shoeID);
 		const colors = Object.keys(shoe.photos);
 		const currIndex = colors.indexOf(shoe.photos.index);
 		const nextIndex = colors[((currIndex) % (colors.length - 1)) + 1];
@@ -100,26 +119,23 @@ function ShoeCatalog() {
 				includeShoe = false;
 			}
 
+			const shoeSizes = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[0]);
 			if (appliedFilters.sizes && appliedFilters.sizes.length > 0) {
-				const shoeSizes = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[0]);
 				let sizeMatch = false;
-
 				for (const size of appliedFilters.sizes) {
 					if (shoeSizes.includes(size)) {
 						sizeMatch = true;
 						break;
 					}
 				}
-
 				if (!sizeMatch) {
 					includeShoe = false;
 				}
 			}
 
+			const shoeColors = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[1]);
 			if (appliedFilters.colors && appliedFilters.colors.length > 0) {
-				const shoeColors = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[1]);
 				let colorMatch = false;
-
 				for (const color of appliedFilters.colors) {
 					if (shoeColors.includes(color)) {
 						colorMatch = true;
@@ -131,12 +147,17 @@ function ShoeCatalog() {
 				}
 			}
 
-			// TODO: add search filter for title, brand, type and color
-			const shoeColors = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[1]);
-			if (appliedFilters.search !== '' && (
-				!([shoe.brand, shoe.model, shoe.type].join(' ')).includes(appliedFilters.search) &&
-				!(shoeColors.join(' ')).includes(appliedFilters.search))) {
-				includeShoe = false;
+			if (appliedFilters.search !== '') {
+				const searchTerms = appliedFilters.search.toLowerCase().split(' ');
+				const shoeTerms = [shoe.brand, shoe.model, shoe.type];
+				const cleanShoeTerms = shoeTerms.concat(shoeColors).concat(shoeSizes).join(' ').toLowerCase();
+				console.log(cleanShoeTerms);
+				for (const word of searchTerms) {
+					console.log(word);
+					if (!cleanShoeTerms.includes(word)) {
+						includeShoe = false;
+					}
+				}
 			}
 
 			if (includeShoe) {
@@ -153,37 +174,37 @@ function ShoeCatalog() {
 	// function to clear shopping cart
 	// function to get specific shoe
 
-function setFilters() {
-	for (const [, shoe] of shoeMap) {
-		if (!filters.brands.includes(shoe.brand)) {
-			filters.brands.push(shoe.brand);
-		}
-
-		if (!filters.types.includes(shoe.type)) {
-			filters.types.push(shoe.type);
-		}
-
-		if (shoe.price < filters.priceRange.min) {
-			filters.priceRange.min = price;
-		}
-
-		if (shoe.price > filters.priceRange.max) {
-			filters.priceRange.max = price;
-		}
-
-		const sizeColors = Object.keys(shoe.sizeColorQuantity);
-		for (const sizeColor of sizeColors) {
-			const [size, color] = sizeColor.split(',');
-			if (!filters.sizes.includes(Number(size))) {
-				filters.sizes.push(Number(size));
+	function setFilters() {
+		for (const [, shoe] of shoeMap) {
+			if (!filters.brands.includes(shoe.brand)) {
+				filters.brands.push(shoe.brand);
 			}
-			filters.sizes.sort((a, b) => a - b);
-			if (!filters.colors.includes(color)) {
-				filters.colors.push(color);
+
+			if (!filters.types.includes(shoe.type)) {
+				filters.types.push(shoe.type);
+			}
+
+			if (shoe.price < filters.priceRange.min) {
+				filters.priceRange.min = price;
+			}
+
+			if (shoe.price > filters.priceRange.max) {
+				filters.priceRange.max = price;
+			}
+
+			const sizeColors = Object.keys(shoe.sizeColorQuantity);
+			for (const sizeColor of sizeColors) {
+				const [size, color] = sizeColor.split(',');
+				if (!filters.sizes.includes(Number(size))) {
+					filters.sizes.push(Number(size));
+				}
+				filters.sizes.sort((a, b) => a - b);
+				if (!filters.colors.includes(color)) {
+					filters.colors.push(color);
+				}
 			}
 		}
 	}
-}
 
 	function getFilters() {
 		return filters;
@@ -199,7 +220,7 @@ function setFilters() {
 	}
 
 	function setSearchFilter(input) {
-		appliedFilters.search = input;
+		appliedFilters.search = input.toLowerCase();
 	}
 
 	function sortShoeMap(order) {
@@ -226,12 +247,20 @@ function setFilters() {
 		return users[username].password === password;
 	}
 
+	function setUsers(userList) {
+		users = userList;
+	}
+
+	function getUsers() {
+		return users;
+	}
+
 	function setCurrUser(username) {
 		currUser = username;
 	}
 
 	function getCurrUser() {
-		return currUser;
+		return users[currUser];
 	}
 
 	function setMessage(text, type) {
