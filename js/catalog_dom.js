@@ -1,6 +1,7 @@
 // ----- TEMPLATE SETUP ----- //
 const shoeTemplate = Handlebars.compile(document.querySelector('.shoe-template').innerHTML);
 const filterTemplate = Handlebars.compile(document.querySelector('.filter-template').innerHTML);
+const addShoeTemplate = Handlebars.compile(document.querySelector('.add-shoe-template').innerHTML);
 
 // ----- INPUT ELEMENTS ----- //
 const navSearch = document.querySelector('.search-input');
@@ -14,6 +15,14 @@ const loginPass = document.querySelector('.user-password');
 const loginBtn = document.querySelector('.user-login');
 
 const addShoeForm = document.querySelector('.add-shoe-form');
+const addShoeBrand = document.querySelector('.add-shoe-brand');
+const addShoeModel = document.querySelector('.add-shoe-model');
+const addShoeType = document.querySelector('.add-shoe-type');
+const addShoePrice = document.querySelector('.add-shoe-price');
+const addSizeColor = document.querySelector('.size-color-quantity');
+const addSizeColorBtn = document.querySelector('.add-size-color');
+const addResetBtn = document.querySelector('.add-reset-form');
+const addShoeBtn = document.querySelector('.add-shoe-button');
 
 const filterBtn = document.querySelector('.filter-button');
 const sortOption = document.querySelector('.sort-category');
@@ -26,12 +35,13 @@ const catalogMenu = document.querySelector('.catalog-menu');
 const filterBar = document.querySelector('.filter-bar');
 const displayWindow = document.querySelector('.display-window');
 const shoeCards = document.querySelectorAll('.shoe-card');
+const sizeColorSection = document.querySelector('.size-color-quantity');
 
 const messageBox = document.querySelector('.message-box');
 
 // ----- VARIABLES ----- //
 let timeout = 250;
-let divTimeout, msgTimeout;
+let divTimeout, msgTimeout, scrollTimeout;
 
 // ==================== INITIALIZATION ==================== //
 
@@ -198,11 +208,36 @@ let sampleShoeMap = new Map([
 		}
 	}]
 ]);
+let sampleUsers = {
+	'admin': {
+		'username': 'admin',
+		'name': 'Administrator',
+		'password': 'admin',
+		'type': 'admin',
+		'likes': [],
+		'cart': []
+	},
+	'ntruter42': {
+		'username': 'ntruter42',
+		'name': 'Nicholas Truter',
+		'password': 'password',
+		'type': 'buyer',
+		'likes': [],
+		'cart': []
+	},
+	'randomuser': {
+		'username': 'randomuser',
+		'name': 'Random User',
+		'password': 'random123',
+		'type': 'buyer',
+		'likes': [],
+		'cart': []
+	}
+};
 
 initializeCatalog();
 updateLocalStorage();
 updateNavMenu();
-catShoe.setFilters();
 updateFilterBar();
 displayShoeCards();
 
@@ -242,6 +277,93 @@ function toggleFilterBar() {
 
 function showAddShoeForm() {
 	showDiv(addShoeForm);
+}
+
+// 	'brand': "Under Armour",
+// 	'model': "Assert 9",
+// 	'type': "Running Shoe",
+// 	'price': 999,
+// 	'sold': 9,
+// 	'photos': {
+// 		'index': 'Black-White',
+// 		'Black-White': "./assets/images/shoes/ua-assert9-blackwhite.webp"
+// 	},
+// 	'sizeColorQuantity': {
+// 		'6,Black-White': 13,
+// 		'7,Black-White': 9,
+// 		'8,Black-White': 7,
+// 		'9,Black-White': 10
+// 	}
+function addShoeToCatalog() {
+	const brand = addShoeBrand.value;
+	const model = addShoeModel.value;
+	const type = addShoeType.value;
+	const price = Number(addShoePrice.value);
+
+	// for (const photo)
+	// addShoe(brand, model, type, price, photos, sizeColorQuantity);
+}
+
+function addSizeColorToForm() {
+	let n = 0;
+	if (document.querySelector('.sizeColor')) {
+		n = Number(sizeColorSection.lastElementChild.id) + 1;
+	}
+
+	const data = {
+		'n': n
+	};
+
+	const sizeColorElement = addShoeTemplate(data);
+
+	if (n === 0) {
+		sizeColorSection.innerHTML = sizeColorElement;
+	} else {
+		const div = document.createElement('div');
+		div.innerHTML = sizeColorElement;
+		sizeColorSection.appendChild(div.firstElementChild);
+	}
+	if (n % 2 === 1) {
+		console.log(n);
+		sizeColorSection.lastElementChild.classList.add('grey-bg');
+	}
+}
+/*<form class="add-shoe-form hide-div" action="">
+	<label for="add-shoe-brand">Brand:</label>
+	<input type="text" id="add-shoe-brand">
+
+	<label for="add-shoe-model">Model:</label>
+	<input type="text" id="add-shoe-model">
+
+	<label for="add-shoe-type">Type:</label>
+	<input type="text" id="add-shoe-type">
+
+	<label for="add-shoe-price">Price:</label>
+	<input type="number" id="add-shoe-price">
+
+	<div class="size-color-quantity">
+		<div class="sizeColor" id="0">
+			<label for="add-shoe-photo">Photo:</label>
+			<input type="text" id="add-shoe-photo">
+
+			<label for="sizeInput">Size:</label>
+			<input type="text" class="sizeInput" required>
+
+			<label for="colorInput">Color:</label>
+			<input type="text" class="colorInput" required>
+
+			<label for="quantityInput">Quantity:</label>
+			<input type="number" class="quantityInput" required>
+		</div>
+	</div>
+	<div class="add-shoe-buttons">
+		<button class="add-size-color" type="button">Add Size-Color</button><br>
+		<button class="add-shoe-button" type="button">Add Shoe</button>
+	</div>
+</form>*/
+function resetAddShoeForm() {
+	let instructions = '<span class="add-shoe-instructions">Click the [ <b>Add Size-Color</b> ] button<br>below to add a photo, color and sizes</span>'
+	sizeColorSection.innerHTML = instructions;
 }
 
 // ==================== DISPLAY WINDOW HANDLING ==================== //
@@ -349,7 +471,7 @@ function getFilterCheckedboxes() {
 			const types = getCheckedValues('filter-type');
 			const sizes = getCheckedValues('filter-size');
 			const colors = getCheckedValues('filter-color');
-			const like = document.getElementById('Like').checked;
+			const like = document.getElementById('Like').checked.value === 'true';
 
 			const priceRange = { min: 0, max: Infinity };
 			if (!isNaN(Number(document.querySelector('.filter-price-low').value))) {
@@ -362,6 +484,8 @@ function getFilterCheckedboxes() {
 			displayShoeCards();
 		});
 	});
+	document.querySelector('.filter-price-low').addEventListener('input', addPriceFilter);
+	document.querySelector('.filter-price-high').addEventListener('input', addPriceFilter);
 }
 
 function getCheckedValues(filterCategory) {
@@ -376,6 +500,12 @@ function getCheckedValues(filterCategory) {
 
 function addSearchFilter() {
 	catShoe.setSearchFilter(navSearch.value);
+	displayShoeCards();
+}
+
+function addPriceFilter() {
+	catShoe.setPriceFilter(document.querySelector('.filter-price-low').value, document.querySelector('.filter-price-high').value
+	);
 	displayShoeCards();
 }
 
@@ -400,6 +530,7 @@ function logUserIn() {
 	} else {
 		catShoe.setMessage("Username or password is incorrect :(", "error");
 	}
+	updateLocalStorage();
 	updateNavMenu();
 	updateFilterBar();
 	displayShoeCards();
@@ -478,6 +609,7 @@ function updateLocalStorage() {
 	localStorage.setItem('shoeMap', JSON.stringify(Array.from(catShoe.getShoeMap().entries())));
 	localStorage.setItem('shoeMapSortOrder', sortOption.options[sortOption.selectedIndex].value);
 	localStorage.setItem('user', catShoe.getCurrUser().username);
+	localStorage.setItem('users', JSON.stringify(catShoe.getUsers()));
 }
 
 function initializeCatalog() {
@@ -493,22 +625,60 @@ function initializeCatalog() {
 		sortOption.value = 'newest';
 	}
 
+	if (localStorage.getItem('users')) {
+		catShoe.setUsers(JSON.parse(localStorage.getItem('users')));
+	} else {
+		catShoe.setUsers(sampleUsers);
+	}
+
 	if (localStorage.getItem('user')) {
 		catShoe.setCurrUser(localStorage.getItem('user'));
 	} else {
-		catShoe.setCurrUser('randomuser');
+		catShoe.setCurrUser('admin');
 	}
+
+	catShoe.setFilters();
 }
 
 // ==================== EVENT LISTENERS ==================== //
 
-navUserBtn.addEventListener('click', showLoginForm);
 navSearch.parentNode.addEventListener('click', expandSearch);
 navSearch.parentNode.addEventListener('focusout', contractSearch);
 navSearch.addEventListener('input', addSearchFilter);
+navUserBtn.addEventListener('click', showLoginForm);
+navAddBtn.addEventListener('click', showAddShoeForm);
 
 filterBtn.addEventListener('click', toggleFilterBar);
 sortOption.addEventListener('change', sortShoeCards);
+
+addSizeColorBtn.addEventListener('click', addSizeColorToForm);
+addResetBtn.addEventListener('click', resetAddShoeForm);
+addShoeBtn.addEventListener('click', addShoeToCatalog);
+addSizeColor.addEventListener('wheel', (event) => {
+	// event.preventDefault();
+	clearTimeout(scrollTimeout);
+
+	// const scrollAmount = event.deltaY;
+	// const scrollDelta = Math.sign(scrollAmount) * 192;
+
+	// addSizeColor.scrollBy({
+	// 	top: scrollDelta,
+	// 	behavior: 'smooth'
+	// });
+});
+addSizeColor.addEventListener('scroll', () => {
+	clearTimeout(scrollTimeout);
+
+	const scrollPosition = addSizeColor.scrollTop;
+	const targetScrollPosition = Math.round(scrollPosition / 192) * 192;
+
+	scrollTimeout = setTimeout(() => {
+		addSizeColor.scrollTo({
+			top: targetScrollPosition,
+			behavior: 'smooth'
+		});
+	}, timeout);
+});
 
 loginName.addEventListener('keydown', (event) => {
 	if (event.keyCode === 13) {
@@ -529,11 +699,6 @@ exitBtns.forEach(button => {
 });
 
 navCartBtn.addEventListener('click', function () {
-	catShoe.setMessage("This feature isn't built yet :/", "warning");
-	showMessage();
-});
-
-navAddBtn.addEventListener('click', function () {
 	catShoe.setMessage("This feature isn't built yet :/", "warning");
 	showMessage();
 });

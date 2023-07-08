@@ -21,7 +21,7 @@
 	<script type="text/x-template" class="shoe-template">
 		{{#each shoes}}
 		<div class="shoe-card">
-			<img class="shoe-img" src="{{photo}}" alt="{{brand}}&#10 {{model}}&#10 {{type}}">
+			<img class="shoe-img" src="{{photo}}" alt="{{color}}&#10 {{brand}}&#10 {{model}}&#10 {{type}}">
 			<img class="shoe-next ui-icon dim {{transparent}}" src="./assets/icons/layers-svgrepo-com.svg" alt="{{color}}">
 			<img class="shoe-like ui-icon {{dim}}" src="./assets/icons/heart-svgrepo-com.svg" alt="{{id}}">
 			<span class="shoe-price">R {{price}}</span>
@@ -72,19 +72,36 @@
 	<div class="filter-like">
 		<h3>{{user}}</h3>
 		<label class="filter-checkbox" for="Like">
-			<input type="checkbox" id="Like" value="Like">
+			<input type="checkbox" id="Like" value="true">
 			<span>Liked</span>
 		</label>
 	</div>
-	<label for="filter-price-low">
-		<span>Price Low</span>
-		<input class="filter-price-low" type="number" name="filter-price-low" placeholder="">
-	</label>
-	<label for="filter-price-high">
-		<span>Price High</span>
-		<input class="filter-price-high" type="number" name="filter-price-high" placeholder="">
-	</label>
-</script>
+	<div class="filter-price">
+		<h3>Price</h3>
+		<label for="filter-price-low">
+			<input class="filter-price-low" type="number" name="filter-price-low" placeholder="Low">
+		</label>
+		<label for="filter-price-high">
+			<input class="filter-price-high" type="number" name="filter-price-high" placeholder="High">
+		</label>
+	</div>
+	</script>
+
+	<script type="text/x-template" class="add-shoe-template">
+	<div class="sizeColor" id="{{n}}">
+		<label for="add-shoe-photo">Photo URL:</label>
+		<input class="add-shoe-photo" type="text" id="add-shoe-photo" required>
+
+		<label for="color-input">Color:</label>
+		<input class="color-input" type="text" id="color-input" required>
+
+		<label for="size-input">Sizes:</label>
+		<input class="size-input" type="text" id="size-input" required>
+
+		<label for="quantity-input">Quantity:</label>
+		<input class="quantity-input" type="number" id="quantity-input" required>
+	</div>
+	</script>
 </head>
 
 <body>
@@ -162,40 +179,54 @@
 			<button class="user-login" type="button">Login</button>
 		</form>
 
-		<form class="add-shoe-form hide-div" action="">
+		<form class="add-shoe-form show-div" action="">
 			<img class="div-exit ui-icon" src="./assets/icons/cross-svgrepo-com.svg" alt="X">
-
 			<h1>Add a shoe</h1>
 
 			<label for="add-shoe-brand">Brand:</label>
-			<input type="text" id="add-shoe-brand">
+			<input class="add-shoe-brand" type="text" id="add-shoe-brand" placeholder="eg. Nike">
 
 			<label for="add-shoe-model">Model:</label>
-			<input type="text" id="add-shoe-model">
+			<input class="add-shoe-model" type="text" id="add-shoe-model" placeholder="eg. Airmax Pro">
 
 			<label for="add-shoe-type">Type:</label>
-			<input type="text" id="add-shoe-type">
+			<input class="add-shoe-type" type="text" id="add-shoe-type" placeholder="eg. Sneaker">
 
 			<label for="add-shoe-price">Price:</label>
-			<input type="number" id="add-shoe-price">
-
-			<label for="add-shoe-photo">Photo:</label>
-			<input type="text" id="add-shoe-photo">
+			<input class="add-shoe-price" type="number" id="add-shoe-price" placeholder="Amount in ZAR">
 
 			<div class="size-color-quantity">
-				<div>
-					<label for="sizeInput">Size:</label>
-					<input type="text" class="sizeInput" required>
+				<span class="add-shoe-instructions">Click the [ <b>Add Size-Color</b> ] button<br>below to add a photo, color and sizes</span>
+				<!-- <div class="sizeColor" id="0">
+					<label for="add-shoe-photo">Photo URL:</label>
+					<input class="add-shoe-photo" type="text" id="add-shoe-photo">
 
-					<label for="colorInput">Color:</label>
-					<input type="text" class="colorInput" required>
+					<label for="color-input">Color:</label>
+					<input class="color-input" type="text" id="color-input" required>
 
-					<label for="quantityInput">Quantity:</label>
-					<input type="number" class="quantityInput" required>
+					<label for="size-input">Sizes:</label>
+					<input class="size-input" type="text" id="size-input" required>
+
+					<label for="quantity-input">Quantity:</label>
+					<input class="quantity-input" type="number" id="quantity-input" required>
 				</div>
+				<div class="sizeColor grey-bg" id="1">
+					<label for="add-shoe-photo">Photo URL:</label>
+					<input class="add-shoe-photo" type="text" id="add-shoe-photo">
+
+					<label for="color-input">Color:</label>
+					<input class="color-input" type="text" id="color-input" required>
+
+					<label for="size-input">Sizes:</label>
+					<input class="size-input" type="text" id="size-input" required>
+
+					<label for="quantity-input">Quantity:</label>
+					<input class="quantity-input" type="number" id="quantity-input" required>
+				</div> -->
 			</div>
 			<div class="add-shoe-buttons">
-				<button class="add-size-color" type="button">Add Size-Color</button><br>
+				<button class="add-size-color" type="button">Add Size-Color</button>
+				<button class="add-reset-form" type="button">Reset Form</button>
 				<button class="add-shoe-button" type="button">Add Shoe</button>
 			</div>
 		</form>

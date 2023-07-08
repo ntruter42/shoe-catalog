@@ -14,36 +14,12 @@ function ShoeCatalog() {
 		types: [],
 		sizes: [],
 		colors: [],
+		like: false,
 		priceRange: { min: 0, max: Infinity },
 		search: ''
 	};
 
-	let users = {
-		'admin': {
-			'username': 'admin',
-			'name': 'Administrator',
-			'password': 'admin',
-			'type': 'admin',
-			'likes': [],
-			'cart': []
-		},
-		'ntruter42': {
-			'username': 'ntruter42',
-			'name': 'Nicholas Truter',
-			'password': 'password',
-			'type': 'buyer',
-			'likes': [],
-			'cart': []
-		},
-		'randomuser': {
-			'username': 'randomuser',
-			'name': 'Random User',
-			'password': 'random123',
-			'type': 'buyer',
-			'likes': [],
-			'cart': []
-		}
-	};
+	let users = {};
 	let currUser = 'admin';
 
 	// variable for shopping cart
@@ -60,7 +36,6 @@ function ShoeCatalog() {
 			'model': model,
 			'type': type,
 			'price': price,
-			'like': false,
 			'sold': 0,
 			'photos': photos,
 			'sizeColorQuantity': sizeColorQuantity
@@ -118,6 +93,10 @@ function ShoeCatalog() {
 			if (appliedFilters.priceRange && (shoe.price < appliedFilters.priceRange.min || shoe.price > appliedFilters.priceRange.max)) {
 				includeShoe = false;
 			}
+
+			// if (appliedFilters.like) {
+			// 	includeShoe = false;
+			// }
 
 			const shoeSizes = Object.keys(shoe.sizeColorQuantity).map(sizeColor => sizeColor.split(',')[0]);
 			if (appliedFilters.sizes && appliedFilters.sizes.length > 0) {
@@ -223,6 +202,19 @@ function ShoeCatalog() {
 		appliedFilters.search = input.toLowerCase();
 	}
 
+	function setPriceFilter(low, high) {
+		if (low !== '' && !isNaN(low)) {
+			appliedFilters.priceRange.min = low;
+		} else {
+			appliedFilters.priceRange.min = 0;
+		}
+		if (high !== '' && !isNaN(high)) {
+			appliedFilters.priceRange.max = high;
+		} else {
+			appliedFilters.priceRange.max = Infinity;
+		}
+	}
+
 	function sortShoeMap(order) {
 		const shoeArray = Array.from(shoeMap);
 
@@ -287,7 +279,10 @@ function ShoeCatalog() {
 		getFilters,
 		setAppliedFilters,
 		setSearchFilter,
+		setPriceFilter,
 		checkUserPass,
+		setUsers,
+		getUsers,
 		setCurrUser,
 		getCurrUser,
 		setMessage,
